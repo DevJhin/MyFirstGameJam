@@ -2,40 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerBehavior : MonoBehaviour {
+public class PlayerBehavior{
 
-    [Header("REFERENCES")]
-    [SerializeField]
-    private LayerMask groundLayerMask;
-    private Rigidbody2D rb;
-    private BoxCollider2D col;
-    [Header("MOVEMENT")]
-    [SerializeField]
-    private float moveSpeed;
-    [SerializeField]
-    private float jumpSpeed;
-    [SerializeField]
-    private float jumpPower;
+    Player player;
 
-    void Start() {
-        rb = GetComponent<Rigidbody2D>();
-        col = GetComponentInChildren<BoxCollider2D>();
-        rb.gravityScale *= jumpSpeed * jumpSpeed;
+    private Transform transform;
+
+    public PlayerBehavior(Player player)
+    { 
+        this.player = player;
+        transform = player.transform;
+
+        player.rb.gravityScale *= player.jumpSpeed * player.jumpSpeed;
     }
-
-    //BEHAVIORS
-
-    public void Move() {
-        /*float movement = Input.GetAxis("Horizontal");
-        transform.position += new Vector3(movement, 0, 0) * moveSpeed * Time.deltaTime;*/
+   
+    
+    //Behavior Functions
+    
+    public void Move(float value) {
+        transform.position += new Vector3(value, 0, 0) * player.moveSpeed * Time.deltaTime;
         Debug.Log("Move");
     }
 
     public void Jump() {
         if (isGrounded()) {
-            rb.velocity = Vector2.zero;
-            Vector2 force = Vector2.up * jumpPower * jumpSpeed;
-            rb.AddForce(force, ForceMode2D.Impulse);
+            player.rb.velocity = Vector2.zero;
+            Vector2 force = Vector2.up * player.jumpPower * player.jumpSpeed;
+            player.rb.AddForce(force, ForceMode2D.Impulse);
         }
     }
 
@@ -43,10 +36,9 @@ public class PlayerBehavior : MonoBehaviour {
         Debug.Log("Attack");
     }
 
-    //GROUNDCHECK
-
+    //Ground Check
     private bool isGrounded() {
-        Collider2D hit = Physics2D.OverlapBox(col.bounds.center, col.bounds.size, 0, groundLayerMask);
+        Collider2D hit = Physics2D.OverlapBox(player.col.bounds.center, player.col.bounds.size, 0, player.groundLayerMask);
         return hit != null;
     }
 }

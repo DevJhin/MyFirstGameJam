@@ -17,6 +17,7 @@ public class PlayerController
 
     private readonly static string InputActionAssetPath = "InputSystem/InputSettings";
 
+
     public PlayerController(Player player)
     {
         this.player = player;
@@ -35,14 +36,31 @@ public class PlayerController
         jumpAction = playerActionMap.FindAction("Jump");
         attackAction = playerActionMap.FindAction("Attack");
 
-        //Bind InputActions with PlayerController Methods.
-        moveAction.performed += OnMoveAction;
+        //Input Binding 작업.
+        //Pressed 처럼 작동해야 하는 Move Input은 Binding하지 않고 OnUpdate에서 처리해야 함.
         jumpAction.performed += OnJumpAction;
         attackAction.performed += OnAttackAction;
+        
+        //Since the limitation of Unity InputSytem, it does not have 'Pressed(Equivalent to Input.GetButton)' Input bindings.
+        //Hence instead of binding function to "Move" Action, we need to check pressed state in Update function.
+        //See https://forum.unity.com/threads/new-input-system-how-to-use-the-hold-interaction.605587/ for more information.
 
         EnableInput();
     }
 
+
+    /// <summary>
+    /// Pressed Input을 확인하기 위한 Update 함수.
+    /// </summary>
+    public void OnUpdate()
+    {
+        UpdateMoveAction();
+    }
+
+
+    /// <summary>
+    /// 모든 Input을 비활성화 합니다.
+    /// </summary>
     public void EnableInput()
     {
         moveAction.Enable();
@@ -50,30 +68,51 @@ public class PlayerController
         attackAction.Enable();
     }
 
+
+    /// <summary>
+    /// 모든 Input을 활성화합니다.
+    /// </summary>
     public void DisableInput()
     {
-        moveAction.Enable();
-        jumpAction.Enable();
-        attackAction.Enable();
+        moveAction.Disable();
+        jumpAction.Disable();
+        attackAction.Disable();
     }
 
 
-    private void OnMoveAction(InputAction.CallbackContext obj)
+    /// <summary>
+    /// 현재 Move 버튼 상태를 확인하고, 눌러져 있다면(Pressed) Move 동작 실행.
+    /// </summary>
+    private void UpdateMoveAction()
     {
-        float value = obj.ReadValue<float>();
-        //player.Behavior.Move(axis);
-        Debug.Log($"Action 'Move' Invoked!({value}) ");
+        float moveValue = moveAction.ReadValue<float>();
+        if (moveValue > 0 || moveValue < 0)
+        {
+            player.Behavior.Move(moveValue);
+
+            Debug.Log($"Action 'Move' Invoked!({moveValue}) ");
+        }
     }
 
+
+    /// <summary>
+    /// JumpAction에 대한 Binding 함수
+    /// </summary>
     private void OnJumpAction(InputAction.CallbackContext obj)
     {
-        //player.Behavior.Jump();
+        player.Behavior.Jump();
+
         Debug.Log("Action 'Jump' Invoked!");
     }
 
+
+    /// <summary>
+    /// AttackAction에 대한 Binding 함수
+    /// </summary>
     private void OnAttackAction(InputAction.CallbackContext obj)
     {
-        //player.Behavior.Attack();
+        player.Behavior.Attack();
+
         Debug.Log("Action 'Attack' Invoked!");
     }
 

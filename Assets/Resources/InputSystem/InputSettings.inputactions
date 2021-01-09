@@ -34,7 +34,7 @@
                 {
                     "name": "",
                     "id": "e504ae01-e94d-4871-8a01-9ee48a904210",
-                    "path": "<Keyboard>/z",
+                    "path": "<Keyboard>/upArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -45,7 +45,7 @@
                 {
                     "name": "",
                     "id": "c61a7a97-b8c4-457e-a689-308abdc087bf",
-                    "path": "<Keyboard>/c",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -79,6 +79,39 @@
                     "name": "positive",
                     "id": "0ebb97fd-0845-4f6f-8be3-c89fa3bc0ca6",
                     "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "1D Axis",
+                    "id": "7390cbb3-b42e-4a26-99b2-6f7ed9ca81a0",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "c9072087-a198-4421-a79c-901ab20b8c42",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "30cc32b4-2c6b-46a7-80e3-521b473a85c6",
+                    "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
