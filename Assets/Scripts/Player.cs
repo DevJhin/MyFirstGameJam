@@ -1,10 +1,10 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 using UnityEngine.InputSystem;
 
-public class Player : MonoBehaviour
+public class Player : FieldObject
 {
     public PlayerBehavior Behavior
     {
@@ -37,10 +37,10 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        //InputSystemÀÌ Pressed »óÅÂ¿¡¼­ÀÇ BindingÀ» Áö¿øÇÏÁö ¾Ê±â ¶§¹®¿¡ 
-        //¾îÂ¿ ¼ö ¾øÀÌ UpdateÇÔ¼ö ¾È¿¡¼­ ¹öÆ° ÀÔ·Â »óÅÂ¸¦ È®ÀÎÇØ¾ß ÇÏ´Âµ¥..
-        //ÀÌ°Í ¶§¹®¿¡ Controller Å¬·¡½º¸¦ MonoBehaviour·Î ¸¸µå´Â °Í º¸´Ù´Â 
-        //ÀÏ´ÜÀº È®½ÇÇÏ°Ô MonoBehaviour·Î ÇÕÀÇµÈ Player¿¡¼­ Controller¸¦ Update ½ÃÄÑÁÖ´Â ¹æ½ÄÀ¸·Î ±¸Çö. 
+        //InputSystemï¿½ï¿½ Pressed ï¿½ï¿½ï¿½Â¿ï¿½ï¿½ï¿½ï¿½ï¿½ Bindingï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
+        //ï¿½ï¿½Â¿ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Updateï¿½Ô¼ï¿½ ï¿½È¿ï¿½ï¿½ï¿½ ï¿½ï¿½Æ° ï¿½Ô·ï¿½ ï¿½ï¿½ï¿½Â¸ï¿½ È®ï¿½ï¿½ï¿½Ø¾ï¿½ ï¿½Ï´Âµï¿½..
+        //ï¿½Ì°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Controller Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ MonoBehaviourï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Ù´ï¿½ 
+        //ï¿½Ï´ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ï°ï¿½ MonoBehaviourï¿½ï¿½ ï¿½ï¿½ï¿½Çµï¿½ Playerï¿½ï¿½ï¿½ï¿½ Controllerï¿½ï¿½ Update ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½. 
         Controller.OnUpdate();
     }
 }

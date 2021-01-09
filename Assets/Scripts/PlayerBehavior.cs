@@ -1,17 +1,18 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerBehavior{
+/// <summary>
+/// 플레이어의 행동 구현체
+/// </summary>
+public class PlayerBehavior : FieldObjectBehaviour{
 
     Player player;
-
-    private Transform transform;
 
     public PlayerBehavior(Player player)
     { 
         this.player = player;
-        transform = player.transform;
+        Transform = player.transform;
 
         player.rb.gravityScale *= player.jumpSpeed * player.jumpSpeed;
     }
@@ -20,7 +21,7 @@ public class PlayerBehavior{
     //Behavior Functions
     
     public void Move(float value) {
-        transform.position += new Vector3(value, 0, 0) * player.moveSpeed * Time.deltaTime;
+        Transform.position += new Vector3(value, 0, 0) * player.moveSpeed * Time.deltaTime;
         Debug.Log("Move");
     }
 

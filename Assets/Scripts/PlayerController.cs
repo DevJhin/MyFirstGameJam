@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 /// <summary>
 /// Controller class for Player.
 /// </summary>
-public class PlayerController
+public class PlayerController : FieldObjectController
 {
     private Player player;
 

@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,5 +7,5 @@ using UnityEngine;
 /// </summary>
 public class FieldObjectBehaviour
 {
-   
+    protected Transform Transform;
 }
