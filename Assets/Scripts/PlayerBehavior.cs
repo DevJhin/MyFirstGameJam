@@ -26,8 +26,9 @@ public class PlayerBehavior : MonoBehaviour {
     //BEHAVIORS
 
     public void Move() {
-        float movement = Input.GetAxis("Horizontal");
-        transform.position += new Vector3(movement, 0, 0) * moveSpeed * Time.deltaTime;
+        /*float movement = Input.GetAxis("Horizontal");
+        transform.position += new Vector3(movement, 0, 0) * moveSpeed * Time.deltaTime;*/
+        Debug.Log("Move");
     }
 
     public void Jump() {
