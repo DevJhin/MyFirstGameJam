@@ -23,30 +23,22 @@ public class PlayerBehavior : MonoBehaviour {
         rb.gravityScale *= jumpSpeed * jumpSpeed;
     }
 
-    void Update() {
-        Move();
-        if (Input.GetKeyDown(KeyCode.W) && isGrounded()) {
-            Jump();
-        }
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            Attack();
-        }
-    }
-
     //BEHAVIORS
 
-    private void Move() {
+    public void Move() {
         float movement = Input.GetAxis("Horizontal");
         transform.position += new Vector3(movement, 0, 0) * moveSpeed * Time.deltaTime;
     }
 
-    private void Jump() {
-        rb.velocity = Vector2.zero;
-        Vector2 force = Vector2.up * jumpPower * jumpSpeed;
-        rb.AddForce(force, ForceMode2D.Impulse);
+    public void Jump() {
+        if (isGrounded()) {
+            rb.velocity = Vector2.zero;
+            Vector2 force = Vector2.up * jumpPower * jumpSpeed;
+            rb.AddForce(force, ForceMode2D.Impulse);
+        }
     }
 
-    private void Attack() {
+    public void Attack() {
         Debug.Log("Attack");
     }
 
