@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,10 +17,24 @@ public class PlayerController : FieldObjectController
 
     private readonly static string InputActionAssetPath = "InputSystem/InputSettings";
 
+
+    /// <summary>
+    /// 현재 Move 버튼이 Repeat(꾹 누르고 있는) 상태인가?
+    /// </summary>
     public bool IsMoveButtonOnRepeat
     {
         get; private set;
     }
+
+
+    /// <summary>
+    /// 현재 Jump 버튼이 Repeat(꾹 누르고 있는) 상태인가?
+    /// </summary>
+    public bool IsJumpButtonOnRepeat
+    {
+        get; private set;
+    }
+
 
     public PlayerController(Player player)
     {
@@ -40,10 +54,13 @@ public class PlayerController : FieldObjectController
         jumpAction = playerActionMap.FindAction("Jump");
         attackAction = playerActionMap.FindAction("Attack");
 
-        //Input Binding �۾�.
+        //Input Binding 작업.
         moveAction.performed += OnMoveActionPressed;
         moveAction.canceled += OnMoveActionReleased;
-        jumpAction.performed += OnJumpAction;
+
+        jumpAction.performed += OnJumpActionPressed;
+        jumpAction.canceled += OnJumpActionReleased;
+        
         attackAction.performed += OnAttackAction;
 
         EnableInput();
@@ -58,7 +75,7 @@ public class PlayerController : FieldObjectController
 
 
     /// <summary>
-    /// ��� Input�� ��Ȱ��ȭ �մϴ�.
+    /// 모든 Input을 활성화 합니다.
     /// </summary>
     public void EnableInput()
     {
@@ -69,7 +86,7 @@ public class PlayerController : FieldObjectController
 
 
     /// <summary>
-    /// ��� Input�� Ȱ��ȭ�մϴ�.
+    /// 모든 Input을 비활성화합니다.
     /// </summary>
     public void DisableInput()
     {
@@ -77,7 +94,6 @@ public class PlayerController : FieldObjectController
         jumpAction.Disable();
         attackAction.Disable();
     }
-
 
 
     public bool TryGetMoveInput(out float value)
@@ -95,7 +111,7 @@ public class PlayerController : FieldObjectController
 
 
     /// <summary>
-    /// MoveAction Press
+    /// MoveAction의 Press에 대한 Binding 함수
     /// </summary>
     private void OnMoveActionPressed(InputAction.CallbackContext obj)
     {
@@ -104,7 +120,7 @@ public class PlayerController : FieldObjectController
 
 
     /// <summary>
-    /// JumpAction�� ���� Binding �Լ�
+    /// MoveAction의 Relese에 대한 Binding 함수
     /// </summary>
     private void OnMoveActionReleased(InputAction.CallbackContext obj)
     {
@@ -113,18 +129,27 @@ public class PlayerController : FieldObjectController
 
 
     /// <summary>
-    /// JumpAction�� ���� Binding �Լ�
+    /// JumpAction의 Pressed에 대한 Binding 함수
     /// </summary>
-    private void OnJumpAction(InputAction.CallbackContext obj)
+    private void OnJumpActionPressed(InputAction.CallbackContext obj)
     {
-        player.Behavior.Jump();
-
-        Debug.Log("Action 'Jump' Invoked!");
+        IsJumpButtonOnRepeat = true;
+        Debug.Log("Action 'Jump' Pressed!");
     }
 
 
     /// <summary>
-    /// AttackAction�� ���� Binding �Լ�
+    /// JumpAction의 Release에 대한 Binding 함수
+    /// </summary>
+    private void OnJumpActionReleased(InputAction.CallbackContext obj)
+    {
+        IsJumpButtonOnRepeat = false;
+        Debug.Log("Action 'Jump' Released!");
+    }
+
+
+    /// <summary>
+    /// AttackAction에 대한 Binding 함수
     /// </summary>
     private void OnAttackAction(InputAction.CallbackContext obj)
     {
