@@ -8,6 +8,8 @@ public delegate void SubscribedCallback();
 
 public class MessageSystem : MonoBehaviour
 {
+    public static MessageSystem Instance {get; private set;}
+
     /// <summary>
     /// 현재 타입에서 구독하고 있는 콜백들
     /// </summary>
@@ -30,6 +32,16 @@ public class MessageSystem : MonoBehaviour
 
     void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
         callbackDict = new Dictionary<Type, List<SubscribedCallback>>();
 
         publishedOnThisFrame = new List<Type>();
@@ -97,14 +109,14 @@ public class MessageSystem : MonoBehaviour
         publishedOnThisFrame.Clear();
     }
 
-    public void Subscribe<T>(Type t, SubscribedCallback cb) where T : IEvent
+    public void Subscribe<T>(SubscribedCallback cb) where T : IEvent
     {
-        subscribeRequestQueue.Enqueue(new KeyValuePair<Type, SubscribedCallback>(t, cb));
+        subscribeRequestQueue.Enqueue(new KeyValuePair<Type, SubscribedCallback>(typeof(T), cb));
     }
 
-    public void Unsubscribe<T>(Type t, SubscribedCallback cb) where T : IEvent
+    public void Unsubscribe<T>(SubscribedCallback cb) where T : IEvent
     {
-        unsubscribeRequestQueue.Enqueue(new KeyValuePair<Type, SubscribedCallback>(t, cb));
+        unsubscribeRequestQueue.Enqueue(new KeyValuePair<Type, SubscribedCallback>(typeof(T), cb));
     }
 
     /// <summary>
@@ -113,6 +125,20 @@ public class MessageSystem : MonoBehaviour
     public void Publish(Type e)
     {
         publishedOnThisFrame.Add(e);
+    }
+
+    /// <summary>
+    /// 구독한 전체 대상에게 바로 이벤트 발생
+    /// </summary>
+    public void PublishImmediate(Type e)
+    {
+        if (callbackDict.TryGetValue(e, out var callbacks))
+        {
+            foreach (var callback in callbacks)
+            {
+                callback.Invoke();
+            }
+        }
     }
 
     /// <summary>

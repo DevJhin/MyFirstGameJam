@@ -53,7 +53,21 @@ public class CameraManager : MonoBehaviour
 
     void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
         mainCam = Camera.main;
+    }
+
+    void OnDestroy()
+    {
+        Instance = null;
     }
 
     void LateUpdate()
