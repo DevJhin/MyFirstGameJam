@@ -8,6 +8,7 @@ using UnityEngine;
 public class PlayerBehavior : FieldObjectBehaviour{
 
     Player player;
+    private bool facingRight = true;
 
     public PlayerBehavior(Player player)
     { 
@@ -25,12 +26,13 @@ public class PlayerBehavior : FieldObjectBehaviour{
         }
     }
 
-
     //Behavior Functions
-
     public void Move(float value) {
         Transform.position += new Vector3(value, 0, 0) * player.moveSpeed * Time.deltaTime;
         Debug.Log("Move");
+        if ((value > 0 && !facingRight) || (value < 0 && facingRight)) {
+            Flip();
+        }
     }
 
     public void Jump() {
@@ -43,6 +45,12 @@ public class PlayerBehavior : FieldObjectBehaviour{
 
     public void Attack() {
         Debug.Log("Attack");
+    }
+
+    //Flip Object
+    private void Flip() {
+        facingRight = !facingRight;
+        Transform.rotation = Quaternion.Euler(0, facingRight ? 0 : 180, 0);
     }
 
     //Ground Check
