@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 /// <summary>
 /// MessageSystem에 등록해서 이벤트를 받는 역할을 수행
