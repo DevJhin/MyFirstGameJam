@@ -16,10 +16,18 @@ public class PlayerBehavior : FieldObjectBehaviour{
 
         player.rb.gravityScale *= player.jumpSpeed * player.jumpSpeed;
     }
-   
-    
+
+    public void OnPlayerUpdate()
+    {
+        if (player.Controller.TryGetMoveInput(out float value))
+        {
+            Move(value);
+        }
+    }
+
+
     //Behavior Functions
-    
+
     public void Move(float value) {
         Transform.position += new Vector3(value, 0, 0) * player.moveSpeed * Time.deltaTime;
         Debug.Log("Move");

@@ -17,6 +17,10 @@ public class PlayerController : FieldObjectController
 
     private readonly static string InputActionAssetPath = "InputSystem/InputSettings";
 
+    public bool IsMoveButtonOnRepeat
+    {
+        get; private set;
+    }
 
     public PlayerController(Player player)
     {
@@ -37,24 +41,19 @@ public class PlayerController : FieldObjectController
         attackAction = playerActionMap.FindAction("Attack");
 
         //Input Binding 작업.
-        //Pressed 처럼 작동해야 하는 Move Input은 Binding하지 않고 OnUpdate에서 처리해야 함.
+        moveAction.performed += OnMoveActionPressed;
+        moveAction.canceled += OnMoveActionReleased;
         jumpAction.performed += OnJumpAction;
         attackAction.performed += OnAttackAction;
-        
-        //Since the limitation of Unity InputSytem, it does not have 'Pressed(Equivalent to Input.GetButton)' Input bindings.
-        //Hence instead of binding function to "Move" Action, we need to check pressed state in Update function.
-        //See https://forum.unity.com/threads/new-input-system-how-to-use-the-hold-interaction.605587/ for more information.
 
         EnableInput();
     }
 
 
-    /// <summary>
-    /// Pressed Input을 확인하기 위한 Update 함수.
-    /// </summary>
-    public void OnUpdate()
+    public void OnPlayerUpdate()
     {
-        UpdateMoveAction();
+
+
     }
 
 
@@ -80,18 +79,36 @@ public class PlayerController : FieldObjectController
     }
 
 
-    /// <summary>
-    /// 현재 Move 버튼 상태를 확인하고, 눌러져 있다면(Pressed) Move 동작 실행.
-    /// </summary>
-    private void UpdateMoveAction()
-    {
-        float moveValue = moveAction.ReadValue<float>();
-        if (moveValue > 0 || moveValue < 0)
-        {
-            player.Behavior.Move(moveValue);
 
-            Debug.Log($"Action 'Move' Invoked!({moveValue}) ");
+    public bool TryGetMoveInput(out float value)
+    {
+        if (!IsMoveButtonOnRepeat)
+        {
+            value = default(float);
+            return false;
         }
+
+        value = moveAction.ReadValue<float>();
+
+        return true;
+    }
+
+
+    /// <summary>
+    /// MoveAction Press
+    /// </summary>
+    private void OnMoveActionPressed(InputAction.CallbackContext obj)
+    {
+        IsMoveButtonOnRepeat = true;
+    }
+
+
+    /// <summary>
+    /// JumpAction에 대한 Binding 함수
+    /// </summary>
+    private void OnMoveActionReleased(InputAction.CallbackContext obj)
+    {
+        IsMoveButtonOnRepeat = false;
     }
 
 

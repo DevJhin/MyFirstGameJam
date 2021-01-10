@@ -37,10 +37,6 @@ public class Player : FieldObject
 
     private void Update()
     {
-        //InputSystem�� Pressed ���¿����� Binding�� �������� �ʱ� ������ 
-        //��¿ �� ���� Update�Լ� �ȿ��� ��ư �Է� ���¸� Ȯ���ؾ� �ϴµ�..
-        //�̰� ������ Controller Ŭ������ MonoBehaviour�� ����� �� ���ٴ� 
-        //�ϴ��� Ȯ���ϰ� MonoBehaviour�� ���ǵ� Player���� Controller�� Update �����ִ� ������� ����. 
-        Controller.OnUpdate();
+        Behavior.OnPlayerUpdate();
     }
 }
