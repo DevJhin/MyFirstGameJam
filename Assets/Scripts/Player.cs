@@ -23,14 +23,13 @@ public class Player : FieldObject
 
     [Header("MOVEMENT")]
     public float moveSpeed;
-    public float jumpSpeed;
+    public float airDrag;
     public float jumpPower;
+    public float gravityScale;
+    public float fallMultiplier;
 
     void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
-        col = GetComponentInChildren<BoxCollider2D>();
-
         Behavior = new PlayerBehavior(this);
         Controller = new PlayerController(this);
     }

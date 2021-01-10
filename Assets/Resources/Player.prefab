@@ -162,7 +162,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &5248455726152613225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -178,8 +178,10 @@ MonoBehaviour:
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 64
-  rb: {fileID: 0}
-  col: {fileID: 0}
+  rb: {fileID: 5248455726152613227}
+  col: {fileID: 5248455725210223214}
   moveSpeed: 10
-  jumpSpeed: 4
-  jumpPower: 8
+  airDrag: 0
+  jumpPower: 13
+  gravityScale: 5
+  fallMultiplier: 2

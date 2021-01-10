@@ -135,6 +135,7 @@ public class PlayerController : FieldObjectController
     {
         IsJumpButtonOnRepeat = true;
         Debug.Log("Action 'Jump' Pressed!");
+        player.Behavior.Jump();
     }
 
 
@@ -154,10 +155,6 @@ public class PlayerController : FieldObjectController
     private void OnAttackAction(InputAction.CallbackContext obj)
     {
         player.Behavior.Attack();
-
         Debug.Log("Action 'Attack' Invoked!");
     }
-
-
-
 }
