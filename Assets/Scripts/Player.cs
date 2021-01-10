@@ -27,6 +27,7 @@ public class Player : FieldObject
     public float jumpPower;
     public float gravityScale;
     public float fallMultiplier;
+    public float jumpCheckTimer;
 
     void Awake()
     {

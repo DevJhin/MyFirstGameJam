@@ -135,7 +135,7 @@ public class PlayerController : FieldObjectController
     {
         IsJumpButtonOnRepeat = true;
         Debug.Log("Action 'Jump' Pressed!");
-        player.Behavior.Jump();
+        player.Behavior.CheckJump();
     }
 
 

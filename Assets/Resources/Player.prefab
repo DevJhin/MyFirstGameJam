@@ -185,3 +185,4 @@ MonoBehaviour:
   jumpPower: 13
   gravityScale: 5
   fallMultiplier: 2
+  jumpCheckTimer: 0.1
