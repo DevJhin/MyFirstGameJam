@@ -10,6 +10,8 @@ public class Game : MonoBehaviour
 {
     public static Game Instance { get; private set; }
 
+    public static BulletSystem BulletSystem { get; } = new BulletSystem();
+
     /// <summary>
     /// 특정 맵 바로 호출해서 플레이 해보기 위한 기능들
     /// </summary>
