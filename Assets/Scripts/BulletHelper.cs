@@ -24,13 +24,13 @@ public struct BulletData
 /// <summary>
 /// 투사체 생성 및 발사 로직을 관리하는 클래스
 /// </summary>
-public class BulletSystem
+public static class BulletHelper
 {
 	/// <summary>
 	/// 투사체 하나를 생성하고 Bullet 컴포넌트를 반환합니다.
 	/// </summary>
 	/// <param name="prefabName">Resources/Bullets 폴더 내의 오브젝트명</param>
-	Bullet CreateBullet(string prefabName)
+	static Bullet CreateBullet(string prefabName)
 	{
 		GameObject bullet = Object.Instantiate(Resources.Load($"Bullets/{prefabName}")) as GameObject;
 
@@ -39,7 +39,7 @@ public class BulletSystem
 	/// <summary>
 	/// 투사체 하나를 생성하고 Bullet 컴포넌트의 위치, 회전, 속도, 색상값을 입력된 데이터를 통해 초기화합니다.
 	/// </summary>
-	Bullet GetBullet(ref BulletData bulletData)
+	static Bullet GetBullet(ref BulletData bulletData)
 	{
 		Bullet bullet = CreateBullet(bulletData.prefabName);
 
@@ -59,7 +59,7 @@ public class BulletSystem
 	/// BulletData를 통해 투사체를 생성합니다.
 	/// </summary>
 	/// <param name="bulletData"></param>
-	public void SpawnBullet(BulletData bulletData)
+	public static void SpawnBullet(BulletData bulletData)
 	{
 		int spawnCount = bulletData.spawnCount;
 
@@ -95,7 +95,7 @@ public class BulletSystem
 	/// <summary>
 	/// 초기화할 변수를 직접 입력하여 투사체를 생성합니다.
 	/// </summary>
-	public void SpawnBullet(string prefabName, Transform shootPoint, float direction, float speed = 10f, Color color = default(Color), int spawnCount = 1, float spreadAngle = 0f, float spacing = 0f)
+	public static void SpawnBullet(string prefabName, Transform shootPoint, float direction, float speed = 10f, Color color = default(Color), int spawnCount = 1, float spreadAngle = 0f, float spacing = 0f)
 	{
 		if (color == default)
 		{
