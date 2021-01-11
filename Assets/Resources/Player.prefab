@@ -179,10 +179,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   rb: {fileID: 5248455726152613227}
-  col: {fileID: 5248455725210223214}
   moveSpeed: 10
   airDrag: 0
   jumpPower: 13
   gravityScale: 5
   fallMultiplier: 2
   jumpCheckTimer: 0.1
+  raycastLength: 0.6
+  raycastGap: {x: 0.39, y: 0, z: 0}

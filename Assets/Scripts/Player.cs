@@ -19,7 +19,6 @@ public class Player : FieldObject
     [Header("REFERENCES")]
     public LayerMask groundLayerMask;
     public Rigidbody2D rb;
-    public BoxCollider2D col;
 
     [Header("MOVEMENT")]
     public float moveSpeed;
@@ -28,6 +27,8 @@ public class Player : FieldObject
     public float gravityScale;
     public float fallMultiplier;
     public float jumpCheckTimer;
+    public float raycastLength;
+    public Vector3 raycastGap;
 
     void Awake()
     {

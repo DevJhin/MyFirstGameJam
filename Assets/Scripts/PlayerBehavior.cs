@@ -94,7 +94,7 @@ public class PlayerBehavior : FieldObjectBehaviour{
 
     //Ground Check
     private bool isGrounded() {
-        Collider2D hit = Physics2D.OverlapBox(player.col.bounds.center, player.col.bounds.size, 0, player.groundLayerMask);
-        return hit != null;
+        bool hit = Physics2D.Raycast(Transform.position + player.raycastGap, Vector2.down, player.raycastLength, player.groundLayerMask) || Physics2D.Raycast(Transform.position - player.raycastGap, Vector2.down, player.raycastLength, player.groundLayerMask);
+        return hit;
     }
 }
