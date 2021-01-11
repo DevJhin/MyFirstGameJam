@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 /// <summary>
 /// 피해를 입히는 모든 투사체에 적용되는 스크립트. 지정된 속도와 방향각에 따라 이동합니다.
@@ -16,7 +17,7 @@ public class Bullet : FieldObject
     /// <summary>
     /// 투사체의 진행 방향을 0~360도로 나타냅니다. 
     /// </summary>
-    public float DirectionDegree
+    [ShowInInspector, ReadOnly] public float DirectionDegree
 	{
         get => directionAngle * Mathf.Rad2Deg;
         set => directionAngle = value * Mathf.Deg2Rad;
@@ -30,8 +31,8 @@ public class Bullet : FieldObject
 
     // 회전시키지 않아도 된다면 true
     [SerializeField] private bool notRotate = true;
-    public bool isAutoRotate;
-    public float autoRotateSpeed;
+    [ShowIf(nameof(notRotate), false)] public bool isAutoRotate;
+    [ShowIf(nameof(isAutoRotate), true)] public float autoRotateSpeed;
     
     [SerializeField] private SpriteRenderer _spriteRenderer;
     public SpriteRenderer SpriteRenderer

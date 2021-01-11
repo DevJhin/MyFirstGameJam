@@ -158,8 +158,7 @@ MonoBehaviour:
   shootPoint: {fileID: 886366905}
   color: {r: 1, g: 0.97183543, b: 0.033018887, a: 1}
   speed: 10
-  rotation: 0
-  spawnCount: 3
+  spawnCount: 1
   spreadAngle: 15
   spacing: 0.3
 --- !u!212 &182521994
