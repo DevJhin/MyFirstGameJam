@@ -153,11 +153,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 553647a26a6f74547b5cc328e63f4b74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  intervalTime: 0.3
+  intervalTime: 1
   prefabName: 1
   shootPoint: {fileID: 886366905}
   color: {r: 1, g: 0.97183543, b: 0.033018887, a: 1}
-  speed: 10
+  bulletSpeed: 10
   spawnCount: 1
   spreadAngle: 15
   spacing: 0.3

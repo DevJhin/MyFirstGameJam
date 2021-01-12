@@ -18,4 +18,22 @@ public class Utility
 
         return isForwardY ? (angle - 90f) : angle;
     }
+
+    /// <summary>
+    /// 오브젝트에서 지정한 컴포넌트를 찾아서 반환합니다. 없으면 컴포넌트를 추가한 후 반환합니다.
+    /// </summary>
+    public static T GetOrAddComponent<T>(GameObject obj) where T : Component
+    {
+        T component = obj.GetComponent<T>();
+
+        return (component != null) ? component : obj.AddComponent<T>();
+    }
+}
+
+public static class CustomUtilityExtension
+{
+    public static T GetOrAddComponent<T>(this GameObject obj) where T : Component
+    {
+        return Utility.GetOrAddComponent<T>(obj);
+    }
 }

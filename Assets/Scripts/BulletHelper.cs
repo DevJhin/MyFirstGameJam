@@ -32,7 +32,7 @@ public static class BulletHelper
 	/// <param name="prefabName">Resources/Bullets 폴더 내의 오브젝트명</param>
 	static Bullet CreateBullet(string prefabName)
 	{
-		GameObject bullet = Object.Instantiate(Resources.Load($"Bullets/{prefabName}")) as GameObject;
+		GameObject bullet = ResourcesHelper.Instantiate($"Bullets/{prefabName}");
 
 		return bullet.GetComponent<Bullet>();
 	}

@@ -78,8 +78,7 @@ public class Bullet : FieldObject
             invisibleTime += Time.deltaTime;
             if (invisibleTime > timeToDisable)
             {
-                // TODO: 오브젝트 풀링 도입 시 비활성화 처리
-                Destroy(gameObject);
+                ResourcesHelper.Destroy(gameObject);
             }
         }
     }
