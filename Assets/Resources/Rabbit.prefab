@@ -398,11 +398,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f69aacdbbf760a846885e91d8b5f83b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Patterns:
-  - {fileID: 11400000, guid: 90c0ec8d6bd963b49a6e17e5ef50d3ce, type: 2}
-  - {fileID: 11400000, guid: 6d651929c399628428ce9acb8cc106a0, type: 2}
-  - {fileID: 11400000, guid: b93702630d80518449f8c798e8d103df, type: 2}
-  ShootTransfrom: {fileID: 0}
+  MainPattern: {fileID: 11400000, guid: b05368d7182011d46beb4f38d40b6fbe, type: 2}
 --- !u!1 &6344303850186341015
 GameObject:
   m_ObjectHideFlags: 0

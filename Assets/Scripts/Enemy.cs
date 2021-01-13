@@ -18,10 +18,9 @@ public class Enemy : FieldObject
     }
 
     /// <summary>
-    /// 실행한 Pattern 목록.
+    /// 실행중인 Pattern.
     /// </summary>
-    public List<PatternAction> Patterns;
-
+    public Pattern MainPattern;
 
     void Awake()
     {
