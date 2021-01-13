@@ -99,7 +99,7 @@ MonoBehaviour:
   speed: 0
   posX: 0
   posY: 0
-  notRotate: 1
+  hasDirection: 1
   isAutoRotate: 0
   autoRotateSpeed: 0
   _spriteRenderer: {fileID: 0}

@@ -29,10 +29,10 @@ public class Bullet : FieldObject
     [HideInInspector] public float posX;
     [HideInInspector] public float posY;
 
-    // 회전시키지 않아도 된다면 true
-    [SerializeField] private bool notRotate = true;
-    [ShowIf(nameof(notRotate), false)] public bool isAutoRotate;
-    [ShowIf(nameof(isAutoRotate), true)] public float autoRotateSpeed;
+    [InfoBox("true일 경우 투사체가 진행 방향을 바라봅니다. 완전한 원형 투사체 등 회전시키지 않아도 된다면 false입니다."), 
+        SerializeField] private bool hasDirection = true;
+    [ShowIf(nameof(hasDirection))] public bool isAutoRotate;
+    [ShowIf(nameof(isAutoRotate))] public float autoRotateSpeed;
     
     [SerializeField] private SpriteRenderer _spriteRenderer;
     public SpriteRenderer SpriteRenderer
@@ -53,6 +53,17 @@ public class Bullet : FieldObject
 	private void OnEnable()
 	{
         invisibleTime = 0f;
+
+        if (!hasDirection)
+		{
+            isAutoRotate = false;
+            //float angle = Utility.LookDirToAngle(new Vector3(Mathf.Cos(directionAngle), Mathf.Sin(directionAngle), transform.position.z));
+            //transform.eulerAngles = new Vector3(0f, 0f, DirectionDegree);
+        }
+		else
+		{
+            //isAutoRotate = false;
+        }
     }
 	void Update()
     {
@@ -61,14 +72,13 @@ public class Bullet : FieldObject
 
         Vector3 nextPos = new Vector3(posX, posY, transform.position.z);
 
-        if (!notRotate && transform.position != nextPos)
-		{
-            float angle = Utility.LookDirToAngle(nextPos - transform.position);
-            transform.eulerAngles = new Vector3(0f, 0f, DirectionDegree);
-        }
-        else if (isAutoRotate)
+        if (isAutoRotate)
         {
             transform.eulerAngles += new Vector3(0f, 0f, autoRotateSpeed * Time.deltaTime);
+        }
+        else if (hasDirection && transform.position != nextPos)
+		{
+            transform.eulerAngles = new Vector3(0f, 0f, DirectionDegree);
         }
 
         transform.position = nextPos;

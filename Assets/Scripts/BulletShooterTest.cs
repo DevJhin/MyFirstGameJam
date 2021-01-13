@@ -13,7 +13,9 @@ public class BulletShooterTest : FieldObject
 	enum BulletType
 	{
 		Circle,
-		Ammo
+		Ammo,
+		Carrot,
+		BigCarrot
 	}
 	[SerializeField] BulletType prefabName = BulletType.Circle;
 
@@ -21,6 +23,7 @@ public class BulletShooterTest : FieldObject
 	[ColorPalette] public Color color = Color.white;
 
 	[Range(0f, 50f)] public float bulletSpeed = 10f;
+	[Range(0f, 180f)] public float rotation = 0f;
 
 	[BoxGroup("Multi Bullet Test"), Range(1, 10)] public int spawnCount = 1;
 	[BoxGroup("Multi Bullet Test"), Range(0f, 180f)] public float spreadAngle = 0f;
@@ -41,7 +44,7 @@ public class BulletShooterTest : FieldObject
 		{
 			yield return new WaitForSeconds(intervalTime);
 
-			BulletHelper.SpawnBullet(System.Enum.GetName(typeof(BulletType), prefabName), shootPoint, shootPoint.eulerAngles.z, bulletSpeed, color, spawnCount, spreadAngle, spacing);
+			BulletHelper.SpawnBullet(System.Enum.GetName(typeof(BulletType), prefabName), shootPoint, shootPoint.rotation.eulerAngles.z + rotation, bulletSpeed, color, spawnCount, spreadAngle, spacing);
 		}
 	}
 }

@@ -74,7 +74,7 @@ public class PoolManager
 
 		public Poolable SetActive(Transform parent)
 		{
-			Poolable poolable = (_poolStack.Count > 0) ?
+			Poolable poolable = (_poolStack.Count > 0 && _poolStack.Peek() != null) ?
 				_poolStack.Pop() : Create();
 
 			poolable.gameObject.SetActive(true);

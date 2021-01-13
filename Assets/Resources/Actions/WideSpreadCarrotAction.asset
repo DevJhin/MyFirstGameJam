@@ -15,6 +15,7 @@ MonoBehaviour:
   BulletPrefabName: Carrot
   color: {r: 1, g: 0.49107963, b: 0.0141509175, a: 1}
   bulletSpeed: 9
+  bulletRotation: 0
   spawnCount: 6
   spreadAngle: 60
   spacing: 0.41
