@@ -51,6 +51,11 @@ public class Stage : IDisposable
 
                 CameraManager.Instance.FollowTarget = player.transform;
             }
+            else
+            {
+                var fieldObjectResource = Resources.Load(data.FieldObjectName);
+                var spawnedFieldObject = GameObject.Instantiate(fieldObjectResource, data.transform.position, data.transform.rotation) as GameObject;
+            }
         }
     }
 

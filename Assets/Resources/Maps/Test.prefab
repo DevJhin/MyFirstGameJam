@@ -1834,6 +1834,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2002064333778740387}
+  - {fileID: 1610323391478598633}
   - {fileID: 8822739278828235993}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -1852,7 +1853,52 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnDatas:
   - {fileID: 4721851259230665482}
+  - {fileID: 7496429269668704252}
   Ground: {fileID: 0}
+--- !u!1 &5854804799406405425
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1610323391478598633}
+  - component: {fileID: 7496429269668704252}
+  m_Layer: 0
+  m_Name: EnemySpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1610323391478598633
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5854804799406405425}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -7.54, y: 5.1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6650013497901443344}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7496429269668704252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5854804799406405425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db4b543a3f0fd4dd28142dc3948acd82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FieldObjectName: Rabbit
 --- !u!1 &5962040162001659870
 GameObject:
   m_ObjectHideFlags: 0
@@ -12185,7 +12231,7 @@ Transform:
   - {fileID: 984699268385735515}
   - {fileID: 2616327675667162319}
   m_Father: {fileID: 6650013497901443344}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!156049354 &5741351662618419406
 Grid:
