@@ -21,9 +21,11 @@ public class PlayerBehavior : FieldObjectBehaviour{
     }
 
     public void OnPlayerUpdate() {
+    
         if (player.Controller.TryGetMoveInput(out float value)) {
             Move(value);
         }
+        
         UpdatePhysics();
     }
 
@@ -87,9 +89,11 @@ public class PlayerBehavior : FieldObjectBehaviour{
         isMomentumXReset = false;
     }
 
-    //Attack
+    /// <summary>
+    /// Player의 Attack BattleAction을 실행합니다.
+    /// </summary>
     public void Attack() {
-        Debug.Log("Attack");
+        player.AttackBattleAction.Execute(player);
     }
 
     //Ground Check

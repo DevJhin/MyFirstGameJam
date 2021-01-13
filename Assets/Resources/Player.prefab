@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5248455725210223209}
   - component: {fileID: 5248455725210223215}
   - component: {fileID: 5248455725210223214}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -120,7 +120,7 @@ GameObject:
   - component: {fileID: 5248455726152613224}
   - component: {fileID: 5248455726152613227}
   - component: {fileID: 5248455726152613225}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -187,3 +187,4 @@ MonoBehaviour:
   jumpCheckTimer: 0.1
   raycastLength: 0.6
   raycastGap: {x: 0.39, y: 0, z: 0}
+  BattleAction: {fileID: 11400000, guid: 6df7b3ba7a02e964f928350659ae4900, type: 2}

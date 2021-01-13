@@ -15,7 +15,7 @@ public class Pattern : ScriptableObject
     /// </summary>
     [System.Serializable]
     public struct PatternActionSchedule
-    {
+    { 
         /// <summary>
         /// 실행할 액션.
         /// </summary>
