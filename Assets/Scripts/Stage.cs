@@ -38,10 +38,10 @@ public class Stage : IDisposable
     /// <summary>
     /// 스테이지가 로드 되었을 때
     /// </summary>
-    void OnStageLoaded()
+    void OnStageLoaded(IEvent e)
     {
         Debug.Log("Stage Loaded");
-        
+
         foreach(var data in LoadedMap.spawnDatas)
         {
             if (data.FieldObjectName == "Player")
@@ -62,7 +62,7 @@ public class Stage : IDisposable
     /// <summary>
     /// 스테이지가 해제되었을 때
     /// </summary>
-    void OnStageUnloaded()
+    void OnStageUnloaded(IEvent e)
     {
         Debug.Log("Stage Unloaded");
     }

@@ -64,8 +64,10 @@ public class Game : MonoBehaviour
             var loadedMap = Resources.Load("Maps/" + stageName) as GameObject;
             currentStage = new Stage(stageName, Instantiate(loadedMap).GetComponent<StageData>());
 
+            var stageLoadEvent = new OnStageLoadEvent();
+
             // 맵이 다 로드되면 이벤트 재생
-            MessageSystem.Instance.Publish(typeof(OnStageLoadEvent));
+            MessageSystem.Instance.Publish(stageLoadEvent);
         }
         catch (System.Exception e)
         {
@@ -78,7 +80,8 @@ public class Game : MonoBehaviour
     {
         if (currentStage != null)
         {
-            MessageSystem.Instance.PublishImmediate(typeof(OnStageUnloadEvent));
+            var stageUnloadEvent = new OnStageUnloadEvent();
+            MessageSystem.Instance.PublishImmediate(stageUnloadEvent);
         }
     }
 }

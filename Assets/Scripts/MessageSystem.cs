@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public delegate void SubscribedCallback();
+public delegate void SubscribedCallback(IEvent e);
 
 public class MessageSystem : MonoBehaviour
 {
@@ -18,7 +18,7 @@ public class MessageSystem : MonoBehaviour
     /// <summary>
     /// 이번 프레임에서 이벤트 발동할 것들
     /// </summary>
-    private List<Type> publishedOnThisFrame;
+    private List<IEvent> publishedOnThisFrame;
 
     /// <summary>
     /// 이벤트 추가 요청 관리
@@ -44,7 +44,7 @@ public class MessageSystem : MonoBehaviour
 
         callbackDict = new Dictionary<Type, List<SubscribedCallback>>();
 
-        publishedOnThisFrame = new List<Type>();
+        publishedOnThisFrame = new List<IEvent>();
 
         subscribeRequestQueue = new Queue<KeyValuePair<Type, SubscribedCallback>>();
         unsubscribeRequestQueue = new Queue<KeyValuePair<Type, SubscribedCallback>>();
@@ -97,11 +97,11 @@ public class MessageSystem : MonoBehaviour
 
         for (int i = 0; i < publishedOnThisFrame.Count; ++i)
         {
-            if (callbackDict.TryGetValue(publishedOnThisFrame[i], out var callbacks))
+            if (callbackDict.TryGetValue(publishedOnThisFrame[i].GetType(), out var callbacks))
             {
                 foreach (var callback in callbacks)
                 {
-                    callback.Invoke();
+                    callback.Invoke(publishedOnThisFrame[i]);
                 }
             }
         }
@@ -122,7 +122,7 @@ public class MessageSystem : MonoBehaviour
     /// <summary>
     /// 구독한 전체 대상에게 이벤트를 발생시키는 것
     /// </summary>
-    public void Publish(Type e)
+    public void Publish(IEvent e)
     {
         publishedOnThisFrame.Add(e);
     }
@@ -130,13 +130,13 @@ public class MessageSystem : MonoBehaviour
     /// <summary>
     /// 구독한 전체 대상에게 바로 이벤트 발생
     /// </summary>
-    public void PublishImmediate(Type e)
+    public void PublishImmediate(IEvent e)
     {
-        if (callbackDict.TryGetValue(e, out var callbacks))
+        if (callbackDict.TryGetValue(e.GetType(), out var callbacks))
         {
             foreach (var callback in callbacks)
             {
-                callback.Invoke();
+                callback.Invoke(e);
             }
         }
     }
