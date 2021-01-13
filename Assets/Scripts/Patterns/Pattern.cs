@@ -5,42 +5,42 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 
 /// <summary>
-/// Patternº°·Î ½ÇÇàµÇ´Â ActionµéÀ» °ü¸®ÇÏ´Â Å¬·¡½º.
+/// Patternë³„ë¡œ ì‹¤í–‰ë˜ëŠ” Actionë“¤ì„ ê´€ë¦¬í•˜ëŠ” í´ë˜ìŠ¤.
 /// </summary>
 [CreateAssetMenu(menuName = "MyFirstGameJam/Pattern")]
 public class Pattern : ScriptableObject
 {
     /// <summary>
-    /// Pattern¿¡¼­ °ü¸®ÇÏ´Â °¢ ActionÀÇ Schedule Á¤º¸ ±¸Á¶Ã¼.
+    /// Patternì—ì„œ ê´€ë¦¬í•˜ëŠ” ê° Actionì˜ Schedule ì •ë³´ êµ¬ì¡°ì²´.
     /// </summary>
     [System.Serializable]
     public struct PatternActionSchedule
     { 
         /// <summary>
-        /// ½ÇÇàÇÒ ¾×¼Ç.
+        /// ì‹¤í–‰í•  ì•¡ì…˜.
         /// </summary>
         public PatternAction Action;
 
         /// <summary>
-        /// ¾×¼Ç ½ÇÇà Àü Áö¿¬ ½Ã°£.
+        /// ì•¡ì…˜ ì‹¤í–‰ ì „ ì§€ì—° ì‹œê°„.
         /// </summary>
         [HorizontalGroup("Delay"), LabelText("Pre"), LabelWidth(25)] [MinValue(0)]
         public float PreDelay;
 
         /// <summary>
-        /// ¾×¼Ç ½ÇÇà ÈÄ Áö¿¬ ½Ã°£.
+        /// ì•¡ì…˜ ì‹¤í–‰ í›„ ì§€ì—° ì‹œê°„.
         /// </summary>
         [HorizontalGroup("Delay"), LabelText("Post"), LabelWidth(25)] [MinValue(0)] 
         public float PostDelay;
 
         /// <summary>
-        /// ¾×¼Ç ¹İº¹ ½ÇÇà È½¼ö.
+        /// ì•¡ì…˜ ë°˜ë³µ ì‹¤í–‰ íšŸìˆ˜.
         /// </summary>
         [HorizontalGroup("Repeat"), LabelText("Count"), LabelWidth(40)] [MinValue(1)] 
         public int RepeatCount;
 
         /// <summary>
-        /// ¾×¼Ç ¹İº¹ ½ÇÇà °£°İ.
+        /// ì•¡ì…˜ ë°˜ë³µ ì‹¤í–‰ ê°„ê²©.
         /// </summary>
         [DisableIf("@this.RepeatCount < 2")][HorizontalGroup("Repeat"), LabelText("Interval"), LabelWidth(60)] 
         public float RepeatInterval;
@@ -48,7 +48,7 @@ public class Pattern : ScriptableObject
     }
 
     /// <summary>
-    /// ½ÇÇàÇÒ ActionµéÀÇ ScheudleÁ¤º¸ ¸ñ·Ï.
+    /// ì‹¤í–‰í•  Actionë“¤ì˜ Scheudleì •ë³´ ëª©ë¡.
     /// </summary>
     [TableList]
     public List<PatternActionSchedule> ActionSchedules;
