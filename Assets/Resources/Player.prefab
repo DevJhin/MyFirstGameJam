@@ -187,4 +187,4 @@ MonoBehaviour:
   jumpCheckTimer: 0.1
   raycastLength: 0.6
   raycastGap: {x: 0.39, y: 0, z: 0}
-  BattleAction: {fileID: 11400000, guid: 6df7b3ba7a02e964f928350659ae4900, type: 2}
+  AttackBattleAction: {fileID: 11400000, guid: 6df7b3ba7a02e964f928350659ae4900, type: 2}

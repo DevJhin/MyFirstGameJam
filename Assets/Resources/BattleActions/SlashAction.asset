@@ -10,12 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dcccce3c07d8d0a42ac902d903bd643c, type: 3}
-  m_Name: New SlashBattleAction
+  m_Name: SlashAction
   m_EditorClassIdentifier: 
-  Distance: 0
   Radius: 1.5
   Angle: 51.31
+  CircleCastDistance: 0
   CollideLayerMask:
     serializedVersion: 2
-    m_Bits: 119
-  DebugColor: {r: 1, g: 0, b: 0, a: 0.3}
+    m_Bits: 375
