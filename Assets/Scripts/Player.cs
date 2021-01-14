@@ -18,6 +18,7 @@ public class Player : FieldObject
     [Header("REFERENCES")]
     public LayerMask groundLayerMask;
     public Rigidbody2D rb;
+    public BoxCollider2D col;
 
     [Header("MOVEMENT")]
     public float moveSpeed;
@@ -25,10 +26,9 @@ public class Player : FieldObject
     public float jumpPower;
     public float gravityScale;
     public float fallMultiplier;
+    public float lowJumpFallMultiplier;
     public float jumpCheckTimer;
     public float raycastLength;
-    public Vector3 raycastGap;
-
 
     /// <summary>
     /// Attack 커맨드 입력시, 실행할 BattleAction.

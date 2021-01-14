@@ -8,6 +8,8 @@ using UnityEngine;
 public class PlayerBehavior : FieldObjectBehaviour{
 
     Player player;
+    private Vector3 groundRaycastGap;
+    private Vector3 sideRaycastGap;
     private float airDragMultiplier;
     private float airDrag;
     private float jumpTimer;
@@ -18,22 +20,22 @@ public class PlayerBehavior : FieldObjectBehaviour{
         this.player = player;
         Transform = player.transform;
         airDrag = 1 - player.airDrag;
+        player.rb.gravityScale = player.gravityScale;
+        groundRaycastGap = new Vector3(player.col.size.x / 2, 0, 0);
+        sideRaycastGap = new Vector3(0, player.col.size.y / 2, 0);
     }
 
     public void OnPlayerUpdate() {
-    
         if (player.Controller.TryGetMoveInput(out float value)) {
             Move(value);
         }
-        
         UpdatePhysics();
     }
 
     //Physics Manager
     private void UpdatePhysics() {
-        if (isGrounded()) {
-            //Reset Physics
-            player.rb.gravityScale = 0;
+        if (IsGrounded()) {
+            //Reset Multiplier
             airDragMultiplier = 1;
             //Jump Check
             if (jumpTimer > Time.time) {
@@ -41,15 +43,13 @@ public class PlayerBehavior : FieldObjectBehaviour{
             }
         }
         else {
-            //Mid-Air
-            player.rb.gravityScale = player.gravityScale;
             //Falling
             if (player.rb.velocity.y < 0) {
-                player.rb.gravityScale = player.gravityScale * player.fallMultiplier;
+                player.rb.velocity += Physics2D.gravity * (player.fallMultiplier - 1) * Time.deltaTime;
             }
-            //Holding Jump Button
-            else if (!player.Controller.IsJumpButtonOnRepeat) {
-                player.rb.gravityScale = player.gravityScale * player.fallMultiplier;
+            //Releasing Jump Button During Jump
+            else if (player.rb.velocity.y > 0 && !player.Controller.IsJumpButtonOnRepeat) {
+                player.rb.velocity += Physics2D.gravity * (player.lowJumpFallMultiplier - 1) * Time.deltaTime;
             }
             //Air Drag Check
             if (!player.Controller.IsMoveButtonOnRepeat && !isMomentumXReset) {
@@ -64,8 +64,9 @@ public class PlayerBehavior : FieldObjectBehaviour{
 
     //Movement
     public void Move(float value) {
-        Transform.position += new Vector3(value, 0, 0) * player.moveSpeed * airDragMultiplier * Time.deltaTime;
-        Debug.Log("Moving");
+        if (!IsSideCollided()) {
+            Transform.position += new Vector3(value, 0, 0) * player.moveSpeed * airDragMultiplier * Time.deltaTime;
+        }
         if ((value < 0 && !facingLeft) || (value > 0 && facingLeft)) {
             Flip();
         }
@@ -97,8 +98,14 @@ public class PlayerBehavior : FieldObjectBehaviour{
     }
 
     //Ground Check
-    private bool isGrounded() {
-        bool hit = Physics2D.Raycast(Transform.position + player.raycastGap, Vector2.down, player.raycastLength, player.groundLayerMask) || Physics2D.Raycast(Transform.position - player.raycastGap, Vector2.down, player.raycastLength, player.groundLayerMask);
+    private bool IsGrounded() {
+        bool hit = Physics2D.Raycast(Transform.position + groundRaycastGap, Vector2.down, player.raycastLength, player.groundLayerMask) || Physics2D.Raycast(Transform.position - groundRaycastGap, Vector2.down, player.raycastLength, player.groundLayerMask);
+        return hit;
+    }
+
+    //Side Check
+    private bool IsSideCollided() {
+        bool hit = Physics2D.Raycast(Transform.position + sideRaycastGap, Transform.right, player.raycastLength, player.groundLayerMask) || Physics2D.Raycast(Transform.position - sideRaycastGap, Transform.right, player.raycastLength, player.groundLayerMask);
         return hit;
     }
 }
