@@ -184,7 +184,7 @@ MonoBehaviour:
   airDrag: 0
   jumpPower: 17
   gravityScale: 5
-  fallMultiplier: 5
+  fallMultiplier: 3
   lowJumpFallMultiplier: 4
   jumpCheckTimer: 0.15
   raycastLength: 0.52
