@@ -44,7 +44,7 @@ public class BulletShooterTest : FieldObject
 		{
 			yield return new WaitForSeconds(intervalTime);
 
-			BulletHelper.SpawnBullet(System.Enum.GetName(typeof(BulletType), prefabName), shootPoint, shootPoint.rotation.eulerAngles.z + rotation, bulletSpeed, color, spawnCount, spreadAngle, spacing);
+			BulletHelper.SpawnBullet(System.Enum.GetName(typeof(BulletType), prefabName), shootPoint, null, shootPoint.rotation.eulerAngles.z + rotation, 1f, bulletSpeed, color, spawnCount, spreadAngle, spacing);
 		}
 	}
 }

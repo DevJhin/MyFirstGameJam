@@ -13,6 +13,7 @@ public class BulletShooterAction : PatternAction
 
 	[ColorPalette] public Color color = Color.white;
 
+	public float bulletDamage = 1f;
 	[Range(0f, 50f)] public float bulletSpeed = 10f;
 	[Range(-180f, 180f)] public float bulletRotation = 0f;
 
@@ -25,7 +26,7 @@ public class BulletShooterAction : PatternAction
 
 	public override void Execute(FieldObject actor)
 	{
-		BulletHelper.SpawnBullet(BulletPrefabName, actor.transform, actor.transform.eulerAngles.z + bulletRotation, bulletSpeed, color, spawnCount, spreadAngle, spacing);
+		BulletHelper.SpawnBullet(BulletPrefabName, actor.transform, actor, actor.transform.eulerAngles.z + bulletRotation, bulletDamage, bulletSpeed, color, spawnCount, spreadAngle, spacing);
 	}
 
 }
