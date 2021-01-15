@@ -39,6 +39,10 @@ public class SlashAction : BattleAction
         var hitInfos = Physics2D.CircleCastAll(point, Radius, forward, CircleCastDistance, CollideLayerMask.value);
 
         float halfAngle = Angle * 0.5f;
+
+        // 이번 공격으로 피격된 대상은 이곳에 저장됩니다. Execute 1회 실행에 1회 이상 피격당하지 않습니다.
+        List<IEventListener> attackedEntity = new List<IEventListener>();
+
         foreach (var hitInfo in hitInfos)
         {
             //범위 내에서 충돌이 발생한 Collider만 충돌로 판정해야 한다.
@@ -49,7 +53,18 @@ public class SlashAction : BattleAction
             if (withinRange)
             {
                 //범위 내 Collider인 경우, 충돌 이벤트 처리.
-                //TODO: 충돌 이벤트 처리 작업 추가할 것.
+                // 콜라이더 자신 또는 부모 오브젝트에 IEventListener가 존재할 경우 이벤트를 발생시킵니다.
+                IEventListener entity = hitInfo.collider.GetComponent<IEventListener>();
+                if(entity == null)
+                    entity = hitInfo.collider.GetComponentInParent<IEventListener>();
+
+                if (entity != null && !attackedEntity.Contains(entity))
+				{
+                    DamageMessage msg = new DamageMessage(actor, 10, hitInfo.point);
+                    MessageSystem.Instance.Send(msg, entity);
+                    attackedEntity.Add(entity);
+                }
+
                 GLDebug.DrawLine(point, hitInfo.point, Color.red, time: 1f);
             }
             else

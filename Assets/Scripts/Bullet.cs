@@ -23,9 +23,6 @@ public class Bullet : FieldObject
         set => directionAngle = value * Mathf.Deg2Rad;
 	}
 
-    // TODO : 타겟 레이어 설정 및 유효한 타겟에 충돌 시 처리
-    LayerMask target;
-
     [HideInInspector] public float posX;
     [HideInInspector] public float posY;
 
@@ -46,27 +43,45 @@ public class Bullet : FieldObject
         }
 	}
     
-    // 화면 밖으로 나가고 일정 시간이 지나면 파괴됩니다.
+    // 화면 밖으로 나가고 해당 시간이 경과하면 파괴됩니다. 생성 시 또는 카메라 범위 내에 있을 경우 초기화됩니다.
     float timeToDisable = 0.5f;
-    float invisibleTime;
+    float invisibleTime = 0f;
 
 	private void OnEnable()
 	{
         invisibleTime = 0f;
 
         if (!hasDirection)
-		{
             isAutoRotate = false;
-            //float angle = Utility.LookDirToAngle(new Vector3(Mathf.Cos(directionAngle), Mathf.Sin(directionAngle), transform.position.z));
-            //transform.eulerAngles = new Vector3(0f, 0f, DirectionDegree);
-        }
-		else
-		{
-            //isAutoRotate = false;
-        }
     }
 	void Update()
     {
+        Move();
+
+        // 오브젝트가 카메라 렌더링 대상에서 벗어난 지 일정 시간이 경과하면 비활성화됩니다.
+        if (!SpriteRenderer.isVisible)
+        {
+            invisibleTime += Time.deltaTime;
+            if (invisibleTime > timeToDisable)
+            {
+                ResourcesHelper.Destroy(gameObject);
+            }
+        }
+		else if (invisibleTime > 0f)
+		{
+            invisibleTime = 0f;
+        }
+    }
+
+    /// <summary>
+    /// 투사체 이동 로직으로 매 프레임 호출됩니다.
+    /// hasDirection == true일 경우 투사체의 X축이 이동 방향을 바라보게 됩니다.
+    /// </summary>
+	private void Move()
+	{
+        if (speed == 0f || !gameObject.activeSelf)
+            return;
+
         posX += Mathf.Cos(directionAngle) * speed * Time.deltaTime;
         posY += Mathf.Sin(directionAngle) * speed * Time.deltaTime;
 
@@ -77,20 +92,11 @@ public class Bullet : FieldObject
             transform.eulerAngles += new Vector3(0f, 0f, autoRotateSpeed * Time.deltaTime);
         }
         else if (hasDirection && transform.position != nextPos)
-		{
+        {
             transform.eulerAngles = new Vector3(0f, 0f, DirectionDegree);
         }
 
         transform.position = nextPos;
-		
-        if (!SpriteRenderer.isVisible)
-        {
-            invisibleTime += Time.deltaTime;
-            if (invisibleTime > timeToDisable)
-            {
-                ResourcesHelper.Destroy(gameObject);
-            }
-        }
     }
 
 }
