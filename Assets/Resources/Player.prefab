@@ -150,14 +150,14 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5248455726152613221}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -181,14 +181,12 @@ MonoBehaviour:
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 64
-  rb: {fileID: 5248455726152613227}
   col: {fileID: 5248455725210223214}
-  moveSpeed: 8
+  moveSpeed: 6
   airDrag: 0
-  jumpPower: 17
-  gravityScale: 5
-  fallMultiplier: 3
-  lowJumpFallMultiplier: 4
+  jumpPower: 10
+  fallMultiplier: 2
+  lowJumpFallMultiplier: 3
   jumpCheckTimer: 0.15
-  raycastLength: 0.05
+  raycastLength: 0.03
   AttackBattleAction: {fileID: 11400000, guid: 6df7b3ba7a02e964f928350659ae4900, type: 2}

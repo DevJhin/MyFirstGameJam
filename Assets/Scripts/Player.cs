@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Sirenix.OdinInspector;
 
 public class Player : FieldObject, IEventListener
 {
@@ -17,22 +16,18 @@ public class Player : FieldObject, IEventListener
 
     [Header("REFERENCES")]
     public LayerMask groundLayerMask;
-    public Rigidbody2D rb;
+    //public Rigidbody2D rb;
     public BoxCollider2D col;
 
     [Header("MOVEMENT")]
     public float moveSpeed;
     public float airDrag;
     public float jumpPower;
-    public float gravityScale;
+    //public float gravityScale;
     public float fallMultiplier;
     public float lowJumpFallMultiplier;
     public float jumpCheckTimer;
     public float raycastLength;
-
-    // Temp: 현재 땅에 붙어있는지 디버깅용
-    [Button("Debug: Is Grounded?")]
-    private bool IsGrounded() => Behavior.IsGroundedDebug;
 
     /// <summary>
     /// Attack 커맨드 입력시, 실행할 BattleAction.

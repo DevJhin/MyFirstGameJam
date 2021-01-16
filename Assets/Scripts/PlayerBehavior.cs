@@ -8,9 +8,7 @@ using UnityEngine;
 public class PlayerBehavior : FieldObjectBehaviour{
 
     Player player;
-    //private Vector3 groundRaycastGap;
-    //private Vector3 sideRaycastGap; // 아래 colliderExtends로 대체
-    private Vector2 colliderExtents; // 콜라이더 박스의 크기 (x,y 각각 콜라이더 size의 절반)
+    private Vector2 colliderExtents;
     private float airDragMultiplier;
     private float airDrag;
     private float jumpTimer;
@@ -18,18 +16,17 @@ public class PlayerBehavior : FieldObjectBehaviour{
     private bool isMomentumXReset;
 
     // temp
+    private Vector3 prevPos;
     private Vector3 currentVelocity;
-
-    public bool IsGroundedDebug => IsGrounded();
+    private RaycastHit2D lastGroundPoint;
+    private bool IsFalling => (prevPos.y > Transform.position.y);
 
     public PlayerBehavior(Player player) { 
         this.player = player;
         Transform = player.transform;
         airDrag = 1 - player.airDrag;
-        player.rb.gravityScale = player.gravityScale;
         colliderExtents = player.col.bounds.extents;
-        //groundRaycastGap = new Vector3(player.col.size.x / 2, 0, 0);
-        //sideRaycastGap = new Vector3(0, player.col.size.y / 2, 0);
+        prevPos = Transform.position;
     }
 
     public void OnPlayerUpdate() 
@@ -44,42 +41,61 @@ public class PlayerBehavior : FieldObjectBehaviour{
         }
         UpdatePhysics();
 
+        prevPos = Transform.position;
         Transform.position += currentVelocity * Time.deltaTime;
     }
 
     //Physics Manager
-    private void UpdatePhysics() {
-        if (IsGrounded()) 
+    private void UpdatePhysics() 
+    {
+        bool isGrounded = IsGrounded();
+
+        // 이전 프레임에서 높이가 변경되었는데 레이캐스트에 땅이 감지된 경우의 처리
+        if (isGrounded && prevPos.y != Transform.position.y) 
         {
+            // 낙하 중이고 내 위치보다 
+            if(IsFalling && lastGroundPoint.point.y < Transform.position.y)
+			{
+                Transform.position = new Vector2(Transform.position.x, lastGroundPoint.point.y + colliderExtents.y);
+            }
+			else
+			{
+                isGrounded = false;
+            }
+        }
+        if(isGrounded)
+		{
             //Reset Multiplier
             airDragMultiplier = 1;
             currentVelocity.y = 0f;
             //Jump Check
-            if (jumpTimer > Time.time) 
+            if (jumpTimer > Time.time)
             {
                 Jump();
             }
         }
-        else {
-            //Falling
-            if (player.rb.velocity.y <= 0) 
-            {
-                // TODO: 낙하속도 자연스럽게 조정 필요 (현재는 낙하속도가 시간에 따라 변화하지 않음)
-                currentVelocity.y += Physics2D.gravity.y * (player.fallMultiplier - 1) * Time.deltaTime;
-                //player.rb.velocity += Physics2D.gravity * (player.fallMultiplier - 1) * Time.deltaTime;
+        else
+        {
+            // Releasing Jump Button During Jump
+            float gravityScale = (!IsFalling && !player.Controller.IsJumpButtonOnRepeat) ? player.lowJumpFallMultiplier : player.fallMultiplier;
+
+            // TODO: 최대 낙하속도 정해서 Player에 추가하고 사용할 예정
+            if (currentVelocity.y < -player.jumpPower)
+			{
+                gravityScale /= 3f;
             }
-            //Releasing Jump Button During Jump
-            else if (player.rb.velocity.y > 0 && !player.Controller.IsJumpButtonOnRepeat) 
-            {
-                currentVelocity.y += Physics2D.gravity.y * (player.lowJumpFallMultiplier - 1) * Time.deltaTime;
-                //player.rb.velocity += Physics2D.gravity * (player.lowJumpFallMultiplier - 1) * Time.deltaTime;
-            }
+
+            currentVelocity.y += Physics2D.gravity.y * gravityScale * Mathf.Min(0.05f, Time.deltaTime);
+            
+
             //Air Drag Check
-            if (!player.Controller.IsMoveButtonOnRepeat && !isMomentumXReset) {
+            if (!player.Controller.IsMoveButtonOnRepeat && !isMomentumXReset) 
+            {
                 isMomentumXReset = true;
             }
             //Air Drag
-            if (isMomentumXReset) {
+            if (isMomentumXReset) 
+            {
                 airDragMultiplier = airDrag;
             }
         }
@@ -104,16 +120,16 @@ public class PlayerBehavior : FieldObjectBehaviour{
     }
 
     //Jump
-    public void CheckJump() {
+    public void CheckJump() 
+    {
         jumpTimer = Time.time + player.jumpCheckTimer;
     }
 
-    // TODO: Rigidbody 조작 없이 점프 구현할 것
-    private void Jump() {
-        player.rb.velocity = Vector2.zero;
-        //currentVelocity.y = player.jumpPower;
-        Vector2 force = Vector2.up * player.jumpPower;
-        player.rb.AddForce(force, ForceMode2D.Impulse);
+    // TODO: 점프 중 천장에 부딪히게 해야 할까? (아니면 메이플 점프처럼 위쪽 지형을 통과하게 할까?)
+    // 부딪히게 해야 한다면 콜라이더 위쪽 체크하여 부딪히는 로직 추가, 아니라면 착지 전까지는 IsSideCollided() 에 걸리더라도 좌우 조작 가능하게 하기
+    private void Jump() 
+    {
+        currentVelocity.y = player.jumpPower;
         jumpTimer = 0;
         isMomentumXReset = false;
     }
@@ -121,30 +137,54 @@ public class PlayerBehavior : FieldObjectBehaviour{
     /// <summary>
     /// Player의 Attack BattleAction을 실행합니다.
     /// </summary>
-    public void Attack() {
+    public void Attack() 
+    {
         player.AttackBattleAction.Execute(player);
     }
 
     //Ground Check
-    private bool IsGrounded() {
-        //Debug.DrawRay(Transform.position + groundRaycastGap, Vector2.down * player.raycastLength, Color.red, 3f);
+    private bool IsGrounded() 
+    {
         Debug.DrawRay(Transform.position, Vector2.down * (colliderExtents.y + player.raycastLength), Color.yellow, 3f);
-        Debug.DrawRay(Transform.position + (Transform.right / 2), Vector2.down * (colliderExtents.y + player.raycastLength), Color.red, 3f);
-        Debug.DrawRay(Transform.position - (Transform.right / 2), Vector2.down * (colliderExtents.y + player.raycastLength), Color.red, 3f);
+        Debug.DrawRay(Transform.position + (Transform.right / 3), Vector2.down * (colliderExtents.y + player.raycastLength), Color.red, 3f);
+        Debug.DrawRay(Transform.position - (Transform.right / 3), Vector2.down * (colliderExtents.y + player.raycastLength), Color.red, 3f);
 
-        // TODO: 끝부분만 약간 땅에 닿는 경우는 낙하하도록 변경
-        bool hit = Physics2D.BoxCast(player.col.bounds.center, player.col.size, 0f, Vector2.down, player.raycastLength, player.groundLayerMask);
-        return hit;
+        // Temp: 콜라이더 외곽 부분의 자연스러운 처리를 위해 캐릭터의 가로 1/6, 3/6, 5/6 지점에서만 아래쪽 지형을 체크합니다.
+        Vector3 delta = -(Transform.right / 3);
+        for (int i = 0; i < 3; i++)
+		{
+            RaycastHit2D hit = Physics2D.Raycast(Transform.position + delta, Vector2.down, colliderExtents.y + player.raycastLength, player.groundLayerMask);
+            if (hit)
+			{
+                lastGroundPoint = hit;
+                return true;
+			}
+            delta += (Transform.right / 3);
+        }
+
+        //Physics2D.BoxCast(player.col.bounds.center, player.col.size, 0f, Vector2.down, player.raycastLength, player.groundLayerMask);
+        return false;
     }
 
     //Side Check
-    private bool IsSideCollided() {
-        //Debug.DrawRay(Transform.position + sideRaycastGap, Transform.right * player.raycastLength, Color.red, 3f);
-        //Debug.DrawRay(Transform.position - sideRaycastGap, Transform.right * player.raycastLength, Color.red, 3f);
+    private bool IsSideCollided() 
+    {
         Debug.DrawRay(Transform.position + (Vector3.up * (colliderExtents.y / 2)), Transform.right * (colliderExtents.x + player.raycastLength), Color.green, 3f);
+        Debug.DrawRay(Transform.position, Transform.right * (colliderExtents.x + player.raycastLength), Color.cyan, 3f);
         Debug.DrawRay(Transform.position + (Vector3.down * (colliderExtents.y /2)), Transform.right * (colliderExtents.x + player.raycastLength), Color.green, 3f);
 
-        bool hit = Physics2D.BoxCast(player.col.bounds.center, player.col.size, 0f, Transform.right, player.raycastLength, player.groundLayerMask);
-        return hit;
+        // Temp: 콜라이더 외곽 부분의 자연스러운 처리를 위해 캐릭터의 세로 1/4, 2/4, 3/4 지점에서만 아래쪽 지형을 체크합니다.
+        Vector3 delta = Vector3.down * (colliderExtents.y / 2);
+        for (int i = 0; i < 3; i++)
+        {
+            if (Physics2D.Raycast(Transform.position + delta, Transform.right, colliderExtents.y + player.raycastLength, player.groundLayerMask))
+            {
+                return true;
+            }
+            delta += (Vector3.up * (colliderExtents.y / 2));
+        }
+
+        //bool hit = Physics2D.BoxCast(player.col.bounds.center, player.col.size, 0f, Transform.right, player.raycastLength, player.groundLayerMask);
+        return false;
     }
 }
