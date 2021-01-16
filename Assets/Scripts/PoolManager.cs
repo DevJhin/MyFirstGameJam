@@ -66,6 +66,7 @@ public class Pool
         for (int i = 0; i < poolCount; i++)
         {
             var inst = Create();
+            inst.gameObject.SetActive(false);
         }
     }
 
