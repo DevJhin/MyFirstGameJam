@@ -190,5 +190,5 @@ MonoBehaviour:
   fallMultiplier: 3
   lowJumpFallMultiplier: 4
   jumpCheckTimer: 0.15
-  raycastLength: 0.52
+  raycastLength: 0.05
   AttackBattleAction: {fileID: 11400000, guid: 6df7b3ba7a02e964f928350659ae4900, type: 2}

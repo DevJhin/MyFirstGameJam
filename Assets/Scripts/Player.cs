@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Sirenix.OdinInspector;
 
 public class Player : FieldObject, IEventListener
 {
@@ -29,6 +29,10 @@ public class Player : FieldObject, IEventListener
     public float lowJumpFallMultiplier;
     public float jumpCheckTimer;
     public float raycastLength;
+
+    // Temp: 현재 땅에 붙어있는지 디버깅용
+    [Button("Debug: Is Grounded?")]
+    private bool IsGrounded() => Behavior.IsGroundedDebug;
 
     /// <summary>
     /// Attack 커맨드 입력시, 실행할 BattleAction.

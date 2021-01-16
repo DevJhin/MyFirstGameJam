@@ -18,7 +18,7 @@ public class Game : MonoBehaviour
     /// <summary>
     /// 바로 호출할 맵 이름
     /// </summary>
-    public string LoadMapName = "test";
+    public string LoadMapName = "Test";
 
     /// <summary>
     /// 현재 실행 중인 스테이지
