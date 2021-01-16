@@ -6,16 +6,13 @@ using UnityEngine;
 /// </summary>
 public class DamageEvent : IEvent
 {
-	public FieldObject attacker;
-	public Vector2 hitPoint;
-	public float damage;
-    public DamageEvent() { }
-    public DamageEvent(FieldObject attacker, float damage, Vector2 hitPoint)
-	{
-        this.attacker = attacker;
-        this.damage = damage;
-        this.hitPoint = hitPoint;
-	}
+	/// <summary>
+	/// 데미지 관련 정보들
+	/// </summary>
+	public DamageInfo damageInfo;
 
-
+    public DamageEvent(DamageInfo info)
+    {
+	    damageInfo = info;
+    }
 }

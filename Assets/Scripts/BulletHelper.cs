@@ -40,6 +40,7 @@ public static class BulletHelper
 		// FIXME 총알 이런 식으로 만들어내면 안 됨.
 		return bullet.gameObject.GetOrAddComponent<Bullet>();
 	}
+	
 	/// <summary>
 	/// 투사체 하나를 생성하고 Bullet 컴포넌트의 위치, 회전, 속도, 색상값을 입력된 데이터를 통해 초기화합니다.
 	/// </summary>

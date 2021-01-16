@@ -54,15 +54,21 @@ public class SlashAction : BattleAction
             {
                 //범위 내 Collider인 경우, 충돌 이벤트 처리.
                 // 콜라이더 자신 또는 부모 오브젝트에 IEventListener가 존재할 경우 이벤트를 발생시킵니다.
-                IEventListener entity = hitInfo.collider.GetComponent<IEventListener>();
-                if(entity == null)
-                    entity = hitInfo.collider.GetComponentInParent<IEventListener>();
+                FieldObject target = hitInfo.collider.GetComponent<FieldObject>();
+                if(target == null)
+                    target = hitInfo.collider.GetComponentInParent<FieldObject>();
 
-                if (entity != null && !attackedEntity.Contains(entity))
-				{
-                    DamageEvent msg = new DamageEvent(actor, 10, hitInfo.point);
-                    MessageSystem.Instance.Send(msg, entity);
-                    attackedEntity.Add(entity);
+                // 적이면 데미지 가함
+                if (actor.EntityGroup.IsHostileTo(target.EntityGroup))
+                {
+                    var info = new DamageInfo
+                    {
+                        Sender = actor,
+                        Target = target,
+                        amount = 10
+                    };
+                    var cmd = DamageCommand.Create(info);
+                    cmd.Execute();
                 }
 
                 GLDebug.DrawLine(point, hitInfo.point, Color.red, time: 1f);

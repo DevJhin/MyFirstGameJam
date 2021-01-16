@@ -145,15 +145,23 @@ public class Bullet : FieldObject
     // TODO: 적인지 감지하는 로직은 추후 EntityGroupHelper.IsHostileTo(entity.EntityGroup, attacker.EntityGroup) 와 같이 수정할 것
     private void OnTriggerEnter2D(Collider2D other)
     {
-        FieldObject entity = other.gameObject.GetComponent<FieldObject>();
-        if (entity == null)
-            entity = other.gameObject.GetComponentInParent<FieldObject>();
-        
-        if (entity != null && entity != attacker)
+        FieldObject target = other.GetComponent<FieldObject>();
+        if (target == null)
+            target = other.GetComponentInParent<FieldObject>();
+
+        // 적이면 데미지 가함
+        if (attacker.EntityGroup.IsHostileTo(target.EntityGroup))
         {
-            DamageEvent msg = new DamageEvent(attacker, damage, transform.position);
-            MessageSystem.Instance.Send(msg, entity as IEventListener);
-            // FIXME 이런 식으로 해제하는건 옳지 않음.
+            var info = new DamageInfo
+            {
+                Sender = attacker,
+                Target = target,
+                amount = 10
+            };
+            var cmd = DamageCommand.Create(info);
+            cmd.Execute();
+
+            // FIXME 여기에 넣는게 맞을까?
             pool.Dispose(pooledObject);
         }
     }

@@ -50,8 +50,8 @@ public class Player : FieldObject, IEventListener
         Behavior.OnPlayerUpdate();
     }
 
-	public bool OnEvent(IEvent e)
-	{
+    public bool OnEvent(IEvent e)
+    {
         if (e is DamageEvent)
         {
             DamageEvent damageEvent = e as DamageEvent;
@@ -65,7 +65,6 @@ public class Player : FieldObject, IEventListener
     void OnDamaged(DamageEvent damageEvent)
     {
         // TODO: 데미지 받았을 때 처리 추가
-        Debug.Log($"[{gameObject.name}] {damageEvent.attacker.name}의 공격으로 {damageEvent.damage}의 피해를 입었습니다. (피격 지점: {damageEvent.hitPoint})");
+        CurrentHP -= damageEvent.damageInfo.amount;
     }
-
 }
