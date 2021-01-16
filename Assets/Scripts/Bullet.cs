@@ -13,7 +13,7 @@ public class Bullet : FieldObject
     /// <summary>
     /// 총을 쏜 주체를 입력합니다. 이 대상은 자신이 쏜 총알에 맞지 않습니다.
     /// </summary>
-    public IEventListener attacker;
+    public FieldObject attacker;
 
     public float speed;
     public float damage = 1f;
@@ -145,14 +145,14 @@ public class Bullet : FieldObject
     // TODO: 적인지 감지하는 로직은 추후 EntityGroupHelper.IsHostileTo(entity.EntityGroup, attacker.EntityGroup) 와 같이 수정할 것
     private void OnTriggerEnter2D(Collider2D other)
     {
-        IEventListener entity = other.gameObject.GetComponent<IEventListener>();
+        FieldObject entity = other.gameObject.GetComponent<FieldObject>();
         if (entity == null)
-            entity = other.gameObject.GetComponentInParent<IEventListener>();
-
+            entity = other.gameObject.GetComponentInParent<FieldObject>();
+        
         if (entity != null && entity != attacker)
         {
-            DamageEvent msg = new DamageEvent((FieldObject) attacker, damage, transform.position);
-            MessageSystem.Instance.Send(msg, entity);
+            DamageEvent msg = new DamageEvent(attacker, damage, transform.position);
+            MessageSystem.Instance.Send(msg, entity as IEventListener);
             // FIXME 이런 식으로 해제하는건 옳지 않음.
             pool.Dispose(pooledObject);
         }

@@ -8,7 +8,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "MyFirstGameJam/Data")]
 public class BulletData : ScriptableObject
 {
-	public IEventListener attacker = null;
+	public FieldObject attacker = null;
 	public string prefabName;
 	public Transform shootPoint;
 
@@ -117,7 +117,7 @@ public static class BulletHelper
 		BulletData data = ScriptableObject.CreateInstance<BulletData>();
 		data.prefabName = prefabName;
 		data.shootPoint = shootPoint;
-		data.attacker = (shooter is IEventListener) ? (IEventListener) shooter : null;
+		data.attacker = shooter;
 		data.direction = (direction != null) ? (float) direction : shootPoint.eulerAngles.z;
 		data.damage = damage;
 		data.speed = speed;

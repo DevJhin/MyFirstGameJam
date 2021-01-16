@@ -7,6 +7,7 @@ using UnityEngine;
 /// 데미지 판정 등을 줄 때 판단하는 팀 구분 그룹
 /// </summary>
 [Flags]
+[Serializable]
 public enum EntityGroup
 {
     None = 0,

@@ -398,6 +398,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f69aacdbbf760a846885e91d8b5f83b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CurrentHP: 0
+  MaxHP: 0
+  EntityGroup: 2
   MainPattern: {fileID: 11400000, guid: b05368d7182011d46beb4f38d40b6fbe, type: 2}
 --- !u!1 &6344303850186341015
 GameObject:

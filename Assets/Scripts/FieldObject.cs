@@ -7,5 +7,18 @@ using UnityEngine;
 /// </summary>
 public class FieldObject : MonoBehaviour
 {
-    
+    /// <summary>
+    /// 현재 체력
+    /// </summary>
+    public int CurrentHP;
+
+    /// <summary>
+    /// 최대 체력
+    /// </summary>
+    public int MaxHP;
+
+    /// <summary>
+    /// 아군, 적군 식별 용 그룹
+    /// </summary>
+    public EntityGroup EntityGroup;
 }
