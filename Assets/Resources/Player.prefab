@@ -184,9 +184,9 @@ MonoBehaviour:
   col: {fileID: 5248455725210223214}
   moveSpeed: 6
   airDrag: 0
-  jumpPower: 10
-  fallMultiplier: 2
-  lowJumpFallMultiplier: 3
+  jumpPower: 14
+  fallMultiplier: 3
+  lowJumpFallMultiplier: 8
   jumpCheckTimer: 0.15
   raycastLength: 0.03
   AttackBattleAction: {fileID: 11400000, guid: 6df7b3ba7a02e964f928350659ae4900, type: 2}

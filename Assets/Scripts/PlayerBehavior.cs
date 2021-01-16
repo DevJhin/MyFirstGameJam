@@ -8,16 +8,18 @@ using UnityEngine;
 public class PlayerBehavior : FieldObjectBehaviour{
 
     Player player;
-    private Vector2 colliderExtents;
+    private Vector2 colliderExtents;        // 콜라이더 직경의 절반으로, 콜라이더 중심에서 외곽까지의 거리를 구할 때 사용됩니다.
     private float airDragMultiplier;
     private float airDrag;
     private float jumpTimer;
     private bool facingLeft;
     private bool isMomentumXReset;
 
-    // temp
     private Vector3 prevPos;
     private Vector3 currentVelocity;
+    /// <summary>
+    /// 최근에 플레이어 하단에 감지된 RaycastHit의 위치
+    /// </summary>
     private RaycastHit2D lastGroundPoint;
     private bool IsFalling => (prevPos.y > Transform.position.y);
 
@@ -51,10 +53,11 @@ public class PlayerBehavior : FieldObjectBehaviour{
         bool isGrounded = IsGrounded();
 
         // 이전 프레임에서 높이가 변경되었는데 레이캐스트에 땅이 감지된 경우의 처리
-        if (isGrounded && prevPos.y != Transform.position.y) 
+        // 이번 프레임에 착지해야 한다면 착지시키고, 아니라면 IsGrounded()의 감지를 무시합니다.
+        if (isGrounded && !Mathf.Approximately(prevPos.y, Transform.position.y))
         {
-            // 낙하 중이고 내 위치보다 
-            if(IsFalling && lastGroundPoint.point.y < Transform.position.y)
+            // 낙하 중이고 내 위치보다 낮은 땅이 감지되면 착지합니다.
+            if(IsFalling && lastGroundPoint.point.y < Transform.position.y - (colliderExtents.y * 0.5f))
 			{
                 Transform.position = new Vector2(Transform.position.x, lastGroundPoint.point.y + colliderExtents.y);
             }
@@ -79,7 +82,8 @@ public class PlayerBehavior : FieldObjectBehaviour{
             // Releasing Jump Button During Jump
             float gravityScale = (!IsFalling && !player.Controller.IsJumpButtonOnRepeat) ? player.lowJumpFallMultiplier : player.fallMultiplier;
 
-            // TODO: 최대 낙하속도 정해서 Player에 추가하고 사용할 예정
+            // TODO: 최대 낙하속도 정해서 Player에 추가하고 사용할 예정 
+            // (현재는 임시로 점프 최초 속도보다 빠르게 떨어지면, 중력 계수를 1/3로 떨어트림)
             if (currentVelocity.y < -player.jumpPower)
 			{
                 gravityScale /= 3f;
@@ -125,8 +129,7 @@ public class PlayerBehavior : FieldObjectBehaviour{
         jumpTimer = Time.time + player.jumpCheckTimer;
     }
 
-    // TODO: 점프 중 천장에 부딪히게 해야 할까? (아니면 메이플 점프처럼 위쪽 지형을 통과하게 할까?)
-    // 부딪히게 해야 한다면 콜라이더 위쪽 체크하여 부딪히는 로직 추가, 아니라면 착지 전까지는 IsSideCollided() 에 걸리더라도 좌우 조작 가능하게 하기
+    // TODO: 점프 중 천장에 부딪히게 하는 처리
     private void Jump() 
     {
         currentVelocity.y = player.jumpPower;
@@ -173,7 +176,7 @@ public class PlayerBehavior : FieldObjectBehaviour{
         Debug.DrawRay(Transform.position, Transform.right * (colliderExtents.x + player.raycastLength), Color.cyan, 3f);
         Debug.DrawRay(Transform.position + (Vector3.down * (colliderExtents.y /2)), Transform.right * (colliderExtents.x + player.raycastLength), Color.green, 3f);
 
-        // Temp: 콜라이더 외곽 부분의 자연스러운 처리를 위해 캐릭터의 세로 1/4, 2/4, 3/4 지점에서만 아래쪽 지형을 체크합니다.
+        // Temp: 콜라이더 외곽 부분의 자연스러운 처리를 위해 캐릭터의 세로 1/4, 2/4, 3/4 지점에서만 캐릭터 앞쪽 지형을 체크합니다.
         Vector3 delta = Vector3.down * (colliderExtents.y / 2);
         for (int i = 0; i < 3; i++)
         {
