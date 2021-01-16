@@ -49,7 +49,7 @@ public class SlashAction : BattleAction
             Vector2 dir = (hitInfo.point - point).normalized;
             float angle = Vector2.Angle(forward, dir);
             bool withinRange = angle < halfAngle;
-            
+
             if (withinRange)
             {
                 //범위 내 Collider인 경우, 충돌 이벤트 처리.
@@ -60,7 +60,7 @@ public class SlashAction : BattleAction
 
                 if (entity != null && !attackedEntity.Contains(entity))
 				{
-                    DamageMessage msg = new DamageMessage(actor, 10, hitInfo.point);
+                    DamageEvent msg = new DamageEvent(actor, 10, hitInfo.point);
                     MessageSystem.Instance.Send(msg, entity);
                     attackedEntity.Add(entity);
                 }
@@ -68,7 +68,7 @@ public class SlashAction : BattleAction
                 GLDebug.DrawLine(point, hitInfo.point, Color.red, time: 1f);
             }
             else
-            { 
+            {
                 //범위 밖 Collider인 경우, 충돌 이벤트 처리 수행하지 않음.
                 GLDebug.DrawLine(point, hitInfo.point, Color.white, time: 1f);
             }

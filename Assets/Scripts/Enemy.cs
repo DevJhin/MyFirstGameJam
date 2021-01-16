@@ -36,19 +36,19 @@ public class Enemy : FieldObject, IEventListener
 
 	public bool OnEvent(IEvent e)
 	{
-		if(e is DamageMessage)
+		if(e is DamageEvent)
 		{
-            DamageMessage damageMessage = e as DamageMessage;
-            OnDamaged(damageMessage);
+            DamageEvent damageEvent = e as DamageEvent;
+            OnDamaged(damageEvent);
             return true;
 		}
 
         return false;
 	}
 
-    void OnDamaged(DamageMessage damageMessage)
+    void OnDamaged(DamageEvent damageEvent)
 	{
         // TODO: 데미지 받았을 때 처리 추가
-        Debug.Log($"[{gameObject.name}] {damageMessage.attacker.name}의 공격으로 {damageMessage.damage}의 피해를 입었습니다. (피격 지점: {damageMessage.hitPoint})");
+        Debug.Log($"[{gameObject.name}] {damageEvent.attacker.name}의 공격으로 {damageEvent.damage}의 피해를 입었습니다. (피격 지점: {damageEvent.hitPoint})");
 	}
 }

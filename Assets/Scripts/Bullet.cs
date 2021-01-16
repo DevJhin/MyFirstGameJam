@@ -151,7 +151,7 @@ public class Bullet : FieldObject
 
         if (entity != null && entity != attacker)
         {
-            DamageMessage msg = new DamageMessage((FieldObject) attacker, damage, transform.position);
+            DamageEvent msg = new DamageEvent((FieldObject) attacker, damage, transform.position);
             MessageSystem.Instance.Send(msg, entity);
             // FIXME 이런 식으로 해제하는건 옳지 않음.
             pool.Dispose(pooledObject);

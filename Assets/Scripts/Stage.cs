@@ -24,15 +24,15 @@ public class Stage : IDisposable
         StageName = stageName;
         LoadedMap = map;
 
-        MessageSystem.Instance.Subscribe<OnStageLoadEvent>(OnStageLoaded);
-        MessageSystem.Instance.Subscribe<OnStageUnloadEvent>(OnStageUnloaded);
+        MessageSystem.Instance.Subscribe<StageLoadEvent>(OnStageLoaded);
+        MessageSystem.Instance.Subscribe<StageUnloadEvent>(OnStageUnloaded);
     }
 
     // 변수 등 모두 여기서 해제
     public void Dispose()
     {
-        MessageSystem.Instance.Unsubscribe<OnStageLoadEvent>(OnStageLoaded);
-        MessageSystem.Instance.Unsubscribe<OnStageUnloadEvent>(OnStageUnloaded);
+        MessageSystem.Instance.Unsubscribe<StageLoadEvent>(OnStageLoaded);
+        MessageSystem.Instance.Unsubscribe<StageUnloadEvent>(OnStageUnloaded);
     }
 
     /// <summary>
