@@ -89,6 +89,7 @@ public class Pool
         PooledObject pooledObject = obj.GetOrAddComponent<PooledObject>();
         pooledObject.OriginalObjectName = obj.name;
         pooledObject.transform.SetParent(Parent);
+        poolStack.Push(pooledObject);
 
         return pooledObject;
     }

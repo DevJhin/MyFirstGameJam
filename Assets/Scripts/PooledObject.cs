@@ -5,7 +5,6 @@ using Sirenix.OdinInspector;
 
 /// <summary>
 /// 이 클래스를 컴포넌트로 가진 모든 오브젝트는 오브젝트 풀링의 대상이 됩니다.
-/// ResourcesEx에 명시된 폴더 내의 프리팹은 생성 시 이 오브젝트가 자동으로 부착됩니다.
 /// </summary>
 public class PooledObject : MonoBehaviour
 {
