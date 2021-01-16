@@ -1,11 +1,14 @@
 using UnityEngine;
 
 /// <summary>
-/// µ¥¹ÌÁö ¹ß»ı ¸Ş½ÃÁö¸¦ Àü´ŞÇÏ´Â Å¬·¡½º.
-/// °ø°İÀÚ¿Í ÇÇÇØ·®, ÇÇ°İ ÁöÁ¡ÀÌ ÀÔ·ÂµÇ¾î ÇÇ°İ ´ë»ó¿¡°Ô Àü´ŞµË´Ï´Ù.
+/// ë°ë¯¸ì§€ ë°œìƒ ë©”ì‹œì§€ë¥¼ ì „ë‹¬í•˜ëŠ” í´ë˜ìŠ¤.
+/// ê³µê²©ìì™€ í”¼í•´ëŸ‰, í”¼ê²© ì§€ì ì´ ì…ë ¥ë˜ì–´ í”¼ê²© ëŒ€ìƒì—ê²Œ ì „ë‹¬ë©ë‹ˆë‹¤.
 /// </summary>
 public class DamageMessage : IEvent
 {
+	public FieldObject attacker;
+	public Vector2 hitPoint;
+	public float damage;
     public DamageMessage() { }
     public DamageMessage(FieldObject attacker, float damage, Vector2 hitPoint)
 	{
@@ -14,7 +17,5 @@ public class DamageMessage : IEvent
         this.hitPoint = hitPoint;
 	}
 
-    public FieldObject attacker;
-    public Vector2 hitPoint;
-    public float damage;
+
 }

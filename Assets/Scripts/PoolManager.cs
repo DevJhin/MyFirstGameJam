@@ -1,164 +1,124 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
-/// 오브젝트 풀링을 담당합니다. ResourcesEx에서 풀링 대상 오브젝트에 대해 Instantiate/Destroy를 할 경우 이곳에서 활성화/비활성화 처리합니다.
+/// 전체 오브젝트 풀들을 관리 및 담당 합니다.
 /// </summary>
-public class PoolManager
+public static class PoolManager
 {
-	public static PoolManager Instance { get; } = new PoolManager();
+    /// <summary>
+    /// 오브젝트 풀들을 관리하는 Dictionary
+    /// </summary>
+    private static Dictionary<string, Pool> poolDict = new Dictionary<string, Pool>();
 
-	// 여기서 생성된 모든 오브젝트의 상위 개체. DontDestroyOnLoad 씬에 저장되며 비활성화된 오브젝트들은 이곳에서 대기한다.
-	Transform Root
-	{
-		get
-		{
-			if(_root == null)
-			{
-				_root = new GameObject(name: "PoolRoot").transform;
-				GameObject.DontDestroyOnLoad(_root);
-			}
-			return _root;
-		}
-	}
-	Transform _root;
+    /// <summary>
+    /// 풀을 가져오거나 생성
+    /// </summary>
+    /// <remarks>count는 생성될 때만 적용된다.</remarks>
+    /// <param name="objName">가져올 오브젝트 이름</param>
+    /// <param name="poolCount">처음 생성할 때, 오브젝트 갯수</param>
+    /// <returns></returns>
+    public static Pool GetOrCreate(string objName, int poolCount = 30)
+    {
+        // 풀 이미 생성되었으면 그 풀을 리턴
+        if (poolDict.TryGetValue(objName, out var pool))
+        {
+            return pool;
+        }
 
-	/// <summary>
-	/// 활성화된 오브젝트를 DontDestroyOnLoad 씬에서 현재 씬으로 보내기 위해 사용되는 부모 Transform.
-	/// 모든 씬에 공통적으로 생성되는 객체가 있다면 이 값을 대체할 수 있습니다.
-	/// </summary>
-	public Transform DefaultSceneParent
-	{
-		get
-		{
-			if(_sceneParent == null)
-				_sceneParent = Camera.main.transform;
+        pool = new Pool(objName, poolCount);
 
-			return _sceneParent;
-		}
-	}
-	Transform _sceneParent = Camera.main.transform;
+        poolDict.Add(objName, pool);
 
-	/// <summary>
-	/// 풀링된 오브젝트를 관리하는 클래스. 오브젝트 프리팹 하나당 Pool 하나가 생성됩니다.
-	/// </summary>
-	class Pool
-	{
-		public GameObject Origin { get; private set; }
-		public Transform Parent { get; set; }
-		Stack<Poolable> _poolStack = new Stack<Poolable>();
+        return pool;
+    }
+}
 
-		public Pool(GameObject originObject, int poolCount)
-		{
-			Origin = originObject;
-			Parent = new GameObject(name: $"Pool: {originObject.name}").transform;
+/// <summary>
+/// 풀링된 오브젝트를 관리하는 클래스. 오브젝트 프리팹 하나당 Pool 하나가 생성됩니다.
+/// </summary>
+public class Pool
+{
+    /// <summary>
+    /// 원본 게임 오브젝트
+    /// </summary>
+    public GameObject Origin { get; private set; }
 
-			if (poolCount <= 0)
-				poolCount = PoolManager.DefaultPoolCount;
+    /// <summary>
+    /// 풀링 된 오브젝트들은 전부 이 트랜스폼의 하위에 존재
+    /// </summary>
+    public Transform Parent { get; set; }
 
-			for (int i = 0; i < poolCount; i++)
-			{
-				SetDeactive(Create());
-			}
-		}
+    /// <summary>
+    /// 풀링 된 오브젝트들 관리 스택
+    /// 이 방식 정말 괜찮은 것인가? PooledObject가 poolStack에서 벗어난 사이에 해지된다거나 하면 남아 있는 오브젝트들은 컨트롤이 전혀 안 된다.
+    /// 적어도 그 부분들은 신경 쓰는 것을 권장
+    /// </summary>
+    Stack<PooledObject> poolStack = new Stack<PooledObject>();
 
-		Poolable Create()
-		{
-			GameObject obj = GameObject.Instantiate(Origin);
-			obj.name = Origin.name;
-			Poolable poolable = obj.GetOrAddComponent<Poolable>();
+    public Pool(string objName, int poolCount)
+    {
+        Origin = ResourcesHelper.LoadPoolableOrigin(objName);
+        Parent = new GameObject(name: $"Pool: {objName}").transform;
 
-			return poolable;
-		}
+        for (int i = 0; i < poolCount; i++)
+        {
+            var inst = Create();
+        }
+    }
 
-		public Poolable SetActive(Transform parent)
-		{
-			Poolable poolable = (_poolStack.Count > 0 && _poolStack.Peek() != null) ?
-				_poolStack.Pop() : Create();
+    ~Pool()
+    {
+        Origin = null;
+        Parent = null;
 
-			poolable.gameObject.SetActive(true);
+        poolStack.Clear();
+        poolStack = null;
+    }
 
-			if (parent == null)
-			{
-				poolable.transform.SetParent(PoolManager.Instance.DefaultSceneParent);
-			}
-			poolable.transform.parent = parent;
+    /// <summary>
+    /// 완전히 새로 생성된 풀링되는 오브젝트
+    /// </summary>
+    PooledObject Create()
+    {
+        GameObject obj = GameObject.Instantiate(Origin);
+        obj.name = Origin.name;
+        PooledObject pooledObject = obj.GetOrAddComponent<PooledObject>();
+        pooledObject.OriginalObjectName = obj.name;
+        pooledObject.transform.SetParent(Parent);
 
-			return poolable;
-		}
+        return pooledObject;
+    }
 
-		public void SetDeactive(Poolable poolable)
-		{
-			if (poolable == null)
-				return;
+    /// <summary>
+    /// 풀링 된 오브젝트 활성화
+    /// </summary>
+    public PooledObject Instantiate(Vector3 position, Quaternion rotation)
+    {
+        // 풀에 남아있는게 없으면 새로 생성
+        PooledObject pooledObject = (poolStack.Count > 0 && poolStack.Peek() != null) ? poolStack.Pop() : Create();
 
-			poolable.transform.parent = Parent;
-			poolable.gameObject.SetActive(false);
+        pooledObject.transform.SetPositionAndRotation(position, rotation);
+        pooledObject.gameObject.SetActive(true);
 
-			_poolStack.Push(poolable);
-		}
-	}
+        return pooledObject;
+    }
 
-	
-	Dictionary<string, Pool> _poolDic = new Dictionary<string, Pool>();
-	/// <summary>
-	/// 별도의 개수 입력이 없을 경우, 최초 생성 시 이 숫자만큼 오브젝트가 생성됩니다.
-	/// </summary>
-	public const int DefaultPoolCount = 30;
+    /// <summary>
+    /// 풀링 오브젝트 해지하고, 풀에 반환
+    /// </summary>
+    /// <param name="pooledObject">해지할 오브젝트</param>
+    /// <returns>정상적으로 해지 되었는가?</returns>
+    public bool Dispose(PooledObject pooledObject)
+    {
+        if (pooledObject == null)
+            return false;
 
-	/// <summary>
-	/// 입력받은 오브젝트 프리팹을 원본으로 새로운 Pool을 생성하고, 딕셔너리에 등록합니다.
-	/// 생성자에 의해 Poolable에서 지정한 개수만큼 오브젝트가 생성되며 비활성화 상태로 대기합니다.
-	/// </summary>
-	Pool CreatePool(GameObject origin)
-	{
-		Poolable poolable = origin.GetComponent<Poolable>();
-		int poolCount = (poolable != null) ? poolable.PoolCount : DefaultPoolCount;
+        pooledObject.gameObject.SetActive(false);
+        poolStack.Push(pooledObject);
 
-		Pool pool = new Pool(origin, poolCount);
-		pool.Parent.SetParent(Root);
-		_poolDic.Add(origin.name, pool);
-
-		return pool;
-	}
-
-	/// <summary>
-	/// 입력받은 오브젝트를 생성합니다. 
-	/// 이미 풀링된 오브젝트면 활성화하고, 아닐 경우 오브젝트 풀 생성 후 하나를 활성화합니다.
-	/// </summary>
-	public Poolable ActivePool(GameObject origin, Transform parent = null)
-	{
-		Pool pool;
-		if(!_poolDic.TryGetValue(origin.name, out pool))
-		{
-			pool = CreatePool(origin);
-		}
-
-		return pool.SetActive(parent);
-	}
-
-	/// <summary>
-	/// 입력된 개체를 비활성화하고 오브젝트 풀에 보관합니다. 오브젝트 풀이 없는 개체라면 그냥 파괴합니다.
-	/// </summary>
-	public void DeactivePool(Poolable poolable)
-	{
-		string name = poolable.gameObject.name;
-
-		if(!_poolDic.ContainsKey(name))
-		{
-			GameObject.Destroy(poolable.gameObject);
-			return;
-		}
-
-		_poolDic[name].SetDeactive(poolable);
-	}
-
-	/// <summary>
-	/// 입력된 이름의 오브젝트 풀이 있다면 원본 오브젝트를 반환합니다. 없을 경우 null이 반환됩니다.
-	/// </summary>
-	public GameObject GetOrigin(string name)
-	{
-		return (_poolDic.ContainsKey(name)) ? _poolDic[name].Origin : null;
-	}
+        return true;
+    }
 }

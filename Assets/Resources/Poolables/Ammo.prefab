@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 7638480547562475940}
   - component: {fileID: 7638480547562475941}
   - component: {fileID: 1417388994326816485}
-  - component: {fileID: 8234821689986732134}
   m_Layer: 0
   m_Name: Ammo
   m_TagString: Untagged
@@ -97,22 +96,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0
+  damage: 1
   posX: 0
   posY: 0
   hasDirection: 1
   isAutoRotate: 0
   autoRotateSpeed: 0
   _spriteRenderer: {fileID: 0}
---- !u!114 &8234821689986732134
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7638480547562475942}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98827387191de5a4d903d6eb4c245e01, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PoolCount: -1
