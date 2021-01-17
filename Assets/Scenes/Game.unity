@@ -280,12 +280,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d3453120935c47998cf0f0b044aee14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FollowTarget: {fileID: 0}
-  FollowDuration: 0.05
-  StartFollowX: 1
-  StartFollowY: 1
-  FocusDistance: 1
   DebugMode: 0
+  FollowTarget: {fileID: 0}
+  verticalOffset: 0.5
+  lookAheadDstX: 2
+  xFollowDuration: 0.2
+  yFolowDuration: 0.2
+  focusAreaSize: {x: 3, y: 3}
+  leftLimit: -5
+  rightLimit: 6
+  bottomLimit: 3
+  topLimit: 7
 --- !u!4 &661542326
 Transform:
   m_ObjectHideFlags: 0

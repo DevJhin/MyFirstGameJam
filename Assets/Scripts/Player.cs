@@ -32,6 +32,7 @@ public class Player : FieldObject, IEventListener
     public float lowJumpFallMultiplier;
     public float jumpCheckTimer;
     public float raycastLength;
+    public float xDirection;
 
     /// <summary>
     /// Attack 커맨드 입력시, 실행할 BattleAction.
