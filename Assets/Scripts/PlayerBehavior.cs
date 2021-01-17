@@ -8,14 +8,23 @@ using UnityEngine;
 public class PlayerBehavior : FieldObjectBehaviour{
 
     Player player;
-    private Vector2 colliderExtents;        // 콜라이더 직경의 절반으로, 콜라이더 중심에서 외곽까지의 거리를 구할 때 사용됩니다.
+    /// <summary>
+    /// 콜라이더 직경의 절반으로, 콜라이더 중심에서 외곽까지의 거리를 구할 때 사용됩니다.
+    /// </summary>
+    private Vector2 colliderExtents;
     private float airDragMultiplier;
     private float airDrag;
     private float jumpTimer;
+    /// <summary>
+    /// 천장에 부딪히면 부딪힌 속도의 일정 비율로 튕겨나오는 비율을 결정합니다. 
+    /// 0일 경우 얼마나 빠르게 부딪히든 동일하게 낙하하며, 1일 경우 부딪힐 당시의 속도와 동일합니다.
+    /// </summary>
+    private float ceilingReactionForceRatio; 
     private bool facingLeft;
     private bool isMomentumXReset;
 
     private Vector3 prevPos;
+    private float gravityScale;
     private Vector3 currentVelocity;
     /// <summary>
     /// 최근에 플레이어 하단에 감지된 RaycastHit의 위치
@@ -29,6 +38,7 @@ public class PlayerBehavior : FieldObjectBehaviour{
         airDrag = 1 - player.airDrag;
         colliderExtents = player.col.bounds.extents;
         prevPos = Transform.position;
+        ceilingReactionForceRatio = Mathf.Max(0f, player.ceilingReactionForceRatio);
     }
 
     public void OnPlayerUpdate() 
@@ -50,6 +60,8 @@ public class PlayerBehavior : FieldObjectBehaviour{
     //Physics Manager
     private void UpdatePhysics() 
     {
+        // If Releasing Jump Button During Jump, Adjust Low JumpFallMultiplier.
+        gravityScale = (!IsFalling && !player.Controller.IsJumpButtonOnRepeat) ? player.lowJumpFallMultiplier : player.fallMultiplier;
         bool isGrounded = IsGrounded();
 
         // 이전 프레임에서 높이가 변경되었는데 레이캐스트에 땅이 감지된 경우의 처리
@@ -79,18 +91,17 @@ public class PlayerBehavior : FieldObjectBehaviour{
         }
         else
         {
-            // Releasing Jump Button During Jump
-            float gravityScale = (!IsFalling && !player.Controller.IsJumpButtonOnRepeat) ? player.lowJumpFallMultiplier : player.fallMultiplier;
-
-            // TODO: 최대 낙하속도 정해서 Player에 추가하고 사용할 예정 
-            // (현재는 임시로 점프 최초 속도보다 빠르게 떨어지면, 중력 계수를 1/3로 떨어트림)
-            if (currentVelocity.y < -player.jumpPower)
+            // 점프 최대 속도보다 빠르게 낙하하지 않습니다.
+            if(currentVelocity.y > -player.jumpPower)
 			{
-                gravityScale /= 3f;
-            }
+                currentVelocity.y += Physics2D.gravity.y * gravityScale * Time.deltaTime;
 
-            currentVelocity.y += Physics2D.gravity.y * gravityScale * Mathf.Min(0.05f, Time.deltaTime);
-            
+                // 상향이동 도중 천장에 부딪혔다면 반대 방향으로 튕겨나옵니다.
+                if (IsHitCeiling() && currentVelocity.y > 0f)
+                {
+                    currentVelocity.y = -currentVelocity.y * ceilingReactionForceRatio;
+                }
+            }
 
             //Air Drag Check
             if (!player.Controller.IsMoveButtonOnRepeat && !isMomentumXReset) 
@@ -156,7 +167,7 @@ public class PlayerBehavior : FieldObjectBehaviour{
         Vector3 delta = -(Transform.right / 3);
         for (int i = 0; i < 3; i++)
 		{
-            RaycastHit2D hit = Physics2D.Raycast(Transform.position + delta, Vector2.down, colliderExtents.y + player.raycastLength, player.groundLayerMask);
+            RaycastHit2D hit = Physics2D.Raycast(Transform.position + delta, Vector2.down, colliderExtents.y + (Time.deltaTime * gravityScale), player.groundLayerMask);
             if (hit)
 			{
                 lastGroundPoint = hit;
@@ -165,7 +176,6 @@ public class PlayerBehavior : FieldObjectBehaviour{
             delta += (Transform.right / 3);
         }
 
-        //Physics2D.BoxCast(player.col.bounds.center, player.col.size, 0f, Vector2.down, player.raycastLength, player.groundLayerMask);
         return false;
     }
 
@@ -187,7 +197,31 @@ public class PlayerBehavior : FieldObjectBehaviour{
             delta += (Vector3.up * (colliderExtents.y / 2));
         }
 
-        //bool hit = Physics2D.BoxCast(player.col.bounds.center, player.col.size, 0f, Transform.right, player.raycastLength, player.groundLayerMask);
+        return false;
+    }
+
+    /// <summary>
+    /// 플레이어가 천장에 부딪혔는지 감지합니다.
+    /// </summary>
+    private bool IsHitCeiling()
+	{
+        Debug.DrawRay(Transform.position, Vector2.up * colliderExtents.y * (0.75f + currentVelocity.y * Time.deltaTime), Color.magenta, 3f);
+        Debug.DrawRay(Transform.position + (Transform.right / 3), Vector2.up * colliderExtents.y * (0.75f + currentVelocity.y * Time.deltaTime), Color.red, 3f);
+        Debug.DrawRay(Transform.position - (Transform.right / 3), Vector2.up * colliderExtents.y * (0.75f + currentVelocity.y * Time.deltaTime), Color.red, 3f);
+
+        // Temp: 콜라이더 외곽 부분의 자연스러운 처리를 위해 캐릭터의 가로 1/6, 3/6, 5/6 지점에서만 위쪽 지형을 체크합니다.
+        // 천장에 부딪힌 게 아니라면 점프 중에 좌우이동이 가능해야 하므로, 여기서 확인하는 높이는 IsSideCollided보다 높아야 합니다.
+        Vector3 delta = -(Transform.right / 3);
+        for (int i = 0; i < 3; i++)
+        {
+            RaycastHit2D hit = Physics2D.Raycast(Transform.position + delta, Vector2.up, colliderExtents.y * (0.75f + currentVelocity.y * Time.deltaTime), player.groundLayerMask);
+            if (hit)
+            {
+                return true;
+            }
+            delta += (Transform.right / 3);
+        }
+
         return false;
     }
 }

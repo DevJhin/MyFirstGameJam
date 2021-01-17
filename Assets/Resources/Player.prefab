@@ -185,6 +185,7 @@ MonoBehaviour:
   moveSpeed: 6
   airDrag: 0
   jumpPower: 14
+  ceilingReactionForceRatio: 0.15
   fallMultiplier: 3
   lowJumpFallMultiplier: 8
   jumpCheckTimer: 0.15

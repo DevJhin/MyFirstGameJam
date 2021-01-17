@@ -23,7 +23,11 @@ public class Player : FieldObject, IEventListener
     public float moveSpeed;
     public float airDrag;
     public float jumpPower;
-    //public float gravityScale;
+    /// <summary>
+    /// 천장에 부딪히면 부딪힌 속도의 일정 비율로 튕겨나오는 비율을 결정합니다. 
+    /// 0일 경우 얼마나 빠르게 부딪히든 동일하게 낙하하며, 1일 경우 부딪힐 당시의 속도와 동일합니다.
+    /// </summary>
+    public float ceilingReactionForceRatio;
     public float fallMultiplier;
     public float lowJumpFallMultiplier;
     public float jumpCheckTimer;
