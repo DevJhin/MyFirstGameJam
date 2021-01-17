@@ -58,9 +58,9 @@ public class CameraManager : MonoBehaviour {
     public float bottomLimit;
     public float topLimit;
 
-    private Player playerScript;
     private Collider2D collider2d;
     private FocusArea focusArea;
+    private Vector3 prevPlayerPos;
     private float currentLookAheadX;
     private float targetLookAheadX;
     private float lookAheadDirX;
@@ -84,7 +84,6 @@ public class CameraManager : MonoBehaviour {
 
     //Stage에서 실행
     public void Setup() {
-        playerScript = FollowTarget.GetComponent<Player>();
         collider2d = FollowTarget.GetComponentInChildren<Collider2D>();
         focusArea = new FocusArea(collider2d.bounds, focusAreaSize);
         initialized = true;
@@ -96,7 +95,9 @@ public class CameraManager : MonoBehaviour {
             Vector2 focusPosition = focusArea.centre + Vector2.up * verticalOffset;
             if (focusArea.velocity.x != 0) {
                 lookAheadDirX = Mathf.Sign(focusArea.velocity.x);
-                if (Mathf.Sign(playerScript.xDirection) == Mathf.Sign(focusArea.velocity.x) && playerScript.xDirection != 0) {
+                float playerDirX = Mathf.Sign(FollowTarget.position.x - prevPlayerPos.x);
+                prevPlayerPos = FollowTarget.position;
+                if (playerDirX == Mathf.Sign(focusArea.velocity.x) && playerDirX != 0) {
                     lookAheadStopped = false;
                     targetLookAheadX = lookAheadDirX * lookAheadDstX;
                 }

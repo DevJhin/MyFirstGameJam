@@ -46,7 +46,6 @@ public class PlayerBehavior : FieldObjectBehaviour{
         if (player.Controller.TryGetMoveInput(out float value))
         {
             Move(value);
-            player.xDirection = value;
         }
         else
 		{
