@@ -60,14 +60,7 @@ public class Game : MonoBehaviour
     {
         try
         {
-            // FIXME: Async하게 불러오는건 나중에
-            var loadedMap = Resources.Load("Maps/" + stageName) as GameObject;
-            currentStage = new Stage(stageName, Instantiate(loadedMap).GetComponent<StageData>());
-
-            var stageLoadEvent = new StageLoadEvent();
-
-            // 맵이 다 로드되면 이벤트 재생
-            MessageSystem.Instance.Publish(stageLoadEvent);
+            StartCoroutine(InstantiateStage(stageName));
         }
         catch (System.Exception e)
         {
@@ -83,5 +76,21 @@ public class Game : MonoBehaviour
             var stageUnloadEvent = new StageUnloadEvent();
             MessageSystem.Instance.PublishImmediate(stageUnloadEvent);
         }
+    }
+
+    private IEnumerator InstantiateStage(string stageName)
+    {
+       // var loadedMap = Resources.Load("Maps/" + stageName) as GameObject;
+        var req = Resources.LoadAsync("Maps/" + stageName);
+        while (!req.isDone)
+        {
+            yield return new WaitUntil(() => req.isDone);
+        }
+        currentStage = new Stage(stageName, Instantiate(req.asset as GameObject).GetComponent<StageData>());
+
+        var stageLoadEvent = new StageLoadEvent();
+
+        // 맵이 다 로드되면 이벤트 재생
+        MessageSystem.Instance.Publish(stageLoadEvent);
     }
 }
