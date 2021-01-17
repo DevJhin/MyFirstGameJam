@@ -45,6 +45,16 @@ public class CameraManager : MonoBehaviour
     /// 카메라가 타겟을 따라가기 시작하는 카메라와 타겟의 거리 XY
     /// </summary>
     public Vector2 focusAreaSize;
+    
+    /// <summary>
+    /// 따라다니는 타겟의 Bound
+    /// </summary>
+    private Bounds targetFocusBound = new Bounds();
+
+    /// <summary>
+    /// targetFocusBound의 크기
+    /// </summary>
+    public float targetFocusBoundSize = 0.5f;
 
     [Header("Camera Boundaries")]
     /// <summary>
@@ -55,16 +65,6 @@ public class CameraManager : MonoBehaviour
     public float rightLimit;
     public float bottomLimit;
     public float topLimit;
-
-    /// <summary>
-    /// 따라다니는 타겟의 Bound
-    /// </summary>
-    private Bounds targetFocusBound = new Bounds();
-
-    /// <summary>
-    /// targetFocusBound의 크기
-    /// </summary>
-    public float targetFocusBoundSize = 0.5f;
 
     private FocusArea focusArea;
     private Vector3 prevPlayerPos;
@@ -110,7 +110,7 @@ public class CameraManager : MonoBehaviour
         {
             targetFocusBound.center = FollowTarget.position;
             targetFocusBound.size = new Vector3(targetFocusBoundSize, targetFocusBoundSize, 1);
-            
+
             focusArea.Update(targetFocusBound);
             Vector2 focusPosition = focusArea.centre + Vector2.up * verticalOffset;
             if (!Mathf.Approximately(focusArea.velocity.x, 0))
