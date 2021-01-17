@@ -49,8 +49,7 @@ public class Stage : IDisposable
                 var playerResource = Resources.Load("Player");
                 var player = GameObject.Instantiate(playerResource, data.transform.position, Quaternion.identity) as GameObject;
 
-                CameraManager.Instance.FollowTarget = player.transform;
-                CameraManager.Instance.Setup();
+                CameraManager.Instance.Setup(player?.transform);
             }
             else
             {
