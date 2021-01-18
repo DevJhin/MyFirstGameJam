@@ -40,6 +40,8 @@ public class SlashAction : BattleAction
 
         float halfAngle = Angle * 0.5f;
 
+        actor.SetAnimation("attack");
+
         // 이번 공격으로 피격된 대상은 이곳에 저장됩니다. Execute 1회 실행에 1회 이상 피격당하지 않습니다.
         List<IEventListener> attackedEntity = new List<IEventListener>();
 
@@ -58,17 +60,20 @@ public class SlashAction : BattleAction
                 if(target == null)
                     target = hitInfo.collider.GetComponentInParent<FieldObject>();
 
-                // 적이면 데미지 가함
-                if (actor.EntityGroup.IsHostileTo(target.EntityGroup))
+                if (target != null)
                 {
-                    var info = new DamageInfo
+                    // 적이면 데미지 가함
+                    if (actor.EntityGroup.IsHostileTo(target.EntityGroup))
                     {
-                        Sender = actor,
-                        Target = target,
-                        amount = 10
-                    };
-                    var cmd = DamageCommand.Create(info);
-                    cmd.Execute();
+                        var info = new DamageInfo
+                        {
+                            Sender = actor,
+                            Target = target,
+                            amount = 10
+                        };
+                        var cmd = DamageCommand.Create(info);
+                        cmd.Execute();
+                    }
                 }
 
                 GLDebug.DrawLine(point, hitInfo.point, Color.red, time: 1f);
