@@ -16,10 +16,10 @@ public class PlayerBehavior : FieldObjectBehaviour{
     private float airDrag;
     private float jumpTimer;
     /// <summary>
-    /// 천장에 부딪히면 부딪힌 속도의 일정 비율로 튕겨나오는 비율을 결정합니다. 
+    /// 천장에 부딪히면 부딪힌 속도의 일정 비율로 튕겨나오는 비율을 결정합니다.
     /// 0일 경우 얼마나 빠르게 부딪히든 동일하게 낙하하며, 1일 경우 부딪힐 당시의 속도와 동일합니다.
     /// </summary>
-    private float ceilingReactionForceRatio; 
+    private float ceilingReactionForceRatio;
     private bool facingLeft;
     private bool isMomentumXReset;
 
@@ -32,7 +32,7 @@ public class PlayerBehavior : FieldObjectBehaviour{
     private RaycastHit2D lastGroundPoint;
     private bool IsFalling => (prevPos.y > Transform.position.y);
 
-    public PlayerBehavior(Player player) { 
+    public PlayerBehavior(Player player) {
         this.player = player;
         Transform = player.transform;
         airDrag = 1 - player.airDrag;
@@ -41,10 +41,11 @@ public class PlayerBehavior : FieldObjectBehaviour{
         ceilingReactionForceRatio = Mathf.Max(0f, player.ceilingReactionForceRatio);
     }
 
-    public void OnPlayerUpdate() 
+    public void OnPlayerUpdate()
     {
         if (player.Controller.TryGetMoveInput(out float value))
         {
+            player.SetAnimation("run");
             Move(value);
         }
         else
@@ -58,7 +59,7 @@ public class PlayerBehavior : FieldObjectBehaviour{
     }
 
     //Physics Manager
-    private void UpdatePhysics() 
+    private void UpdatePhysics()
     {
         // If Releasing Jump Button During Jump, Adjust Low JumpFallMultiplier.
         gravityScale = (!IsFalling && !player.Controller.IsJumpButtonOnRepeat) ? player.lowJumpFallMultiplier : player.fallMultiplier;
@@ -104,12 +105,12 @@ public class PlayerBehavior : FieldObjectBehaviour{
             }
 
             //Air Drag Check
-            if (!player.Controller.IsMoveButtonOnRepeat && !isMomentumXReset) 
+            if (!player.Controller.IsMoveButtonOnRepeat && !isMomentumXReset)
             {
                 isMomentumXReset = true;
             }
             //Air Drag
-            if (isMomentumXReset) 
+            if (isMomentumXReset)
             {
                 airDragMultiplier = airDrag;
             }
@@ -117,47 +118,49 @@ public class PlayerBehavior : FieldObjectBehaviour{
     }
 
     //Movement
-    public void Move(float value) 
+    public void Move(float value)
     {
-        currentVelocity.x = IsSideCollided() ? 
+        currentVelocity.x = IsSideCollided() ?
             0f : (value * player.moveSpeed * airDragMultiplier);
 
-        if ((value < 0 && !facingLeft) || (value > 0 && facingLeft)) 
+        if ((value < 0 && !facingLeft) || (value > 0 && facingLeft))
         {
             Flip();
         }
     }
 
-    private void Flip() 
+    private void Flip()
     {
         facingLeft = !facingLeft;
         Transform.rotation = Quaternion.Euler(0, facingLeft ? 180 : 0, 0);
     }
 
     //Jump
-    public void CheckJump() 
+    public void CheckJump()
     {
         jumpTimer = Time.time + player.jumpCheckTimer;
     }
 
     // TODO: 점프 중 천장에 부딪히게 하는 처리
-    private void Jump() 
+    private void Jump()
     {
         currentVelocity.y = player.jumpPower;
         jumpTimer = 0;
         isMomentumXReset = false;
+
+        player.SetAnimation("jump");
     }
 
     /// <summary>
     /// Player의 Attack BattleAction을 실행합니다.
     /// </summary>
-    public void Attack() 
+    public void Attack()
     {
         player.AttackBattleAction.Execute(player);
     }
 
     //Ground Check
-    private bool IsGrounded() 
+    private bool IsGrounded()
     {
         Debug.DrawRay(Transform.position, Vector2.down * (colliderExtents.y + player.raycastLength), Color.yellow, 3f);
         Debug.DrawRay(Transform.position + (Transform.right / 3), Vector2.down * (colliderExtents.y + player.raycastLength), Color.red, 3f);
@@ -180,7 +183,7 @@ public class PlayerBehavior : FieldObjectBehaviour{
     }
 
     //Side Check
-    private bool IsSideCollided() 
+    private bool IsSideCollided()
     {
         Debug.DrawRay(Transform.position + (Vector3.up * (colliderExtents.y / 2)), Transform.right * (colliderExtents.x + player.raycastLength), Color.green, 3f);
         Debug.DrawRay(Transform.position, Transform.right * (colliderExtents.x + player.raycastLength), Color.cyan, 3f);
