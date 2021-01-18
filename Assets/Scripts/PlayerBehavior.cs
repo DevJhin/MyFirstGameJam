@@ -156,7 +156,8 @@ public class PlayerBehavior : FieldObjectBehaviour{
     /// </summary>
     public void Attack()
     {
-        player.AttackBattleAction.Execute(player);
+        //player.AttackBattleAction.Execute(player);
+        player.AttackBattleActionBehaviour.Start();
     }
 
     //Ground Check

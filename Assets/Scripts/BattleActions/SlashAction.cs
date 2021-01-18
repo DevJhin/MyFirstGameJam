@@ -86,7 +86,5 @@ public class SlashAction : BattleAction
         }
 
         GLDebug.DrawSector(new Circle(point, Radius, forward), Angle, DebugColor, 1f);
-
     }
-
 }

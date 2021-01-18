@@ -4,30 +4,25 @@ using UnityEngine;
 
 public class Player : FieldObject, IEventListener
 {
-    public PlayerBehavior Behavior
-    {
-        get; private set;
-    }
+    public PlayerBehavior Behavior { get; private set; }
 
-    public PlayerController Controller
-    {
-        get; private set;
-    }
+    public PlayerController Controller { get; private set; }
 
-    [Header("REFERENCES")]
-    public LayerMask groundLayerMask;
+    [Header("REFERENCES")] public LayerMask groundLayerMask;
+
     //public Rigidbody2D rb;
     public BoxCollider2D col;
 
-    [Header("MOVEMENT")]
-    public float moveSpeed;
+    [Header("MOVEMENT")] public float moveSpeed;
     public float airDrag;
     public float jumpPower;
+
     /// <summary>
-    /// 천장에 부딪히면 부딪힌 속도의 일정 비율로 튕겨나오는 비율을 결정합니다. 
+    /// 천장에 부딪히면 부딪힌 속도의 일정 비율로 튕겨나오는 비율을 결정합니다.
     /// 0일 경우 얼마나 빠르게 부딪히든 동일하게 낙하하며, 1일 경우 부딪힐 당시의 속도와 동일합니다.
     /// </summary>
     public float ceilingReactionForceRatio;
+
     public float fallMultiplier;
     public float lowJumpFallMultiplier;
     public float jumpCheckTimer;
@@ -38,15 +33,24 @@ public class Player : FieldObject, IEventListener
     /// </summary>
     public BattleAction AttackBattleAction;
 
+    public BattleActionBehaviour AttackBattleActionBehaviour;
+
     void Awake()
     {
         Behavior = new PlayerBehavior(this);
         Controller = new PlayerController(this);
+
+        AttackBattleActionBehaviour = BattleActionBehaviourFactory.Create(AttackBattleAction, this);
     }
 
     private void Update()
     {
         Behavior.OnPlayerUpdate();
+
+        if (AttackBattleActionBehaviour.IsActive)
+        {
+            AttackBattleActionBehaviour.Update();
+        }
     }
 
     public bool OnEvent(IEvent e)
@@ -65,5 +69,7 @@ public class Player : FieldObject, IEventListener
     {
         // TODO: 데미지 받았을 때 처리 추가
         CurrentHP -= damageEvent.damageInfo.amount;
+
+        SetAnimation("hurt");
     }
 }

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcccce3c07d8d0a42ac902d903bd643c, type: 3}
   m_Name: SlashAction
   m_EditorClassIdentifier: 
+  BattleActionBehaviourName: SlashActionBehaviour
   Radius: 1.5
   Angle: 51.31
   CircleCastDistance: 0
