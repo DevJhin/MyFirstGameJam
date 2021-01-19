@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: BS_LoopPattern2
   m_EditorClassIdentifier: 
   PrefabName: Circle
-  InitialPoolSize: 30
+  InitialPoolSize: 100
   Damage: 1
   CollisionShape: 0

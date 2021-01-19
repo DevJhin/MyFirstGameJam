@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7638480547562475940}
   - component: {fileID: 7638480547562475941}
   - component: {fileID: 1417388994326816485}
-  - component: {fileID: 9211236333961664702}
+  - component: {fileID: -5591522383884657327}
   m_Layer: 0
   m_Name: Circle
   m_TagString: Untagged
@@ -97,19 +97,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29e61b7d1184974478e3a3d8181eb1be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CurrentHP: 0
+  MaxHP: 0
+  EntityGroup: 0
+  PooledObject: {fileID: -5591522383884657327}
   attacker: {fileID: 0}
-  damage: 1
+  Damage: 1
+  EnableMove: 1
   EnableRotation: 0
   RotationAngularVelocity: 0
-  _spriteRenderer: {fileID: 7638480547562475941}
-  lifetime: 1
-  gravityMultiplier: 0
-  enableCollision: 1
-  collisionShape: 0
-  colliderScale: {x: 0, y: 0}
-  radius: 0
-  destroyAfterCollision: 0
---- !u!114 &9211236333961664702
+  Lifetime: 1
+  EnableCollision: 1
+  CollisionShape: 0
+  CollisionBoxScale: {x: 0, y: 0}
+  CollisionCircleRadius: 0
+  DestroyAfterCollision: 0
+  DisposeFlag: 0
+  remainingLifetime: 0
+--- !u!114 &-5591522383884657327
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -121,7 +126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4a29c40fd51e164c973d1d27bb8625f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OriginalObjectName: 
+  OriginalObjectName: Circle
 --- !u!1 &7784292666947292307
 GameObject:
   m_ObjectHideFlags: 0

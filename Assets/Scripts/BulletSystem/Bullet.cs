@@ -25,6 +25,12 @@ public class Bullet : FieldObject
         }
     }
 
+
+    /// <summary>
+    /// 현재 사용중인 Pool.
+    /// </summary>
+    public Pool Pool;
+
     /// <summary>
     /// Bullet의 PooledObject 레퍼런스.
     /// </summary>
@@ -103,6 +109,12 @@ public class Bullet : FieldObject
     /// 충돌 후에 이 객체를 Destroy할 것인가?
     /// </summary>
     public bool DestroyAfterCollision;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public float SimulationSpeed;
+
    
     /*Private Fields*/
 
@@ -133,9 +145,19 @@ public class Bullet : FieldObject
     private Collider2D[] colliderBuffer = new Collider2D[ColliderBufferSize];
 
 
+
+    public List<BulletEffector> Effectors = new List<BulletEffector>();
+
+    private bool IsActive = false;
+
     private void Awake()
     {
         PooledObject = GetComponent<PooledObject>();
+    }
+
+    private void Start()
+    {
+        Pool = PoolManager.GetOrCreate(PooledObject.OriginalObjectName);
     }
 
 
@@ -146,6 +168,7 @@ public class Bullet : FieldObject
     {
         birthTime = Time.time;
         remainingLifetime = Lifetime;
+        IsActive = true;
     }
 
 
@@ -153,9 +176,15 @@ public class Bullet : FieldObject
     /// Bullet의 상태를 갱신합니다. 매 프레임마다 Emitter에 의해 Update됩니다.
     /// </summary>
     /// <param name="dt">Scaled된 DeltaTime.</param>
-    public void OnUpdate(float dt)
+    public void Update()
     {
+        if (!IsActive) return;
+
+        float dt = Time.deltaTime * SimulationSpeed;
+
         Move(dt);
+
+        ApplyEffectors();
 
         if (EnableCollision)
         {
@@ -163,15 +192,23 @@ public class Bullet : FieldObject
         }
 
         remainingLifetime -= dt;
+        if (remainingLifetime <= 0)
+        {
+            Dispose();
+        }
     }
 
 
     /// <summary>
     /// Emitter가 이 Bullet 객체의 사용을 종료하고, Pool로 반환하기 전에 호출됩니다.
     /// </summary>
-    public void OnDispose()
+    public void Dispose()
     {
+        if (!IsActive) return;
 
+        Effectors = null;
+        Pool.Dispose(PooledObject);
+        IsActive = false;
     }
 
 
@@ -300,6 +337,19 @@ public class Bullet : FieldObject
 
         Angle = Vector2.SignedAngle(Vector2.right, velocity.normalized);
         Speed = velocity.magnitude;
+    }
+
+
+    /// <summary>
+    /// 각 Bullet에 Effector 효과를 적용합니다.
+    /// </summary>
+    /// <param name="bullet"></param>
+    private void ApplyEffectors()
+    {
+        foreach (var effector in Effectors)
+        {
+            effector.Apply(this);
+        }
     }
 
 }
