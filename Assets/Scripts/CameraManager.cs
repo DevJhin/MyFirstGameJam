@@ -77,12 +77,12 @@ public class CameraManager : MonoBehaviour
     private bool initialized;
 
     //Screen Shake Variables
-    private float _shakeTimeRemaining;
-    private float _shakePower;
-    private float _shakeFadeTime;
-    private float _shakeRotation;
-    private float _rotationMultiplier;
-    private bool _isRotating;
+    private float shakeTimeRemaining;
+    private float shakePower;
+    private float shakeFadeTime;
+    private float shakeRotation;
+    private float rotationMultiplier;
+    private bool isRotating;
 
     void Awake()
     {
@@ -160,22 +160,22 @@ public class CameraManager : MonoBehaviour
 
     //LateUpdate에서 실행
     private void ScreenShake() {
-        if (_shakeTimeRemaining > 0) {
-            _shakeTimeRemaining -= Time.deltaTime;
+        if (shakeTimeRemaining > 0) {
+            shakeTimeRemaining -= Time.deltaTime;
             //Random shake 방향
-            float xAmount = Random.Range(-0.1f, 0.1f) * _shakePower;
-            float yAmount = Random.Range(-0.1f, 0.1f) * _shakePower;
+            float xAmount = Random.Range(-0.1f, 0.1f) * shakePower;
+            float yAmount = Random.Range(-0.1f, 0.1f) * shakePower;
             //Transform XY + Rotation Z 움직임
             transform.position += new Vector3(xAmount, yAmount, 0);
-            transform.rotation = Quaternion.Euler(0, 0, _shakeRotation * Random.Range(-1, 1));
+            transform.rotation = Quaternion.Euler(0, 0, shakeRotation * Random.Range(-1, 1));
             //Shake timer 줄면서 shake power도 줄게됨
-            _shakePower = Mathf.MoveTowards(_shakePower, 0, _shakeFadeTime * Time.deltaTime);
-            _shakeRotation = Mathf.MoveTowards(_shakeRotation, 0, _shakeFadeTime * _rotationMultiplier * Time.deltaTime);
+            shakePower = Mathf.MoveTowards(shakePower, 0, shakeFadeTime * Time.deltaTime);
+            shakeRotation = Mathf.MoveTowards(shakeRotation, 0, shakeFadeTime * rotationMultiplier * Time.deltaTime);
         }
         //Rotation reset
-        else if (_isRotating) {
+        else if (isRotating) {
             transform.rotation = Quaternion.Euler(0, 0, 0);
-            _isRotating = false;
+            isRotating = false;
         }
     }
 
@@ -187,12 +187,12 @@ public class CameraManager : MonoBehaviour
     /// <param name="power"></param>
     /// <param name="rotPower"></param>
     public void StartShake(float length, float power, float rotPower) {
-        _shakeTimeRemaining = length;
-        _shakePower = power;
-        _shakeFadeTime = power / length;
-        _rotationMultiplier = rotPower;
-        _shakeRotation = power * _rotationMultiplier;
-        _isRotating = true;
+        shakeTimeRemaining = length;
+        shakePower = power;
+        shakeFadeTime = power / length;
+        rotationMultiplier = rotPower;
+        shakeRotation = power * rotationMultiplier;
+        isRotating = true;
     }
 
     struct FocusArea
