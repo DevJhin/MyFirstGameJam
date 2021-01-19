@@ -7,13 +7,14 @@ using UnityEngine.InputSystem;
 /// <summary>
 /// Controller class for Player.
 /// </summary>
-public class PlayerController : FieldObjectController
+public class PlayerController : FieldObjectController, IDisposable
 {
     private Player player;
 
     private InputAction moveAction;
     private InputAction jumpAction;
     private InputAction attackAction;
+    private InputAction interactAction;
 
     private readonly static string InputActionAssetPath = "InputSystem/InputSettings";
 
@@ -49,28 +50,53 @@ public class PlayerController : FieldObjectController
         }
 
         var playerActionMap = inputActionAsset.FindActionMap("Player");
-
+        
         moveAction = playerActionMap.FindAction("Move");
         jumpAction = playerActionMap.FindAction("Jump");
         attackAction = playerActionMap.FindAction("Attack");
-
+        interactAction = playerActionMap.FindAction("Interact");
         //Input Binding 작업.
+        BindAcitons();
+        EnableInput();
+    }
+
+    
+    public void OnPlayerUpdate()
+    {
+
+
+    }
+
+
+    /// <summary>
+    /// Input을 binding 합니다.
+    /// </summary>
+    private void BindAcitons()
+    {
         moveAction.performed += OnMoveActionPressed;
         moveAction.canceled += OnMoveActionReleased;
 
         jumpAction.performed += OnJumpActionPressed;
         jumpAction.canceled += OnJumpActionReleased;
-        
-        attackAction.performed += OnAttackAction;
 
-        EnableInput();
+        attackAction.performed += OnAttackAction;
+        interactAction.performed += OnInteractAction;
     }
 
 
-    public void OnPlayerUpdate()
+    /// <summary>
+    /// Input을 Unblind 합니다.
+    /// </summary>
+    private void UnbindActions()
     {
+        moveAction.performed -= OnMoveActionPressed;
+        moveAction.canceled -= OnMoveActionReleased;
 
+        jumpAction.performed -= OnJumpActionPressed;
+        jumpAction.canceled -= OnJumpActionReleased;
 
+        attackAction.performed -= OnAttackAction;
+        interactAction.performed -= OnInteractAction;
     }
 
 
@@ -82,6 +108,7 @@ public class PlayerController : FieldObjectController
         moveAction.Enable();
         jumpAction.Enable();
         attackAction.Enable();
+        interactAction.Enable();
     }
 
 
@@ -93,6 +120,7 @@ public class PlayerController : FieldObjectController
         moveAction.Disable();
         jumpAction.Disable();
         attackAction.Disable();
+        interactAction.Disable();
     }
 
 
@@ -156,5 +184,23 @@ public class PlayerController : FieldObjectController
     {
         player.Behavior.Attack();
         Debug.Log("Action 'Attack' Invoked!");
+    }
+
+
+    /// <summary>
+    /// InteractAction에 대한 Binding 함수
+    /// </summary>
+    private void OnInteractAction(InputAction.CallbackContext obj)
+    {
+        player.Behavior.Interact();
+        Debug.Log("Action 'Interact' Invoked!");
+    }
+
+    /// <summary>
+    /// 캐릭터가 삭제되었을 때, 반드시 Unbind해서 Dangling Listener를 막아야 함.
+    /// </summary>
+    public void Dispose()
+    {
+        UnbindActions();
     }
 }

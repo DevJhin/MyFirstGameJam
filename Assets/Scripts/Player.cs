@@ -33,7 +33,13 @@ public class Player : FieldObject, IEventListener
     /// </summary>
     public BattleAction AttackBattleAction;
 
+    /// <summary>
+    /// Interact 커맨드 입력시, 실행할 BattleAction.
+    /// </summary>
+    public BattleAction InteractBattleAction;
+
     public BattleActionBehaviour AttackBattleActionBehaviour;
+    public BattleActionBehaviour InteractActionBehaviour;
 
     void Awake()
     {
@@ -41,6 +47,7 @@ public class Player : FieldObject, IEventListener
         Controller = new PlayerController(this);
 
         AttackBattleActionBehaviour = BattleActionBehaviourFactory.Create(AttackBattleAction, this);
+        InteractActionBehaviour = BattleActionBehaviourFactory.Create(InteractBattleAction, this);
     }
 
     private void Update()
@@ -71,5 +78,13 @@ public class Player : FieldObject, IEventListener
         CurrentHP -= damageEvent.damageInfo.amount;
 
         SetAnimation("hurt");
+    }
+
+    /// <summary>
+    /// 플레이어 GameObject가 Destroy 되었을 때 실행합니다.
+    /// </summary>
+    private void OnDestroy()
+    {
+        Controller.Dispose();
     }
 }

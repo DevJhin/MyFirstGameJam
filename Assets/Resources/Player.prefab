@@ -193,6 +193,7 @@ MonoBehaviour:
   jumpCheckTimer: 0.15
   raycastLength: 0.03
   AttackBattleAction: {fileID: 11400000, guid: 6df7b3ba7a02e964f928350659ae4900, type: 2}
+  InteractBattleAction: {fileID: 11400000, guid: aaee2512e58f83b43bc13e8f948f5e7d, type: 2}
 --- !u!212 &8664868082914798699
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -163,6 +163,16 @@ public class PlayerBehavior : FieldObjectBehaviour{
         CameraManager.Instance.StartShake(0.4f, 0.4f, 0.3f);
     }
 
+
+    /// <summary>
+    /// Player의 Interact BattleAction을 실행합니다.
+    /// </summary>
+    public void Interact()
+    {
+        player.InteractActionBehaviour.Start();
+    }
+
+
     //Ground Check
     private bool IsGrounded()
     {

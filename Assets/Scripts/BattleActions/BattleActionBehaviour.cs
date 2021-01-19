@@ -12,9 +12,11 @@ public abstract class BattleActionBehaviour
     /// </summary>
     public bool IsActive = false;
 
+    protected FieldObject owner;
+
     public BattleActionBehaviour(BattleAction ba, FieldObject owner)
     {
-
+        this.owner = owner;
     }
 
     /// <summary>
@@ -46,6 +48,8 @@ public static class BattleActionBehaviourFactory
         {
             case "SlashActionBehaviour":
                 return new SlashActionBehaviour(ba, owner);
+            case "InteractActionBehaviour":
+                return new InteractActionBehaviour(ba, owner);
             default:
                 Debug.LogError("Wrong BattleAction Name");
                 return null;
