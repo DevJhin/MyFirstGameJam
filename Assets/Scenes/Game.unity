@@ -236,7 +236,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LoadMapDirectly: 1
-  LoadMapName: Test
+  LoadMapName: Test2
 --- !u!4 &83121865
 Transform:
   m_ObjectHideFlags: 0
@@ -288,10 +288,10 @@ MonoBehaviour:
   yFolowDuration: 0.2
   focusAreaSize: {x: 1, y: 1}
   targetFocusBoundSize: 0.5
-  leftLimit: -5
-  rightLimit: 6
-  bottomLimit: 3
-  topLimit: 7
+  leftLimit: -100
+  rightLimit: 100
+  bottomLimit: -100
+  topLimit: 100
 --- !u!4 &661542326
 Transform:
   m_ObjectHideFlags: 0
