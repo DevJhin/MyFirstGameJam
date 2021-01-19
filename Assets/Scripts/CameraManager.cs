@@ -1,6 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 /// <summary>
 /// 카메라 로직들은 전부 여기서 조작
@@ -45,7 +48,7 @@ public class CameraManager : MonoBehaviour
     /// 카메라가 타겟을 따라가기 시작하는 카메라와 타겟의 거리 XY
     /// </summary>
     public Vector2 focusAreaSize;
-    
+
     /// <summary>
     /// 따라다니는 타겟의 Bound
     /// </summary>
@@ -56,11 +59,17 @@ public class CameraManager : MonoBehaviour
     /// </summary>
     public float targetFocusBoundSize = 0.5f;
 
+    /// <summary>
+    /// 화면 전환 이펙트 조절
+    /// </summary>
+    private SimplePostFX transitionFX;
+
     [Header("Camera Boundaries")]
     /// <summary>
     /// 카메라 Boundaries
     /// </summary>
     public float leftLimit;
+
     public float rightLimit;
     public float bottomLimit;
     public float topLimit;
@@ -96,6 +105,8 @@ public class CameraManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        transitionFX = GetComponentInChildren<SimplePostFX>();
     }
 
     void OnDestroy()
@@ -132,41 +143,56 @@ public class CameraManager : MonoBehaviour
     }
 
     //LateUpdate에서 실행
-    private void Follow() {
+    private void Follow()
+    {
+        // 타겟 없으면 안 따라감.
+        if (FollowTarget == null)
+            return;
+
         targetFocusBound.center = FollowTarget.position;
         targetFocusBound.size = new Vector3(targetFocusBoundSize, targetFocusBoundSize, 1);
         focusArea.Update(targetFocusBound);
         Vector2 focusPosition = focusArea.centre + Vector2.up * verticalOffset;
-        if (!Mathf.Approximately(focusArea.velocity.x, 0)) {
+        if (!Mathf.Approximately(focusArea.velocity.x, 0))
+        {
             lookAheadDirX = Mathf.Sign(focusArea.velocity.x);
             float playerDirX = Mathf.Sign(FollowTarget.position.x - prevPlayerPos.x);
             prevPlayerPos = FollowTarget.position;
             if (Mathf.Approximately(playerDirX, Mathf.Sign(focusArea.velocity.x)) &&
-                !Mathf.Approximately(playerDirX, 0)) {
+                !Mathf.Approximately(playerDirX, 0))
+            {
                 lookAheadStopped = false;
                 targetLookAheadX = lookAheadDirX * lookAheadDstX;
             }
-            else {
-                if (!lookAheadStopped) {
+            else
+            {
+                if (!lookAheadStopped)
+                {
                     lookAheadStopped = true;
                     targetLookAheadX = currentLookAheadX + (lookAheadDirX * lookAheadDstX - currentLookAheadX) / 4f;
                 }
             }
         }
-        currentLookAheadX = Mathf.SmoothDamp(currentLookAheadX, targetLookAheadX, ref smoothLookVelocityX, xFollowDuration);
+
+        currentLookAheadX =
+            Mathf.SmoothDamp(currentLookAheadX, targetLookAheadX, ref smoothLookVelocityX, xFollowDuration);
         focusPosition.y = Mathf.SmoothDamp(transform.position.y, focusPosition.y, ref smoothVelocityY, yFolowDuration);
         focusPosition += Vector2.right * currentLookAheadX;
-        finalPos = (Vector3)focusPosition + Vector3.forward * -10;
+        finalPos = (Vector3) focusPosition + Vector3.forward * -10;
     }
 
     //LateUpdate에서 실행
-    private void Clamp() {
-        finalPos = new Vector3(Mathf.Clamp(finalPos.x, leftLimit, rightLimit), Mathf.Clamp(finalPos.y, bottomLimit, topLimit), finalPos.z);
+    private void Clamp()
+    {
+        finalPos = new Vector3(Mathf.Clamp(finalPos.x, leftLimit, rightLimit),
+            Mathf.Clamp(finalPos.y, bottomLimit, topLimit), finalPos.z);
     }
 
     //LateUpdate에서 실행
-    private void ScreenShake() {
-        if (shakeTimeRemaining > 0) {
+    private void ScreenShake()
+    {
+        if (shakeTimeRemaining > 0)
+        {
             shakeTimeRemaining -= Time.deltaTime;
             //Random shake 방향
             float xAmount = Random.Range(-0.1f, 0.1f) * shakePower;
@@ -179,7 +205,8 @@ public class CameraManager : MonoBehaviour
             shakeRotation = Mathf.MoveTowards(shakeRotation, 0, shakeFadeTime * rotationMultiplier * Time.deltaTime);
         }
         //Rotation reset
-        else if (isRotating) {
+        else if (isRotating)
+        {
             transform.rotation = Quaternion.Euler(0, 0, 0);
             isRotating = false;
         }
@@ -192,13 +219,19 @@ public class CameraManager : MonoBehaviour
     /// <param name="length"></param>
     /// <param name="power"></param>
     /// <param name="rotPower"></param>
-    public void StartShake(float length, float power, float rotPower) {
+    public void StartShake(float length, float power, float rotPower)
+    {
         shakeTimeRemaining = length;
         shakePower = power;
         shakeFadeTime = power / length;
         rotationMultiplier = rotPower;
         shakeRotation = power * rotationMultiplier;
         isRotating = true;
+    }
+
+    public void StartTransition(float target, float duration)
+    {
+        StartCoroutine(transitionFX.PlayFxRoutine(transitionFX.Progress, target, duration));
     }
 
     struct FocusArea
@@ -248,97 +281,4 @@ public class CameraManager : MonoBehaviour
             velocity = new Vector2(shiftX, shiftY);
         }
     }
-
-    //기존코드
-
-    /*
-    public static CameraManager Instance { get; private set; }
-
-    /// <summary>
-    /// 따라갈 타겟
-    /// </summary>
-    public Transform FollowTarget;
-
-    [Header("Camera Follow Variables")]
-
-    /// <summary>
-    /// 카메라가 타겟을 쫓아가는데 걸리는 시간
-    /// </summary>
-    public float FollowDuration = 0.05f;
-
-    /// <summary>
-    /// 카메라가 타겟을 따라가기 시작하는 카메라와 타겟의 거리 (X)
-    /// </summary>
-    public float StartFollowX = 1;
-
-    /// <summary>
-    /// 카메라가 타겟을 따라가기 시작하는 카메라와 타겟의 거리 (Y)
-    /// </summary>
-    public float StartFollowY = 1;
-
-    /// <summary>
-    /// 카메라가 움직일 방향으로 타겟보다 얼마나 떨어져있을 것인지?
-    /// </summary>
-    public float FocusDistance = 1;
-
-    /// <summary>
-    /// 디버그 모드
-    /// </summary>
-    public bool DebugMode = false;
-
-    /// <summary>
-    /// 전체적인 렌더링 담당할 메인 카메라
-    /// </summary>
-    private Camera mainCam;
-
-    /// <summary>
-    /// SmoothDamp velocity
-    /// </summary>
-    Vector3 refVel = Vector3.zero;
-
-    void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-
-        mainCam = Camera.main;
-    }
-
-    void OnDestroy()
-    {
-        Instance = null;
-    }
-
-    void LateUpdate()
-    {
-        if (DebugMode)
-        {
-
-        }
-
-        Vector3 finalPos = transform.position;
-
-        if (FollowTarget)
-        {
-            Vector3 dest = FollowTarget.position;
-            dest.z = transform.position.z;
-
-            Vector3 dampPos = Vector3.SmoothDamp(transform.position, dest, ref refVel, FollowDuration);
-
-            finalPos = dampPos;
-        }
-
-        // 위치 변경되면 그 때 업데이트
-        if (finalPos != transform.position)
-        {
-            transform.position = finalPos;
-        }
-    }
-    */
 }

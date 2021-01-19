@@ -24,11 +24,10 @@ public class Stage : IDisposable
     /// </summary>
     public GameObject PlayerObject;
 
-
     /// <summary>
     /// 생성된 플레이어 외 객체.
     /// </summary>
-    public List<GameObject> StageObjects = new List<GameObject>(); 
+    public List<GameObject> StageObjects = new List<GameObject>();
 
     public Stage(string stageName, StageData map)
     {
@@ -44,6 +43,12 @@ public class Stage : IDisposable
     {
         MessageSystem.Instance.Unsubscribe<StageLoadEvent>(OnStageLoaded);
         MessageSystem.Instance.Unsubscribe<StageUnloadEvent>(OnStageUnloaded);
+
+        LoadedMap = null;
+        PlayerObject = null;
+
+        StageObjects.Clear();
+        StageObjects = null;
     }
 
     /// <summary>
@@ -52,6 +57,7 @@ public class Stage : IDisposable
     void OnStageLoaded(IEvent e)
     {
         Debug.Log("Stage Loaded");
+        CameraManager.Instance.StartTransition(1, 1f);
 
         foreach(var data in LoadedMap.spawnDatas)
         {
@@ -59,7 +65,7 @@ public class Stage : IDisposable
             {
                 var playerResource = Resources.Load("Player");
                 var player = GameObject.Instantiate(playerResource, data.transform.position, Quaternion.identity) as GameObject;
-                
+
                 CameraManager.Instance.enabled = true;
                 CameraManager.Instance.Setup(player?.transform);
 
@@ -70,7 +76,7 @@ public class Stage : IDisposable
             {
                 var fieldObjectResource = Resources.Load(data.FieldObjectName);
                 var spawnedStageObject = GameObject.Instantiate(fieldObjectResource, data.transform.position, data.transform.rotation) as GameObject;
-                
+
                 StageObjects.Add(spawnedStageObject);
             }
 
@@ -83,10 +89,8 @@ public class Stage : IDisposable
     void OnStageUnloaded(IEvent e)
     {
         Debug.Log("Stage Unloaded");
+        CameraManager.Instance.StartTransition(0, 1f);
 
-        //FIXME: 간헐적으로 PlayMode가 종료되었을 때 NullReference 오류가 뜨는 경우가 있음.
-        //그래도 맥락상 Camera는 여기서 설정/해제하는 것이 맞는 것 같아 일단 추가.
-        CameraManager.Instance.enabled = false;
         CameraManager.Instance.FollowTarget = null;
 
         GameObject.Destroy(PlayerObject);
