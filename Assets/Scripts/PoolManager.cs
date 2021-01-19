@@ -99,8 +99,12 @@ public class Pool
     /// </summary>
     public PooledObject Instantiate(Vector3 position, Quaternion rotation)
     {
-        // 풀에 남아있는게 없으면 새로 생성
-        PooledObject pooledObject = (poolStack.Count > 0 && poolStack.Peek() != null) ? poolStack.Pop() : Create();
+        PooledObject pooledObject;
+        if (poolStack.Count > 0 && poolStack.Peek() != null)
+        {
+            Create();
+        }
+        pooledObject = poolStack.Pop();
 
         pooledObject.transform.SetPositionAndRotation(position, rotation);
         pooledObject.gameObject.SetActive(true);
