@@ -65,6 +65,8 @@ public class CameraManager : MonoBehaviour
     public float bottomLimit;
     public float topLimit;
 
+    private Vector3 finalPos;
+
     //Follow Variables
     private FocusArea focusArea;
     private Vector3 prevPlayerPos;
@@ -116,46 +118,50 @@ public class CameraManager : MonoBehaviour
     {
         if (initialized)
         {
-            targetFocusBound.center = FollowTarget.position;
-            targetFocusBound.size = new Vector3(targetFocusBoundSize, targetFocusBoundSize, 1);
+            Follow();
 
-            focusArea.Update(targetFocusBound);
-            Vector2 focusPosition = focusArea.centre + Vector2.up * verticalOffset;
-            if (!Mathf.Approximately(focusArea.velocity.x, 0))
-            {
-                lookAheadDirX = Mathf.Sign(focusArea.velocity.x);
-                float playerDirX = Mathf.Sign(FollowTarget.position.x - prevPlayerPos.x);
-                prevPlayerPos = FollowTarget.position;
-                if (Mathf.Approximately(playerDirX, Mathf.Sign(focusArea.velocity.x)) &&
-                    !Mathf.Approximately(playerDirX, 0))
-                {
-                    lookAheadStopped = false;
-                    targetLookAheadX = lookAheadDirX * lookAheadDstX;
-                }
-                else
-                {
-                    if (!lookAheadStopped)
-                    {
-                        lookAheadStopped = true;
-                        targetLookAheadX = currentLookAheadX + (lookAheadDirX * lookAheadDstX - currentLookAheadX) / 4f;
-                    }
-                }
-            }
+            Clamp();
 
-            currentLookAheadX = Mathf.SmoothDamp(currentLookAheadX, targetLookAheadX, ref smoothLookVelocityX,
-                xFollowDuration);
-            focusPosition.y =
-                Mathf.SmoothDamp(transform.position.y, focusPosition.y, ref smoothVelocityY, yFolowDuration);
-            focusPosition += Vector2.right * currentLookAheadX;
-            Vector3 finalPos = (Vector3) focusPosition + Vector3.forward * -10;
-            finalPos = new Vector3(Mathf.Clamp(finalPos.x, leftLimit, rightLimit),
-                Mathf.Clamp(finalPos.y, bottomLimit, topLimit), finalPos.z);
+            ScreenShake();
+
             if (transform.position != finalPos)
             {
                 transform.position = finalPos;
             }
         }
-        ScreenShake();
+    }
+
+    //LateUpdate에서 실행
+    private void Follow() {
+        targetFocusBound.center = FollowTarget.position;
+        targetFocusBound.size = new Vector3(targetFocusBoundSize, targetFocusBoundSize, 1);
+        focusArea.Update(targetFocusBound);
+        Vector2 focusPosition = focusArea.centre + Vector2.up * verticalOffset;
+        if (!Mathf.Approximately(focusArea.velocity.x, 0)) {
+            lookAheadDirX = Mathf.Sign(focusArea.velocity.x);
+            float playerDirX = Mathf.Sign(FollowTarget.position.x - prevPlayerPos.x);
+            prevPlayerPos = FollowTarget.position;
+            if (Mathf.Approximately(playerDirX, Mathf.Sign(focusArea.velocity.x)) &&
+                !Mathf.Approximately(playerDirX, 0)) {
+                lookAheadStopped = false;
+                targetLookAheadX = lookAheadDirX * lookAheadDstX;
+            }
+            else {
+                if (!lookAheadStopped) {
+                    lookAheadStopped = true;
+                    targetLookAheadX = currentLookAheadX + (lookAheadDirX * lookAheadDstX - currentLookAheadX) / 4f;
+                }
+            }
+        }
+        currentLookAheadX = Mathf.SmoothDamp(currentLookAheadX, targetLookAheadX, ref smoothLookVelocityX, xFollowDuration);
+        focusPosition.y = Mathf.SmoothDamp(transform.position.y, focusPosition.y, ref smoothVelocityY, yFolowDuration);
+        focusPosition += Vector2.right * currentLookAheadX;
+        finalPos = (Vector3)focusPosition + Vector3.forward * -10;
+    }
+
+    //LateUpdate에서 실행
+    private void Clamp() {
+        finalPos = new Vector3(Mathf.Clamp(finalPos.x, leftLimit, rightLimit), Mathf.Clamp(finalPos.y, bottomLimit, topLimit), finalPos.z);
     }
 
     //LateUpdate에서 실행
@@ -166,7 +172,7 @@ public class CameraManager : MonoBehaviour
             float xAmount = Random.Range(-0.1f, 0.1f) * shakePower;
             float yAmount = Random.Range(-0.1f, 0.1f) * shakePower;
             //Transform XY + Rotation Z 움직임
-            transform.position += new Vector3(xAmount, yAmount, 0);
+            finalPos += new Vector3(xAmount, yAmount, 0);
             transform.rotation = Quaternion.Euler(0, 0, shakeRotation * Random.Range(-1, 1));
             //Shake timer 줄면서 shake power도 줄게됨
             shakePower = Mathf.MoveTowards(shakePower, 0, shakeFadeTime * Time.deltaTime);
