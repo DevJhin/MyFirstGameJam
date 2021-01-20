@@ -20,7 +20,7 @@ MonoBehaviour:
     RepeatCount: 1
     RepeatInterval: 0.01
   - Action: {fileID: 11400000, guid: 5095ba9fd6c79524abfeae2ce314fac3, type: 2}
-    Delay: 2
+    Delay: 4
     Playtime: 6
     RepeatCount: 1
     RepeatInterval: 0

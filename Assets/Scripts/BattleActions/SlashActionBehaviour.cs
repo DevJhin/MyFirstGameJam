@@ -10,6 +10,11 @@ public class SlashActionBehaviour : BattleActionBehaviour
     private float currentTime = 0f;
 
     /// <summary>
+    /// BattleLayer에 이 이름을 가진 State가 있어야 함.
+    /// </summary>
+    private string SlashAnimName = "BA_Slash";
+
+    /// <summary>
     /// 생성 부분에서 배틀액션 데이터 넘겨줘서 제작
     /// </summary>
     public SlashActionBehaviour(BattleAction ba, FieldObject owner) : base(ba, owner)
@@ -17,32 +22,36 @@ public class SlashActionBehaviour : BattleActionBehaviour
         var data = ba as SlashAction;
     }
 
-    // Start is called before the first frame update
+
     public override void Start()
     {
-        Debug.Log("Started");
-
         currentTime = 0f;
         IsActive = true;
+
+        // BA 레이어 On.
+        owner.AnimController.SetLayerWeight(2, 0.75f);
+
+        // Slash 애니메이션(State) 실행.
+        owner.AnimController.Play(SlashAnimName, 2, 0f);
     }
 
-    // Update is called once per frame
+
     public override void Update()
     {
-        Debug.Log("Update");
-
         currentTime += Time.deltaTime;
 
         if (currentTime > duration)
         {
             Finish();
         }
+
     }
+    
 
     public override void Finish()
     {
-        Debug.Log("Finished");
-
+        // BA 레이어 Off.
+        owner.AnimController.SetLayerWeight(2, 0f);
         IsActive = false;
     }
 }

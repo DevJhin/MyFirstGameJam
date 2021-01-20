@@ -41,17 +41,21 @@ public class PlayerBehavior : FieldObjectBehaviour{
         ceilingReactionForceRatio = Mathf.Max(0f, player.ceilingReactionForceRatio);
     }
 
+
     public void OnPlayerUpdate()
     {
+
         if (player.Controller.TryGetMoveInput(out float value))
         {
-            player.SetAnimation("run");
             Move(value);
+            player.AnimController.SetBool("IsMoving", true);
         }
         else
 		{
             currentVelocity.x = 0f;
+            player.AnimController.SetBool("IsMoving", false);
         }
+
         UpdatePhysics();
 
         prevPos = Transform.position;
@@ -64,7 +68,6 @@ public class PlayerBehavior : FieldObjectBehaviour{
         // If Releasing Jump Button During Jump, Adjust Low JumpFallMultiplier.
         gravityScale = (!IsFalling && !player.Controller.IsJumpButtonOnRepeat) ? player.lowJumpFallMultiplier : player.fallMultiplier;
         bool isGrounded = IsGrounded();
-
         // 이전 프레임에서 높이가 변경되었는데 레이캐스트에 땅이 감지된 경우의 처리
         // 이번 프레임에 착지해야 한다면 착지시키고, 아니라면 IsGrounded()의 감지를 무시합니다.
         if (isGrounded && !Mathf.Approximately(prevPos.y, Transform.position.y))
@@ -115,18 +118,20 @@ public class PlayerBehavior : FieldObjectBehaviour{
                 airDragMultiplier = airDrag;
             }
         }
+
+        player.AnimController.SetBool("IsGrounded", isGrounded);
     }
 
     //Movement
     public void Move(float value)
     {
-        currentVelocity.x = IsSideCollided() ?
-            0f : (value * player.moveSpeed * airDragMultiplier);
+        currentVelocity.x = IsSideCollided() ? 0f : (value * player.moveSpeed * airDragMultiplier);
 
         if ((value < 0 && !facingLeft) || (value > 0 && facingLeft))
         {
             Flip();
         }
+
     }
 
     private void Flip()
@@ -147,8 +152,6 @@ public class PlayerBehavior : FieldObjectBehaviour{
         currentVelocity.y = player.jumpPower;
         jumpTimer = 0;
         isMomentumXReset = false;
-
-        player.SetAnimation("jump");
     }
 
     /// <summary>

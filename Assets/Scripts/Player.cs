@@ -48,6 +48,7 @@ public class Player : FieldObject, IEventListener
 
         AttackBattleActionBehaviour = BattleActionBehaviourFactory.Create(AttackBattleAction, this);
         InteractActionBehaviour = BattleActionBehaviourFactory.Create(InteractBattleAction, this);
+
     }
 
     private void Update()
@@ -72,13 +73,73 @@ public class Player : FieldObject, IEventListener
         return false;
     }
 
+
+    /// <summary>
+    /// 테스트: 캐릭턱 현재 무적 상태인가?
+    /// </summary>
+    public bool test_isInvinsible = false;
+
+    /// <summary>
+    /// 테스트: 피격 후 무적 상태 지속 시간.
+    /// </summary>
+    public float test_invinsibleTime = 1f;
+
+    /// <summary>
+    /// 테스트: 캐릭터가 죽은 상태인가?
+    /// </summary>
+    public bool test_isDead = false;
+
+
     void OnDamaged(DamageEvent damageEvent)
     {
+        if (test_isDead) return;
+        if (test_isInvinsible) return;
+
         // TODO: 데미지 받았을 때 처리 추가
         CurrentHP -= damageEvent.damageInfo.amount;
 
-        SetAnimation("hurt");
+        if (CurrentHP <= 0)
+        {
+            CurrentHP = 0;
+
+            
+            test_isDead = true;
+            test_isInvinsible = true;
+
+            //피격 레이어 ON.
+            AnimController.SetLayerWeight(1, 1f);
+            
+            // 죽은 상태도 업데이트 필요.
+            AnimController.SetBool("IsDead", true);
+
+            //죽으면 Controller Input을 Disable 해준다.
+            Controller.DisableInput();
+        }
+        else
+        {
+            test_isInvinsible = true;
+            //피격 레이어 On.
+            AnimController.SetLayerWeight(1, 1f);
+
+            //FIXME: 귀찮아서 Invoke 쓰긴 했는데 나중엔 바꿔야 할 듯.
+            Invoke(nameof(Test_OnInvinsibleTimeEnd), test_invinsibleTime);
+        }
     }
+
+ 
+    /// <summary>
+    /// Invinsible 시간 종료 시 실행됩니다.
+    /// </summary>
+    public void Test_OnInvinsibleTimeEnd()
+    {
+        if (test_isInvinsible)
+        {
+            test_isInvinsible = false;
+            //피격 레이어 Off.
+            AnimController.SetLayerWeight(1, 0f);
+        }
+    }
+
 
     /// <summary>
     /// 플레이어 GameObject가 Destroy 되었을 때 실행합니다.

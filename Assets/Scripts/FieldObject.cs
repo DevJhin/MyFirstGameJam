@@ -26,7 +26,7 @@ public class FieldObject : MonoBehaviour
     /// <summary>
     /// 애니메이션 조절
     /// </summary>
-    protected Animator AnimController;
+    public Animator AnimController;
 
     private void Start()
     {
