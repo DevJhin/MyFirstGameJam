@@ -39,7 +39,7 @@ public class Bullet : FieldObject
     /// <summary>
     /// Bullet을 발사한 주체.
     /// </summary>
-    public FieldObject attacker;
+    public FieldObject Attacker;
 
     /// <summary>
     /// 충돌 시 데미지.
@@ -108,10 +108,15 @@ public class Bullet : FieldObject
     /// <summary>
     /// 충돌 후에 이 객체를 Destroy할 것인가?
     /// </summary>
-    public bool DestroyAfterCollision;
+    public bool DisposeAfterCollision;
 
     /// <summary>
-    /// 
+    /// 충돌 가능 LayerMask.
+    /// </summary>
+    public LayerMask CollisionLayerMask;
+
+    /// <summary>
+    /// 시뮬레이션 속도(Timescale).
     /// </summary>
     public float SimulationSpeed;
 
@@ -253,17 +258,16 @@ public class Bullet : FieldObject
 
         if (CollisionShape == CollisionShape.Circle)
         { 
-            numColliders = Physics2D.OverlapCircleNonAlloc(transform.position, CollisionBoxScale.x, colliderBuffer);
+            numColliders = Physics2D.OverlapCircleNonAlloc(transform.position, CollisionCircleRadius, colliderBuffer, CollisionLayerMask);
         }
         else if (CollisionShape == CollisionShape.Box)
         {
-            numColliders = Physics2D.OverlapBoxNonAlloc(transform.position, CollisionBoxScale, transform.eulerAngles.z, colliderBuffer);
+            numColliders = Physics2D.OverlapBoxNonAlloc(transform.position, CollisionBoxScale, transform.eulerAngles.z, colliderBuffer, CollisionLayerMask);
         }
 
-        //FIXME: 총알에 Attacker 설정 가능하도록 할 것.
         for (int i = 0; i < numColliders; i++)
         {
-            //ProcessCollision(colliderBuffer[i]);   
+            ProcessCollision(colliderBuffer[i]);   
         }
     }
 
@@ -275,22 +279,31 @@ public class Bullet : FieldObject
     private void ProcessCollision(Collider2D collider)
     {
         FieldObject target = collider.GetComponent<FieldObject>();
+
         if (target == null)
             target = collider.GetComponentInParent<FieldObject>();
 
+
+        bool canSendDamageEvent = Attacker != null && target !=null && Attacker.EntityGroup.IsHostileTo(target.EntityGroup);
+
         // 적이면 데미지 가함
-        if (attacker.EntityGroup.IsHostileTo(target.EntityGroup))
+        if (canSendDamageEvent)
         {
             var info = new DamageInfo
             {
-                Sender = attacker,
+                Sender = Attacker,
                 Target = target,
-                amount = 10
+                amount = (int)Damage
             };
             var cmd = DamageCommand.Create(info);
             cmd.Execute();
         }
 
+        if (DisposeAfterCollision)
+        {
+            Dispose();
+            return;
+        }
     }
 
 

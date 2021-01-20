@@ -60,6 +60,16 @@ public struct BulletEmitterSpec
 	public BurstModule Burst;
 
 
+	/// <summary>
+	/// 기존에 설정된 Collision LayerMask를 무시하고, Emitter가 임의로 변경할 수 있습니까?
+	/// </summary>
+	public bool OverrideCollisionLayerMask;
+
+	/// <summary>
+	/// 충돌 LayerMask.
+	/// </summary>
+	[EnableIf("OverrideCollisionLayerMask")]
+	public LayerMask CollisionLayerMask;
 
 	/// <summary>
 	/// 매 동작마다 실행하는 Effector.

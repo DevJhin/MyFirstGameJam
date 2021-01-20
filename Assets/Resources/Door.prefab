@@ -124,5 +124,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentHP: 0
   MaxHP: 0
-  EntityGroup: 4
+  EntityGroup: 0
   NextMapName: Test2

@@ -14,7 +14,7 @@ public abstract class BattleActionBehaviour
 
     protected FieldObject owner;
 
-    public BattleActionBehaviour(BattleAction ba, FieldObject owner)
+    public BattleActionBehaviour(BattleAction action, FieldObject owner)
     {
         this.owner = owner;
     }
@@ -50,6 +50,8 @@ public static class BattleActionBehaviourFactory
                 return new SlashActionBehaviour(ba, owner);
             case "InteractActionBehaviour":
                 return new InteractActionBehaviour(ba, owner);
+            case "SpawnActionBehaviour":
+                return new SpawnActionBehaviour(ba, owner);
             default:
                 Debug.LogError("Wrong BattleAction Name");
                 return null;

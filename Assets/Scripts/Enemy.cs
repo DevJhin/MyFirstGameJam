@@ -12,9 +12,9 @@ public class Enemy : FieldObject, IEventListener
     public EnemyBehaviour Behaviour { get; private set; }
 
     /// <summary>
-    /// 실행중인 Pattern.
+    /// 실행중인 ActionSchedule.
     /// </summary>
-    public Pattern MainPattern;
+    public ActionSchedule MainActionSchedule;
 
     void Awake()
     {

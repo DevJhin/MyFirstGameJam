@@ -7,31 +7,33 @@ using Sirenix.OdinInspector;
 /// <summary>
 /// Pattern별로 실행되는 Action들을 관리하는 클래스.
 /// </summary>
-[CreateAssetMenu(menuName = "MyFirstGameJam/Pattern")]
-public class Pattern : ScriptableObject
+[CreateAssetMenu(menuName = "MyFirstGameJam/Action Schedule")]
+public class ActionSchedule : ScriptableObject
 {
+    public bool Loop;
+
     /// <summary>
     /// Pattern에서 관리하는 각 Action의 Schedule 정보 구조체.
     /// </summary>
     [System.Serializable]
-    public struct PatternActionSchedule
+    public struct ActionScheduleData
     { 
         /// <summary>
         /// 실행할 액션.
         /// </summary>
-        public PatternAction Action;
+        public BattleAction Action;
 
         /// <summary>
         /// 액션 실행 전 지연 시간.
         /// </summary>
-        [HorizontalGroup("Delay"), LabelText("Pre"), LabelWidth(25)] [MinValue(0)]
-        public float PreDelay;
+        [HorizontalGroup("Delay"), LabelText("Delay"), LabelWidth(40)] [MinValue(0)]
+        public float Delay;
 
         /// <summary>
-        /// 액션 실행 후 지연 시간.
+        /// 액션의 실행(Update) 시간.
         /// </summary>
-        [HorizontalGroup("Delay"), LabelText("Post"), LabelWidth(25)] [MinValue(0)] 
-        public float PostDelay;
+        [HorizontalGroup("Delay"), LabelText("Time"), LabelWidth(40)] [MinValue(0)]
+        public float Playtime;
 
         /// <summary>
         /// 액션 반복 실행 횟수.
@@ -45,15 +47,14 @@ public class Pattern : ScriptableObject
         [DisableIf("@this.RepeatCount < 2")][HorizontalGroup("Repeat"), LabelText("Interval"), LabelWidth(60)] 
         public float RepeatInterval;
 
+
     }
 
     /// <summary>
     /// 실행할 Action들의 Scheudle정보 목록.
     /// </summary>
     [TableList]
-    public List<PatternActionSchedule> ActionSchedules;
-
-
+    public List<ActionScheduleData> TimeTable;
 
     
 }

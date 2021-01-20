@@ -10,16 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ce36057916b226747b1e4e9e126f6f3d, type: 3}
-  m_Name: RabbitLowHpPattern
+  m_Name: RabbitSchedule
   m_EditorClassIdentifier: 
-  ActionSchedules:
-  - Action: {fileID: 11400000, guid: 6d651929c399628428ce9acb8cc106a0, type: 2}
-    PreDelay: 1.73
-    PostDelay: 2
-    RepeatCount: 4
-    RepeatInterval: 0.67
-  - Action: {fileID: 11400000, guid: b93702630d80518449f8c798e8d103df, type: 2}
-    PreDelay: 0
-    PostDelay: 0
-    RepeatCount: 10
-    RepeatInterval: 0.05
+  Loop: 1
+  TimeTable:
+  - Action: {fileID: 11400000, guid: 4a23c9a6de3ad76489c7fcf30d11da87, type: 2}
+    Delay: 4
+    Playtime: 6
+    RepeatCount: 1
+    RepeatInterval: 0.01
+  - Action: {fileID: 11400000, guid: 5095ba9fd6c79524abfeae2ce314fac3, type: 2}
+    Delay: 2
+    Playtime: 6
+    RepeatCount: 1
+    RepeatInterval: 0

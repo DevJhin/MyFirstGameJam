@@ -17,14 +17,10 @@ public class EnemyBehaviour : FieldObjectBehaviour
 
 
     /// <summary>
-    /// PatternAction을 실행합니다.
+    /// BattleAction을 실행합니다.
     /// </summary>
-    /// <param name="pattern"></param>
-    public void ExecutePatternAction(PatternAction pattern)
+    public void ExecuteBattleAction(BattleAction battleAction)
     {
-        // 지금은 Enemy객체를 전달하기 때문에, Enemy의 Transform 기준으로 총알이 발사됨.
-        // 하지만 나중에 class BulletShooter : IFieldObject 이런식으로 하나 만들어주면,
-        // 발사 중심점을 다양하게 설정할 수 있을 듯.
-        pattern.Execute(enemy);
+        battleAction.Execute(enemy);
     }
 }

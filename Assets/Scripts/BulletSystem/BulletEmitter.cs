@@ -7,12 +7,12 @@ using UnityEngine;
 /// <summary>
 /// Bullet 발사를 수행하는 FieldObject.
 /// </summary>
-public class BulletEmitter : FieldObject
+public class BulletEmitter : PatternObject
 {
 	/// <summary>
 	/// Unity OnEnable 실행과 함께 Emitter의 Play를 실행하는가?
 	/// </summary>
-	public bool PlayOnEnable = true;
+	public bool PlayOnPatternStart = true;
 
 	/// <summary>
 	/// 이 Emitter가 Stop 되었을 때 모든 Bullet을 Dispose 하는가?
@@ -25,6 +25,7 @@ public class BulletEmitter : FieldObject
 	[HideLabel, Title("Specifications")]
 	public BulletEmitterSpec_Reference spec;
 
+
 	/// <summary>
 	/// 현재 사용중인 Bullet Spec.
 	/// </summary>
@@ -35,21 +36,10 @@ public class BulletEmitter : FieldObject
 	/// </summary>
 	private float playbackTime;
 
-	private void OnEnable()
-	{
-		if (PlayOnEnable)
-		{
-			Play();
-		}
-	}
-
-	private void OnDisable()
-	{
-		if (IsPlaying)
-		{ 
-			Stop();
-		}
-	}
+	/// <summary>
+	/// 현재 이 Emitter가 실행 중인가?
+	/// </summary>
+	private bool isPlaying;
 
 
 	/// <summary>
@@ -57,8 +47,28 @@ public class BulletEmitter : FieldObject
 	/// </summary>
 	public bool IsPlaying
 	{
-		get; private set;
+		get=>IsPlaying;
 	}
+
+
+	public override void OnPatternStart(BulletPattern pattern)
+	{
+		if (PlayOnPatternStart)
+		{
+			Play();
+		}
+
+	}
+
+
+	public override void OnPatternFinish(BulletPattern pattern)
+	{
+		if (isPlaying)
+		{
+			Stop();
+		}
+	}
+
 
 
 	/// <summary>
@@ -67,7 +77,7 @@ public class BulletEmitter : FieldObject
 	[Button(ButtonSizes.Medium)]
 	public void Play()
 	{
-		IsPlaying = true;
+		isPlaying = true;
 
 		playbackTime = 0;
 		OnCycleResetFlag = true;
@@ -80,7 +90,7 @@ public class BulletEmitter : FieldObject
 	/// </summary>
 	public void Stop()
 	{
-		IsPlaying = false;
+		isPlaying = false;
 	}
 
 
@@ -163,11 +173,16 @@ public class BulletEmitter : FieldObject
 		bullet.Lifetime = spec.value.LifeTime;
 		bullet.Speed = spec.value.StartSpeed;
 		bullet.Effectors = spec.value.Effectors;
+		bullet.Attacker = OwnerPattern.SpawnOwner;
+
+		if (spec.value.OverrideCollisionLayerMask)
+		{
+			bullet.CollisionLayerMask = spec.value.CollisionLayerMask;
+		}
+
 		LocateBullet(bullet);
 
 		bullet.OnStart();
-
-		Debug.Log("Emit");
 	}
 
 	/// <summary>
@@ -188,15 +203,26 @@ public class BulletEmitter : FieldObject
 	/// </summary>
 	private Bullet GetBulletFromSpec()
 	{
-		var poolObject = PoolManager.GetOrCreate(spec.value.BulletSpec.PrefabName).Instantiate(Vector3.zero, Quaternion.identity);
+		var bulletSpec = spec.value.BulletSpec;
+		var pooledObject = PoolManager.GetOrCreate(bulletSpec.PrefabName, bulletSpec.InitialPoolSize).Instantiate(Vector3.zero, Quaternion.identity);
 
-		Bullet bullet = poolObject.gameObject.GetComponent<Bullet>();
+		Bullet bullet = pooledObject.gameObject.GetComponent<Bullet>();
 		if (bullet == null)
 		{
 			Debug.LogError("생성된 poolObject가 Bullet Component를 가지지 않습니다.");
 			return null;
 		}
 
+		//BulletSpec 값으로 초기화. 
+		bullet.Damage = bulletSpec.Damage;
+
+		bullet.CollisionShape = bulletSpec.CollisionShape;
+		bullet.CollisionBoxScale = bulletSpec.CollisionBoxScale;
+		bullet.CollisionCircleRadius = bulletSpec.CollisionCircleRadius;
+
+		bullet.DisposeAfterCollision = bulletSpec.DisposeAfterCollision;
+		bullet.CollisionLayerMask = bulletSpec.CollisionLayerMask;
+		
 		return bullet;
 	}
 

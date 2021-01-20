@@ -10,10 +10,10 @@ using UnityEngine;
 [Serializable]
 public enum EntityGroup
 {
-    None = 0,
-    Friend = 1,
-    Enemy = 2,
-    Neutral = 4,
+    None =    0,
+    Friend =  1,
+    Enemy =   2,
+    Neutral = 4
 }
 
 /// <summary>
@@ -29,7 +29,7 @@ public static class EntityGroupHelper
     /// <returns></returns>
     public static bool IsFriendly(this EntityGroup owner, EntityGroup target)
     {
-        return (owner & target) != 0;
+        return !IsHostileTo(owner,target);
     }
 
     /// <summary>
@@ -40,6 +40,6 @@ public static class EntityGroupHelper
     /// <returns></returns>
     public static bool IsHostileTo(this EntityGroup owner, EntityGroup target)
     {
-        return (owner & target) == 0;
+        return (owner!=0 ) && (target != 0) && ((owner & target) == 0);
     }
 }
