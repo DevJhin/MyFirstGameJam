@@ -177,8 +177,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd6cbe187d40d6241b7df49f24e1a384, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentHP: 5
-  MaxHP: 5
+  CurrentHP: 10
+  MaxHP: 10
   EntityGroup: 1
   AnimController: {fileID: 0}
   groundLayerMask:
@@ -195,6 +195,9 @@ MonoBehaviour:
   raycastLength: 0.03
   AttackBattleAction: {fileID: 11400000, guid: 6df7b3ba7a02e964f928350659ae4900, type: 2}
   InteractBattleAction: {fileID: 11400000, guid: aaee2512e58f83b43bc13e8f948f5e7d, type: 2}
+  test_isInvinsible: 0
+  test_invinsibleTime: 1
+  test_isDead: 0
 --- !u!212 &8664868082914798699
 SpriteRenderer:
   m_ObjectHideFlags: 0

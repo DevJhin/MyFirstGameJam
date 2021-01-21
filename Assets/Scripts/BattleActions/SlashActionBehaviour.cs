@@ -4,9 +4,16 @@ using UnityEngine;
 
 public class SlashActionBehaviour : BattleActionBehaviour
 {
-    // FIXME: 데이터로 받아오게 하던지 알아서 처리할 것 임시로 만들었음.
-    private float duration = 0.3f;
 
+    /// <summary>
+    /// SlashAction의 데이터.
+    /// </summary>
+    private SlashAction data;
+
+
+    /// <summary>
+    /// Start 실행 후 동작 시간.
+    /// </summary>
     private float currentTime = 0f;
 
     /// <summary>
@@ -14,12 +21,18 @@ public class SlashActionBehaviour : BattleActionBehaviour
     /// </summary>
     private string SlashAnimName = "BA_Slash";
 
+
+    /// <summary>
+    /// 이번 실행에서 데미지를 전달한 FieldObject 리스트. 
+    /// </summary> 이번 실행에서 데미지를 전달한 FieldObject 리스트. 
+    ///<remarks>한 번 공격에 1회 이상 피격당하는 상황을 방지하기 위함.</remarks>
+    private List<FieldObject> attackedEntityList = new List<FieldObject>();
     /// <summary>
     /// 생성 부분에서 배틀액션 데이터 넘겨줘서 제작
     /// </summary>
     public SlashActionBehaviour(BattleAction ba, FieldObject owner) : base(ba, owner)
     {
-        var data = ba as SlashAction;
+        data = ba as SlashAction;
     }
 
 
@@ -33,6 +46,8 @@ public class SlashActionBehaviour : BattleActionBehaviour
 
         // Slash 애니메이션(State) 실행.
         owner.AnimController.Play(SlashAnimName, 2, 0f);
+        attackedEntityList.Clear();
+
     }
 
 
@@ -40,18 +55,81 @@ public class SlashActionBehaviour : BattleActionBehaviour
     {
         currentTime += Time.deltaTime;
 
-        if (currentTime > duration)
+        ProcessCollision();
+
+
+        if (currentTime > data.duration)
         {
             Finish();
         }
 
     }
-    
+
 
     public override void Finish()
     {
+        if (!IsActive) return;
+
         // BA 레이어 Off.
         owner.AnimController.SetLayerWeight(2, 0f);
         IsActive = false;
+
+        attackedEntityList.Clear();
     }
+
+
+    /// <summary>
+    /// 충돌 및 데미지 이벤트 전달을 처리합니다.
+    /// </summary>
+    public void ProcessCollision()
+    {
+        Vector2 point = owner.transform.position;
+        Vector2 forward = owner.transform.right;
+
+        var hitInfos = Physics2D.CircleCastAll(point, data.Radius, forward, data.CircleCastDistance, data.CollideLayerMask.value);
+
+        float halfAngle = data.Angle * 0.5f;
+
+        foreach (var hitInfo in hitInfos)
+        {
+            //범위(Angle) 내에서 충돌이 발생한 Collider만 충돌로 판정해야 한다.
+            Vector2 dir = (hitInfo.point - point).normalized;
+            float angle = Vector2.Angle(forward, dir);
+
+            bool withinRange = angle < halfAngle;
+
+            if (withinRange)
+            {
+                //범위 내 Collider인 경우, 충돌 이벤트 처리.
+                FieldObject target = hitInfo.collider.GetComponent<FieldObject>();
+                if (target == null)
+                    target = hitInfo.collider.GetComponentInParent<FieldObject>();
+
+
+                if (target != null && !attackedEntityList.Contains(target))
+                {
+                    // 적이면 데미지 가함
+                    if (owner.EntityGroup.IsHostileTo(target.EntityGroup))
+                    {
+                        var info = new DamageInfo
+                        {
+                            Sender = owner,
+                            Target = target,
+                            amount = data.Damage
+                        };
+                        var cmd = DamageCommand.Create(info);
+                        cmd.Execute();
+
+                        attackedEntityList.Add(target);
+
+                    }
+                }
+
+            }
+        }
+
+        //GLDebug.DrawSector(new Circle(point, Radius, forward), Angle, DebugColor, 1f);
+    }
+
 }
+

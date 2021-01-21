@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using System;
+
 /// <summary>
 /// 배틀액션 행동 구현 부분
 /// </summary>
-public abstract class BattleActionBehaviour
+public abstract class BattleActionBehaviour : IDisposable
 {
     /// <summary>
     /// 현재 스킬 실행 중인가?
@@ -33,6 +35,12 @@ public abstract class BattleActionBehaviour
     /// 끝났을 때
     /// </summary>
     public abstract void Finish();
+
+
+    public void Dispose()
+    {
+        
+    }
 }
 
 public static class BattleActionBehaviourFactory
