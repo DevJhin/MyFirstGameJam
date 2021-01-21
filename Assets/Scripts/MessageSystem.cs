@@ -63,8 +63,9 @@ public class MessageSystem : MonoBehaviour
 
     void Update()
     {
+        int subscribeRequestQueueCount = subscribeRequestQueue.Count;
         // 이벤트들은 마지막 틱에 일괄 추가 및 제거가 되게함.
-        for (int i = 0; i < subscribeRequestQueue.Count; ++i)
+        for (int i = 0; i < subscribeRequestQueueCount; ++i)
         {
             // Type이 있으면 기존 리스트에 추가
             var req = subscribeRequestQueue.Dequeue();
@@ -82,7 +83,8 @@ public class MessageSystem : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < unsubscribeRequestQueue.Count; ++i)
+        int unsubscribeRequestQueueCount = unsubscribeRequestQueue.Count;
+        for (int i = 0; i < unsubscribeRequestQueueCount; ++i)
         {
             // Type이 있으면 기존 리스트에서 제거
             var req = unsubscribeRequestQueue.Dequeue();
