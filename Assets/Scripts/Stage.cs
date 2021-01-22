@@ -94,7 +94,7 @@ public class Stage : IDisposable
                 var player = GameObject.Instantiate(playerResource, data.transform.position, Quaternion.identity) as GameObject;
                 PlayerFieldObject = player.GetComponent<FieldObject>();
 
-                var hpBar = UIManager.Instance.LoadUI<UI_PlayerHpBar>();
+                var hpBar = UIManager.Instance.LoadUI<UIPlayerHpBar>();
                 hpBar.SetPlayer(player.GetComponent<Player>());
 
                 CameraManager.Instance.enabled = true;
