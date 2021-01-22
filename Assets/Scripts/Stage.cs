@@ -66,6 +66,9 @@ public class Stage : IDisposable
                 var playerResource = Resources.Load("Player");
                 var player = GameObject.Instantiate(playerResource, data.transform.position, Quaternion.identity) as GameObject;
 
+                var hpBar = UIManager.Instance.LoadUI<UI_PlayerHpBar>();
+                hpBar.SetPlayer(player.GetComponent<Player>());
+
                 CameraManager.Instance.enabled = true;
                 CameraManager.Instance.Setup(player?.transform);
 
@@ -99,6 +102,8 @@ public class Stage : IDisposable
         {
             GameObject.Destroy(stageObject);
         }
+
+        UIManager.Instance.Clear();
 
         GameObject.Destroy(LoadedMap.gameObject);
 

@@ -28,6 +28,34 @@ public class Utility
 
         return (component != null) ? component : obj.AddComponent<T>();
     }
+
+    /// <summary>
+    /// 입력한 이름의 자식 오브젝트를 찾아서 T 타입의 컴포넌트를 반환합니다.  
+    /// UI Canvas 생성 시 산하 요소를 탐색하여 바인딩할 때 사용됩니다.
+    /// </summary>
+    /// <returns>타입이 GameObject일 경우 오브젝트를 반환하며, 그 외에는 오브젝트에 붙어 있는 T 타입의 컴포넌트를 반환합니다. 없을 경우 null을 반환합니다. 탐색에 실패한 경우 null을 반환합니다.</returns>
+	public static T FindChild<T>(GameObject parent, string name) where T : Object
+	{
+		if ((parent == null) || (string.IsNullOrEmpty(name)))
+			return null;
+
+        if(typeof(T) ==typeof(GameObject))
+		{
+            Transform tr = FindChild<Transform>(parent, name);
+            if (tr == null)
+                return null;
+
+            return tr.gameObject as T;
+        }
+
+        foreach (T component in parent.GetComponentsInChildren<T>())
+        {
+            if (component.name == name)
+                return component;
+        }
+
+        return null;
+	}
 }
 
 public static class CustomUtilityExtension
