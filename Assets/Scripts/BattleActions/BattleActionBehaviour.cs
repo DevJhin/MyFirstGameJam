@@ -14,6 +14,7 @@ public abstract class BattleActionBehaviour : IDisposable
     /// </summary>
     public bool IsActive = false;
 
+
     protected FieldObject owner;
 
     public BattleActionBehaviour(BattleAction action, FieldObject owner)
@@ -37,9 +38,9 @@ public abstract class BattleActionBehaviour : IDisposable
     public abstract void Finish();
 
 
-    public void Dispose()
+    public virtual void Dispose()
     {
-        
+        owner = null;
     }
 }
 

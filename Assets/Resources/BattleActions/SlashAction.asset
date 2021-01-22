@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: SlashAction
   m_EditorClassIdentifier: 
   BattleActionBehaviourName: SlashActionBehaviour
-  Damage: 0
+  Damage: 1
   Radius: 1
-  Angle: 51.31
+  Angle: 120
   duration: 0.5
   CircleCastDistance: 0.01
   CollideLayerMask:

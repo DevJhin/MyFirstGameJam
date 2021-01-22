@@ -13,20 +13,43 @@ public class StageGate : FieldObject, IEventListener, IInteractable
     public string NextMapName;
 
     /// <summary>
-    /// 이 문이 사용되었는가?(버튼 연타로 인한 중복 Stage 전환 방지)
+    /// 이 문을 사용할 수 있는가?(버튼 연타로 인한 중복 Stage 전환 방지)
     /// </summary>
-    private bool IsUsed = false;
+    private bool IsActive = false;
+
+    public void Start()
+    {
+        MessageSystem.Instance.Subscribe<StageClearEvent>(OnStageClearEvent);
+        gameObject.SetActive(false);
+    }
+
+    public void OnDisable()
+    {
+        MessageSystem.Instance.Unsubscribe<ShieldRecoverEvent>(OnStageClearEvent);
+    }
+
+
+    /// <summary>
+    /// StageClearEvent의 Callback.
+    /// </summary>
+    public void OnStageClearEvent(IEvent e)
+    {
+        IsActive = true;
+        gameObject.SetActive(true);
+    }
+
 
 
     public bool OnEvent(IEvent e)
     {
         if (e is InteractEvent)
         {
-            if (!IsUsed)
+            if (IsActive)
             {
                 Game.Instance.UnloadCurrentStage();
                 Game.Instance.LoadStage(NextMapName);
-                IsUsed = true;
+                IsActive = false;
+
                 return true;
             }
         }

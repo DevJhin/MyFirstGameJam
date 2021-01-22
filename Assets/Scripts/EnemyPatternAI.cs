@@ -30,25 +30,27 @@ public class EnemyPatternAI : FieldObjectAI
     /// <summary>
     /// 루틴 실행을 반복 실행하는가?
     /// </summary>
-    private bool Loop;
+    private bool doLoop;
 
-
-    private bool IsPlaying;
+    /// <summary>
+    /// 루틴 실행을 활성화하는가?
+    /// </summary>
+    private bool isActive;
 
     public EnemyPatternAI(Enemy enemy)
     {
         this.enemy = enemy;
 
+        isActive = true;
+
         LoadActionSchedule();
+        ResetQueue();
     }
 
 
     public override void OnUpdate()
     {
-        if (commandQueue.Count <= 0)
-        {
-            ResetQueue();
-        }
+        if (!isActive) return;
 
         //이번에 처리할 커맨드.
         ActionCommand cmd = commandQueue.Peek();
@@ -79,14 +81,21 @@ public class EnemyPatternAI : FieldObjectAI
                 commandQueue.Dequeue();
 
                 cmd.State = CommandState.Finish;
+
             }
+        }
+
+        //Queue가 비면 루틴을 초기화할 필요가 있음.
+        if (commandQueue.Count <= 0)
+        {
+            isActive = doLoop;
+            ResetQueue();
         }
 
         //진행 시간 업데이트.
         playbackTime += Time.deltaTime;
 
     }
-
 
     /// <summary>
     /// 명령 큐 상태를 초기화하여 스케쥴을 재시작합니다.
@@ -105,7 +114,6 @@ public class EnemyPatternAI : FieldObjectAI
     public void LoadActionSchedule()
     {
         BuildTimetable();
-        ResetQueue();
     }
 
 
@@ -120,7 +128,7 @@ public class EnemyPatternAI : FieldObjectAI
         var actionScheduleDataList = enemy.MainActionSchedule.TimeTable;
 
         //루프 여부 설정
-        Loop = enemy.MainActionSchedule.Loop;
+        doLoop = enemy.MainActionSchedule.Loop;
 
         //ActionScheudule 데이터를 돌면서 필요한 명령 생성.
         float time = 0;
@@ -147,9 +155,37 @@ public class EnemyPatternAI : FieldObjectAI
 
         }
 
-
     }
 
+    /// <summary>
+    /// 사용을 정지하고 Command 상태 초기화.
+    /// </summary>
+    public void Stop()
+    {
+        isActive = false;
+
+        commandQueue.Clear();
+        foreach (var cmd in commandOrderList)
+        {
+            cmd.Reset();
+        }
+    }
+
+
+    /// <summary>
+    /// Destroy시, 모든 Command 자원을 Dispose.
+    /// </summary>
+    public override void Dispose()
+    {
+        base.Dispose();
+        isActive = false;
+
+        commandQueue.Clear();
+        foreach (var cmd in commandOrderList)
+        {
+            cmd.Dispose();
+        }
+    }
 
     /// <summary>
     ///  Action 실행에 필요한 정보를 관리하는 클래스.
@@ -187,7 +223,7 @@ public class EnemyPatternAI : FieldObjectAI
 
         public void Dispose()
         {
-            //Behaviour Dispose가 필요할 수도 있다.
+            ActionBehaviour.Dispose();
         }
 
 
@@ -197,6 +233,11 @@ public class EnemyPatternAI : FieldObjectAI
         public void Reset()
         {
             State = CommandState.Queued;
+            
+            if (ActionBehaviour.IsActive)
+            { 
+                ActionBehaviour.Finish();
+            }
         }
 
 

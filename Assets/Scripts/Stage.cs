@@ -22,12 +22,12 @@ public class Stage : IDisposable
     /// <summary>
     /// 생성된 플레이어 객체.
     /// </summary>
-    public GameObject PlayerObject;
+    public FieldObject PlayerFieldObject;
 
     /// <summary>
     /// 생성된 플레이어 외 객체.
     /// </summary>
-    public List<GameObject> StageObjects = new List<GameObject>();
+    public List<FieldObject> StageFieldObjects = new List<FieldObject>();
 
     public Stage(string stageName, StageData map)
     {
@@ -36,19 +36,46 @@ public class Stage : IDisposable
 
         MessageSystem.Instance.Subscribe<StageLoadEvent>(OnStageLoaded);
         MessageSystem.Instance.Subscribe<StageUnloadEvent>(OnStageUnloaded);
+        MessageSystem.Instance.Subscribe<EnemyDeathEvent>(OnEnemyDeathEvent);
+        MessageSystem.Instance.Subscribe<PlayerDeathEvent>(OnPlayerDeathEvent);
     }
+    
 
     // 변수 등 모두 여기서 해제
     public void Dispose()
     {
         MessageSystem.Instance.Unsubscribe<StageLoadEvent>(OnStageLoaded);
         MessageSystem.Instance.Unsubscribe<StageUnloadEvent>(OnStageUnloaded);
+        MessageSystem.Instance.Unsubscribe<EnemyDeathEvent>(OnEnemyDeathEvent);
+        MessageSystem.Instance.Unsubscribe<PlayerDeathEvent>(OnPlayerDeathEvent);
 
-        LoadedMap = null;
-        PlayerObject = null;
+        //Dispose Player FieldObject.
+        if (PlayerFieldObject != null)
+        {
+            PlayerFieldObject.Dispose();
+            GameObject.Destroy(PlayerFieldObject.gameObject);
+            PlayerFieldObject = null;
+        }
 
-        StageObjects.Clear();
-        StageObjects = null;
+        //Dispose all StageFieldObjects.
+        foreach (var stageFieldObject in StageFieldObjects)
+        {
+            if (stageFieldObject == null) continue;
+
+            stageFieldObject.Dispose();
+            GameObject.Destroy(stageFieldObject.gameObject);
+        }
+        StageFieldObjects.Clear();
+        StageFieldObjects = null;
+
+        if (LoadedMap != null)
+        {
+            GameObject.Destroy(LoadedMap.gameObject);
+            LoadedMap = null;
+        }
+
+        UIManager.Instance.Clear();
+
     }
 
     /// <summary>
@@ -65,25 +92,24 @@ public class Stage : IDisposable
             {
                 var playerResource = Resources.Load("Player");
                 var player = GameObject.Instantiate(playerResource, data.transform.position, Quaternion.identity) as GameObject;
+                PlayerFieldObject = player.GetComponent<FieldObject>();
 
                 var hpBar = UIManager.Instance.LoadUI<UI_PlayerHpBar>();
                 hpBar.SetPlayer(player.GetComponent<Player>());
 
                 CameraManager.Instance.enabled = true;
                 CameraManager.Instance.Setup(player?.transform);
-
-                PlayerObject = player;
-
             }
             else
             {
                 var fieldObjectResource = Resources.Load(data.FieldObjectName);
-                var spawnedStageObject = GameObject.Instantiate(fieldObjectResource, data.transform.position, data.transform.rotation) as GameObject;
-
-                StageObjects.Add(spawnedStageObject);
+                var spawnedStageGameObject = GameObject.Instantiate(fieldObjectResource, data.transform.position, data.transform.rotation) as GameObject;
+                
+                StageFieldObjects.Add(spawnedStageGameObject.GetComponent<FieldObject>());
             }
 
         }
+
     }
 
     /// <summary>
@@ -92,21 +118,43 @@ public class Stage : IDisposable
     void OnStageUnloaded(IEvent e)
     {
         Debug.Log("Stage Unloaded");
-        CameraManager.Instance.StartTransition(0, 1f);
 
+        CameraManager.Instance.StartTransition(0, 1f);
         CameraManager.Instance.FollowTarget = null;
 
-        GameObject.Destroy(PlayerObject);
+    }
 
-        foreach (var stageObject in StageObjects)
+
+    void OnEnemyDeathEvent(IEvent e)
+    {
+        var deathEvent = e as EnemyDeathEvent;
+
+        var deadEnemy = deathEvent.Sender;
+
+        // 죽은 적이 보스일 경우, 스테이지 클리어 이벤트 전달. 
+        if (deadEnemy.IsBoss)
         {
-            GameObject.Destroy(stageObject);
+            MessageSystem.Instance.Publish(new StageClearEvent());
+
+
+        }
+        else
+        {
+
         }
 
-        UIManager.Instance.Clear();
+    }
 
-        GameObject.Destroy(LoadedMap.gameObject);
 
-        Dispose();
+    /// <summary>
+    /// 플레이어 사망시 전달되는 이벤트.
+    /// </summary>
+    /// <param name="e"></param>
+    void OnPlayerDeathEvent(IEvent e)
+    {
+        var deathEvent = e as PlayerDeathEvent;
+
+        //TODO: 플레이어 사망시 처리해야 하는 작업 수행.
+
     }
 }

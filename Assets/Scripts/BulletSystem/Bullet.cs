@@ -199,7 +199,7 @@ public class Bullet : FieldObject
         remainingLifetime -= dt;
         if (remainingLifetime <= 0)
         {
-            Dispose();
+            ReturnPool();
         }
     }
 
@@ -207,7 +207,7 @@ public class Bullet : FieldObject
     /// <summary>
     /// Emitter가 이 Bullet 객체의 사용을 종료하고, Pool로 반환하기 전에 호출됩니다.
     /// </summary>
-    public void Dispose()
+    public void ReturnPool()
     {
         if (!IsActive) return;
 
@@ -301,7 +301,7 @@ public class Bullet : FieldObject
 
         if (DisposeAfterCollision)
         {
-            Dispose();
+            ReturnPool();
             return;
         }
     }

@@ -41,6 +41,24 @@ public class Player : FieldObject, IEventListener
     public BattleActionBehaviour AttackBattleActionBehaviour;
     public BattleActionBehaviour InteractActionBehaviour;
 
+    /// <summary>
+    /// 캐릭터가 현재 무적 상태인가?
+    /// </summary>
+    public bool IsInvinsible = false;
+
+    /// <summary>
+    /// 피격 후 무적 상태 지속 시간.
+    /// </summary>
+    public float test_invinsibleTime = 1f;
+
+    /// <summary>
+    /// 캐릭터가 죽은 상태인가?
+    /// </summary>
+    public bool IsDead = false;
+
+
+
+
     void Awake()
     {
         Behavior = new PlayerBehavior(this);
@@ -65,6 +83,8 @@ public class Player : FieldObject, IEventListener
     {
         if (e is DamageEvent)
         {
+            if (IsDead) return false;
+
             DamageEvent damageEvent = e as DamageEvent;
             OnDamaged(damageEvent);
             return true;
@@ -73,27 +93,15 @@ public class Player : FieldObject, IEventListener
         return false;
     }
 
-
     /// <summary>
-    /// 테스트: 캐릭턱 현재 무적 상태인가?
+    /// 플레이어가 데미지 이벤트를 받았을 때 실행.
     /// </summary>
-    public bool test_isInvinsible = false;
-
-    /// <summary>
-    /// 테스트: 피격 후 무적 상태 지속 시간.
-    /// </summary>
-    public float test_invinsibleTime = 1f;
-
-    /// <summary>
-    /// 테스트: 캐릭터가 죽은 상태인가?
-    /// </summary>
-    public bool test_isDead = false;
-
+    /// <param name="damageEvent"></param>
 
     void OnDamaged(DamageEvent damageEvent)
     {
-        if (test_isDead) return;
-        if (test_isInvinsible) return;
+        // 무적상태라면 데미지 처리 무시.
+        if (IsInvinsible) return;
 
         // TODO: 데미지 받았을 때 처리 추가
         CurrentHP -= damageEvent.damageInfo.amount;
@@ -102,39 +110,60 @@ public class Player : FieldObject, IEventListener
         {
             CurrentHP = 0;
 
-            
-            test_isDead = true;
-            test_isInvinsible = true;
+            CurrentHP = 0;
+            IsDead = true;
+        }
 
-            //피격 레이어 ON.
-            AnimController.SetLayerWeight(1, 1f);
-            
-            // 죽은 상태도 업데이트 필요.
-            AnimController.SetBool("IsDead", true);
 
-            //죽으면 Controller Input을 Disable 해준다.
-            Controller.DisableInput();
+        if (IsDead)
+        {
+            OnDeath();
         }
         else
         {
-            test_isInvinsible = true;
-            //피격 레이어 On.
+            //피격후 무적 샃태로으로 설정.
+            IsInvinsible = true;
+
+            //피격 애니메이션 실행.
             AnimController.SetLayerWeight(1, 1f);
 
+            //일정 시간후, 무적상태 OFF시킨다.
             //FIXME: 귀찮아서 Invoke 쓰긴 했는데 나중엔 바꿔야 할 듯.
             Invoke(nameof(Test_OnInvinsibleTimeEnd), test_invinsibleTime);
         }
     }
 
- 
+
+    /// <summary>
+    /// 플레이어 사망시 1회 호출되는 함수.
+    /// </summary>
+    private void OnDeath()
+    {
+        // 사망상태 애니메이션 업데이트.
+        AnimController.SetLayerWeight(1, 1f);
+        AnimController.SetBool("IsDead", true);
+
+        //죽으면 Controller Input을 Disable 해준다.
+        Controller.DisableInput();
+
+        //플레이어 사망 이벤트 전달.
+        var deathEvent = new PlayerDeathEvent()
+        {
+        };
+
+        ///사망 이벤트 전달.
+        MessageSystem.Instance.Publish(deathEvent);
+    }
+
+
     /// <summary>
     /// Invinsible 시간 종료 시 실행됩니다.
     /// </summary>
     public void Test_OnInvinsibleTimeEnd()
     {
-        if (test_isInvinsible)
+        if (IsInvinsible)
         {
-            test_isInvinsible = false;
+            IsInvinsible = false;
             //피격 레이어 Off.
             AnimController.SetLayerWeight(1, 0f);
         }
@@ -144,8 +173,12 @@ public class Player : FieldObject, IEventListener
     /// <summary>
     /// 플레이어 GameObject가 Destroy 되었을 때 실행합니다.
     /// </summary>
-    private void OnDestroy()
+    public override void Dispose()
     {
+        base.Dispose();
         Controller.Dispose();
+
+        AttackBattleActionBehaviour.Dispose();
+        InteractActionBehaviour.Dispose();
     }
 }

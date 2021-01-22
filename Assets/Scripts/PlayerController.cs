@@ -199,7 +199,7 @@ public class PlayerController : FieldObjectController, IDisposable
     /// <summary>
     /// 캐릭터가 삭제되었을 때, 반드시 Unbind해서 Dangling Listener를 막아야 함.
     /// </summary>
-    public void Dispose()
+    public override void Dispose()
     {
         UnbindActions();
     }

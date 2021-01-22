@@ -43,9 +43,10 @@ public class FieldObject : MonoBehaviour, IDisposable
     }
 
 
-    public void Dispose()
+    public virtual void Dispose()
     {
 
     }
+
 
 }

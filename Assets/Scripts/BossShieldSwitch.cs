@@ -11,7 +11,6 @@ using UnityEngine;
 public class BossShieldSwitch : FieldObject
 {
     
-    public SpriteRenderer renderer;
 
     /// <summary>
     /// 이 Switch 기믹에 사용되는 EventTrigger.
@@ -23,20 +22,25 @@ public class BossShieldSwitch : FieldObject
     /// </summary>
     public bool IsActive { get; private set; }
 
+    private SpriteRenderer shieldRenderer;
 
     public void Start()
     {
+        shieldRenderer = GetComponentInChildren<SpriteRenderer>();
+
         EnableSwitch();
 
         MessageSystem.Instance.Subscribe<TriggerEvent>(OnTriggerEvent);
         MessageSystem.Instance.Subscribe<ShieldRecoverEvent>(OnShieldRecoverEvent);
+        MessageSystem.Instance.Subscribe<StageClearEvent>(OnStageClearEvent);
     }
 
 
     public void OnDisable()
     {
-        MessageSystem.Instance.Subscribe<TriggerEvent>(OnTriggerEvent);
+        MessageSystem.Instance.Unsubscribe<TriggerEvent>(OnTriggerEvent);
         MessageSystem.Instance.Unsubscribe<ShieldRecoverEvent>(OnShieldRecoverEvent);
+        MessageSystem.Instance.Unsubscribe<StageClearEvent>(OnStageClearEvent);
     }
 
 
@@ -51,11 +55,11 @@ public class BossShieldSwitch : FieldObject
 
     }
 
+
     /// <summary>
     /// TriggerEvent의 Callback. 피격당하면 비활성화상태로 변경.
     /// </summary>
     /// <param name="e"></param>
-
     public void OnTriggerEvent(IEvent e)
     {
         if (!IsActive) return;
@@ -73,6 +77,19 @@ public class BossShieldSwitch : FieldObject
 
 
     /// <summary>
+    /// StageClearEvent의 Callback. 완전 비활성화 되었음을 알리기 위해 임시로 검정으로 변경.
+    /// </summary>
+    public void OnStageClearEvent(IEvent e)
+    {
+        DisableSwitch();
+
+        shieldRenderer.color = Color.black;
+
+    }
+
+
+
+    /// <summary>
     /// 스위치를 활성화(때려야 되는) 상태로 만듭니다.
     /// </summary>
     public void EnableSwitch()
@@ -80,7 +97,7 @@ public class BossShieldSwitch : FieldObject
         IsActive = true;
         owningEventTrigger.IsActive = true;
 
-        renderer.color = Color.blue;
+        shieldRenderer.color = Color.blue;
     }
 
 
@@ -92,7 +109,7 @@ public class BossShieldSwitch : FieldObject
         IsActive = false;
         owningEventTrigger.IsActive = false;
 
-        renderer.color = Color.red;
+        shieldRenderer.color = Color.red;
     }
 
 

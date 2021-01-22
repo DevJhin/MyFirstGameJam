@@ -24,23 +24,27 @@ public class BossShield : FieldObject
     public float ShieldRecoveryTime;
 
 
-    [SerializeField] private SpriteRenderer renderer;
-
+    private SpriteRenderer bodyRendrerer;
+    private Collider2D bodyCollider;
 
     
 
     public void Start()
     {
-        IsActive = true;
-        CurrentHP = MaxHP;
+        bodyRendrerer = GetComponentInChildren<SpriteRenderer>();
+        bodyCollider = GetComponentInChildren<Collider2D>();
 
+        RecoverShield();
+       
         MessageSystem.Instance.Subscribe<ShieldSwitchOffEvent>(OnShieldSwitchOffEvent);
+        MessageSystem.Instance.Subscribe<StageClearEvent>(OnStageClearEvent);
     }
 
 
     public void OnDisable()
     {
         MessageSystem.Instance.Unsubscribe<ShieldSwitchOffEvent>(OnShieldSwitchOffEvent);
+        MessageSystem.Instance.Unsubscribe<StageClearEvent>(OnStageClearEvent);
     }
 
 
@@ -70,23 +74,62 @@ public class BossShield : FieldObject
     }
 
 
-    public void RecoverShield()
+    /// <summary>
+    /// StageClearEvent의 Callback. 실드 작동을 정지해야 함.
+    /// </summary>
+    public void OnStageClearEvent(IEvent e)
     {
-        IsActive = true;
-        CurrentHP = MaxHP;
+        //실드 재생을 즉시 중단하고 비활성화시켜야 한다.
+        DisableShield();
 
-        //실드가 회복되었다는 이벤트를 뿌린다.
-        MessageSystem.Instance.Publish(new ShieldRecoverEvent());
-
-        renderer.enabled = true;
     }
 
 
+    /// <summary>
+    /// 보스의 실드를 복구하는 동작을 수행.
+    /// </summary>
+    public void RecoverShield()
+    {
+        if (OwnerEnemy.IsDead) return;
+
+        IsActive = true;
+        CurrentHP = MaxHP;
+
+        //적 개체를 다시 무적으로 설정.
+        OwnerEnemy.IsInvinsible = true;
+        
+        //실드가 회복되었다는 이벤트를 뿌린다.
+        MessageSystem.Instance.Publish(new ShieldRecoverEvent());
+
+        bodyRendrerer.enabled = true;
+        bodyCollider.enabled = true;
+    }
+
+
+    /// <summary>
+    /// 보스의 실드를 비활성화한다.
+    /// </summary>
     public void DisableShield()
     {
         IsActive = false;
 
-        renderer.enabled = false;
+        //적 개체의 무적상태를 비활성화.
+        OwnerEnemy.IsInvinsible = false;
+
+        bodyRendrerer.enabled = false;
+        bodyCollider.enabled = false;
+    }
+
+
+    public override void Dispose()
+    {
+        base.Dispose();
+
+        OwnerEnemy = null;
+
+        bodyRendrerer = null;
+        bodyCollider = null;
+
     }
 
 

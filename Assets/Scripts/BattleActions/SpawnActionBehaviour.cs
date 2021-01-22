@@ -76,11 +76,15 @@ public class SpawnActionBehaviour : BattleActionBehaviour
         {
             Debug.LogError("ISpawnable을 구현하지 않은 FieldObject는 Spawn할 수 없습니다 ");
             pool.Dispose(asPooledObject);
+
+            asPooledObject = null;
             return;
         }
 
         asSpawnedObject.SpawnOwner = owner;
         asSpawnedObject.OnSpawn(owner);
+
+        IsActive = true;
 
     }
 
@@ -96,12 +100,30 @@ public class SpawnActionBehaviour : BattleActionBehaviour
     /// </summary>
     public override void Finish()
     {
-        asSpawnedObject.OnDespawn();
-        PoolManager.GetOrCreate(PrefabName).Dispose(asPooledObject);
-        
-        asSpawnedObject = null;
-        asPooledObject = null;
+        if (asSpawnedObject != null)
+        { 
+            asSpawnedObject.OnDespawn();
+            asSpawnedObject = null;
+        }
+
+        if (asPooledObject != null)
+        {
+            PoolManager.GetOrCreate(PrefabName).Dispose(asPooledObject);
+            asPooledObject = null;
+            return;
+        }
         
         IsActive = false;
     }
+
+    public override void Dispose()
+    {
+        base.Dispose();
+
+        if (IsActive)
+        {
+            Finish();
+        }
+    }
+
 }

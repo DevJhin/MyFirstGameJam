@@ -49,11 +49,13 @@ public class Game : MonoBehaviour
 
     void OnDestroy()
     {
-        if (currentStage != null)
+        Debug.Log("Game: Destroy Call");
+        
+        if (currentStage != null)   
         {
-            UnloadCurrentStage();
             currentStage.Dispose();
         }
+        
     }
 
     public void LoadStage(string stageName)
@@ -75,6 +77,8 @@ public class Game : MonoBehaviour
         {
             var stageUnloadEvent = new StageUnloadEvent();
             MessageSystem.Instance.PublishImmediate(stageUnloadEvent);
+            currentStage.Dispose();
+            currentStage = null;
         }
     }
 
