@@ -15657,15 +15657,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3917990032997720569, guid: 809b4bf8754fe2b4fa7be2f506a164c4, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.1281502
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3917990032997720569, guid: 809b4bf8754fe2b4fa7be2f506a164c4, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.7513747
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3917990032997720569, guid: 809b4bf8754fe2b4fa7be2f506a164c4, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.60575
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3917990032997720569, guid: 809b4bf8754fe2b4fa7be2f506a164c4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -15709,24 +15709,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5764360289350943976, guid: 809b4bf8754fe2b4fa7be2f506a164c4, type: 3}
       propertyPath: m_Color.a
-      value: 0.89411765
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5764360289350943976, guid: 809b4bf8754fe2b4fa7be2f506a164c4, type: 3}
       propertyPath: m_Color.b
-      value: 0.019607842
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5764360289350943976, guid: 809b4bf8754fe2b4fa7be2f506a164c4, type: 3}
       propertyPath: m_Color.g
-      value: 0.14375463
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5764360289350943976, guid: 809b4bf8754fe2b4fa7be2f506a164c4, type: 3}
       propertyPath: m_Color.r
-      value: 0.8666667
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8901808688175578670, guid: 809b4bf8754fe2b4fa7be2f506a164c4, type: 3}
       propertyPath: NextMapName
       value: Test
       objectReference: {fileID: 0}
+    - target: {fileID: 8901808688175578670, guid: 809b4bf8754fe2b4fa7be2f506a164c4, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8901808688175578670, guid: 809b4bf8754fe2b4fa7be2f506a164c4, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 809b4bf8754fe2b4fa7be2f506a164c4, type: 3}
 --- !u!4 &2803719272535091283 stripped
@@ -15745,6 +15749,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: BossShieldSwitch
       objectReference: {fileID: 0}
+    - target: {fileID: 5674923547815172286, guid: dc6c51fc7d8788044bf6950bc87cce72, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 5674923547815172286, guid: dc6c51fc7d8788044bf6950bc87cce72, type: 3}
+    - target: {fileID: 5682021775564180591, guid: dc6c51fc7d8788044bf6950bc87cce72, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 5682021775564180591, guid: dc6c51fc7d8788044bf6950bc87cce72, type: 3}
     - target: {fileID: 7376371984193808697, guid: dc6c51fc7d8788044bf6950bc87cce72, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -15807,6 +15819,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: BossShieldSwitch (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 5674923547815172286, guid: dc6c51fc7d8788044bf6950bc87cce72, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 5674923547815172286, guid: dc6c51fc7d8788044bf6950bc87cce72, type: 3}
+    - target: {fileID: 5682021775564180591, guid: dc6c51fc7d8788044bf6950bc87cce72, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 5682021775564180591, guid: dc6c51fc7d8788044bf6950bc87cce72, type: 3}
     - target: {fileID: 7376371984193808697, guid: dc6c51fc7d8788044bf6950bc87cce72, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -15869,6 +15889,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: BossShieldSwitch (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5674923547815172286, guid: dc6c51fc7d8788044bf6950bc87cce72, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 5674923547815172286, guid: dc6c51fc7d8788044bf6950bc87cce72, type: 3}
+    - target: {fileID: 5682021775564180591, guid: dc6c51fc7d8788044bf6950bc87cce72, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 5682021775564180591, guid: dc6c51fc7d8788044bf6950bc87cce72, type: 3}
     - target: {fileID: 7376371984193808697, guid: dc6c51fc7d8788044bf6950bc87cce72, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -15937,15 +15965,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3917990032997720569, guid: 809b4bf8754fe2b4fa7be2f506a164c4, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.1281502
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3917990032997720569, guid: 809b4bf8754fe2b4fa7be2f506a164c4, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.7513747
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3917990032997720569, guid: 809b4bf8754fe2b4fa7be2f506a164c4, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.60575
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3917990032997720569, guid: 809b4bf8754fe2b4fa7be2f506a164c4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -15989,24 +16017,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5764360289350943976, guid: 809b4bf8754fe2b4fa7be2f506a164c4, type: 3}
       propertyPath: m_Color.a
-      value: 0.89411765
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5764360289350943976, guid: 809b4bf8754fe2b4fa7be2f506a164c4, type: 3}
       propertyPath: m_Color.b
-      value: 0.8679245
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5764360289350943976, guid: 809b4bf8754fe2b4fa7be2f506a164c4, type: 3}
       propertyPath: m_Color.g
-      value: 0.39691636
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5764360289350943976, guid: 809b4bf8754fe2b4fa7be2f506a164c4, type: 3}
       propertyPath: m_Color.r
-      value: 0.020469915
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8901808688175578670, guid: 809b4bf8754fe2b4fa7be2f506a164c4, type: 3}
       propertyPath: NextMapName
       value: Test3
       objectReference: {fileID: 0}
+    - target: {fileID: 8901808688175578670, guid: 809b4bf8754fe2b4fa7be2f506a164c4, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8901808688175578670, guid: 809b4bf8754fe2b4fa7be2f506a164c4, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 809b4bf8754fe2b4fa7be2f506a164c4, type: 3}
 --- !u!4 &6099625514925332165 stripped
