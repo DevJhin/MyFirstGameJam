@@ -71,7 +71,12 @@ public class BossShieldSwitch : FieldObject
         if (dte.Sender == owningEventTrigger)
         {
             MessageSystem.Instance.Publish(new ShieldSwitchOffEvent());
+
+            SoundManager.Instance.PlayClipAtPoint("EnemyHurt", transform.position);
+
             DisableSwitch();
+
+
         }
     }
 
@@ -110,6 +115,7 @@ public class BossShieldSwitch : FieldObject
         owningEventTrigger.IsActive = false;
 
         shieldRenderer.color = Color.red;
+
     }
 
 

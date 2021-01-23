@@ -16,7 +16,7 @@ MonoBehaviour:
   Damage: 1
   Radius: 1
   Angle: 180
-  duration: 0.5
+  duration: 0.4
   CircleCastDistance: 0.01
   CollideLayerMask:
     serializedVersion: 2
