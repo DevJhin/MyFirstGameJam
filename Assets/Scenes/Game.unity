@@ -133,7 +133,6 @@ GameObject:
   m_Component:
   - component: {fileID: 15747513}
   - component: {fileID: 15747515}
-  - component: {fileID: 15747514}
   - component: {fileID: 15747516}
   - component: {fileID: 15747517}
   m_Layer: 0
@@ -157,14 +156,6 @@ Transform:
   m_Father: {fileID: 661542326}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!81 &15747514
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 15747512}
-  m_Enabled: 1
 --- !u!20 &15747515
 Camera:
   m_ObjectHideFlags: 0
@@ -909,5 +900,23 @@ PrefabInstance:
       propertyPath: serializationData.Prefab
       value: 
       objectReference: {fileID: 7972478871486960333, guid: 8488e90e2d2cde64ba87fb061dae141f, type: 3}
+    - target: {fileID: 7972478871486960333, guid: 8488e90e2d2cde64ba87fb061dae141f, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7972478871486960333, guid: 8488e90e2d2cde64ba87fb061dae141f, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[0]
+      value: '"path":"sound.{\"BgmGame1\"}.volume","value":{"$id":0,"$type":"System.Single,
+        mscorlib",0.3}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 7972478871486960333, guid: 8488e90e2d2cde64ba87fb061dae141f, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[1]
+      value: '"path":"sound.{\"EnemyHurt\"}.volume","value":{"$id":0,"$type":"System.Single,
+        mscorlib",1}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 7972478871486960333, guid: 8488e90e2d2cde64ba87fb061dae141f, type: 3}
+      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8488e90e2d2cde64ba87fb061dae141f, type: 3}

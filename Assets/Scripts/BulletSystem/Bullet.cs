@@ -125,7 +125,7 @@ public class Bullet : FieldObject, IEventListener
     /// </summary>
     public float SimulationSpeed;
 
-   
+
     /*Private Fields*/
 
     /// <summary>
@@ -169,6 +169,16 @@ public class Bullet : FieldObject, IEventListener
         Pool = PoolManager.GetOrCreate(PooledObject.OriginalObjectName);
     }
 
+    private void OnEnable()
+    {
+        MessageSystem.Instance.Subscribe<StageClearEvent>(OnStageClearEvent);
+    }
+
+    private void OnDisable()
+    {
+        MessageSystem.Instance.Unsubscribe<StageClearEvent>(OnStageClearEvent);
+    }
+
 
     /// <summary>
     /// BulletEmitter가 Bullet을 Emit하면서 사용을 시작했을 때 실행됩니다.
@@ -178,6 +188,7 @@ public class Bullet : FieldObject, IEventListener
         birthTime = Time.time;
         remainingLifetime = Lifetime;
         IsActive = true;
+
     }
 
 
@@ -218,12 +229,7 @@ public class Bullet : FieldObject, IEventListener
         Effectors = null;
         Pool.Dispose(PooledObject);
 
-        //Spawn VFX
         var vfxPooledObject = PoolManager.GetOrCreate("BulletVFX").Instantiate(transform.position, transform.rotation);
-
-        //var 
-
-
 
 
         IsActive = false;
@@ -251,7 +257,7 @@ public class Bullet : FieldObject, IEventListener
         Vector3 deltaPos = new Vector3(dx, dy, 0);
 
         Vector3 nextPos = transform.position + deltaPos;
-        
+
 
         if (EnableRotation)
         {
@@ -270,7 +276,7 @@ public class Bullet : FieldObject, IEventListener
         int numColliders = 0;
 
         if (CollisionShape == CollisionShape.Circle)
-        { 
+        {
             numColliders = Physics2D.OverlapCircleNonAlloc(transform.position, CollisionCircleRadius, colliderBuffer, CollisionLayerMask);
         }
         else if (CollisionShape == CollisionShape.Box)
@@ -280,7 +286,7 @@ public class Bullet : FieldObject, IEventListener
 
         for (int i = 0; i < numColliders; i++)
         {
-            ProcessCollision(colliderBuffer[i]);   
+            ProcessCollision(colliderBuffer[i]);
         }
     }
 
@@ -297,7 +303,7 @@ public class Bullet : FieldObject, IEventListener
             target = collider.GetComponentInParent<FieldObject>();
 
 
-        bool canSendDamageEvent = Attacker != null && target !=null && Attacker.EntityGroup.IsHostileTo(target.EntityGroup);
+        bool canSendDamageEvent = Attacker != null && target != null && Attacker.EntityGroup.IsHostileTo(target.EntityGroup);
 
         // 적이면 데미지 가함
         if (canSendDamageEvent)
@@ -382,9 +388,17 @@ public class Bullet : FieldObject, IEventListener
     {
         if (e is DamageEvent)
         {
+            SoundManager.Instance.PlayClipAtPoint("PlayerDeflect", transform.position);
+
             ReturnPool();
             return true;
         }
         return false;
     }
+
+    public void OnStageClearEvent(IEvent e)
+    {
+        ReturnPool();
+    }
+
 }

@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 6199094300933551896}
   - component: {fileID: 6199094300933552103}
   m_Layer: 0
-  m_Name: BulletMissile
+  m_Name: BulletMissile 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -152,7 +152,7 @@ MonoBehaviour:
         Enabled: 1
         LayoutMode: 0
         Count: 45
-        SpreadAngle: 180
+        SpreadAngle: 52
         Spacing: -0.26
         XCount: 5
         YCount: 5
