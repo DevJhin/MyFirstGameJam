@@ -75,6 +75,8 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 81885c9cfbcdaa7488b25d3d38840179, type: 3}
     - {fileID: 8300000, guid: 5f9b7df249ae9b14286ab1d2fe5298d8, type: 3}
     - {fileID: 8300000, guid: 9ad44e6abb95f734ea6793af04618195, type: 3}
+    - {fileID: 8300000, guid: 677ba2b7761e20744bf6ba239ee63f76, type: 3}
+    - {fileID: 8300000, guid: b0862543ecea61b499450bfc0fc5f23a, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -93,7 +95,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 26
+      Data: 28
     - Name: 
       Entry: 7
       Data: 
@@ -570,7 +572,7 @@ MonoBehaviour:
       Data: 22
     - Name: volume
       Entry: 4
-      Data: 1
+      Data: 0.3
     - Name: 
       Entry: 8
       Data: 
@@ -631,6 +633,48 @@ MonoBehaviour:
     - Name: clip
       Entry: 10
       Data: 25
+    - Name: volume
+      Entry: 4
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: FireOff
+    - Name: $v
+      Entry: 7
+      Data: 28|SoundManager+Sound, Assembly-CSharp
+    - Name: clip
+      Entry: 10
+      Data: 26
+    - Name: volume
+      Entry: 4
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: PlayerShieldAttack2
+    - Name: $v
+      Entry: 7
+      Data: 29|SoundManager+Sound, Assembly-CSharp
+    - Name: clip
+      Entry: 10
+      Data: 27
     - Name: volume
       Entry: 4
       Data: 1

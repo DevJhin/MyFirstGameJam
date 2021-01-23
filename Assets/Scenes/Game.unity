@@ -902,21 +902,66 @@ PrefabInstance:
       objectReference: {fileID: 7972478871486960333, guid: 8488e90e2d2cde64ba87fb061dae141f, type: 3}
     - target: {fileID: 7972478871486960333, guid: 8488e90e2d2cde64ba87fb061dae141f, type: 3}
       propertyPath: serializationData.PrefabModifications.Array.size
-      value: 2
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 7972478871486960333, guid: 8488e90e2d2cde64ba87fb061dae141f, type: 3}
       propertyPath: serializationData.PrefabModifications.Array.data[0]
+      value: '"path":"sound","add_keys":{"$id":0,"$type":"System.Object[], mscorlib","$rlength":5,"$rcontent":[{"$id":1,"$type":"System.String,
+        mscorlib","FireOff"},$iref:1,{"$id":2,"$type":"System.String, mscorlib","PlayerShieldAttack2"},$iref:1,$iref:2]},"remove_keys":null'
+      objectReference: {fileID: 0}
+    - target: {fileID: 7972478871486960333, guid: 8488e90e2d2cde64ba87fb061dae141f, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[1]
       value: '"path":"sound.{\"BgmGame1\"}.volume","value":{"$id":0,"$type":"System.Single,
         mscorlib",0.3}'
       objectReference: {fileID: 0}
     - target: {fileID: 7972478871486960333, guid: 8488e90e2d2cde64ba87fb061dae141f, type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[1]
+      propertyPath: serializationData.PrefabModifications.Array.data[2]
       value: '"path":"sound.{\"EnemyHurt\"}.volume","value":{"$id":0,"$type":"System.Single,
         mscorlib",1}'
       objectReference: {fileID: 0}
     - target: {fileID: 7972478871486960333, guid: 8488e90e2d2cde64ba87fb061dae141f, type: 3}
-      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.size
-      value: 0
+      propertyPath: serializationData.PrefabModifications.Array.data[3]
+      value: '"path":"sound.{\"FireOff\"}","value":{"$id":0,"$type":"SoundManager+Sound,
+        Assembly-CSharp","clip":$eref:0,"volume":1}'
       objectReference: {fileID: 0}
+    - target: {fileID: 7972478871486960333, guid: 8488e90e2d2cde64ba87fb061dae141f, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[4]
+      value: '"path":"sound.{\"FireOff\"}.clip","value":$eref:0'
+      objectReference: {fileID: 0}
+    - target: {fileID: 7972478871486960333, guid: 8488e90e2d2cde64ba87fb061dae141f, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[5]
+      value: '"path":"sound.{\"FireOff\"}.volume","value":{"$id":0,"$type":"System.Single,
+        mscorlib",1}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 7972478871486960333, guid: 8488e90e2d2cde64ba87fb061dae141f, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[6]
+      value: '"path":"sound.{\"PlayerShieldAttack2\"}","value":{"$id":0,"$type":"SoundManager+Sound,
+        Assembly-CSharp","clip":$eref:1,"volume":1}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 7972478871486960333, guid: 8488e90e2d2cde64ba87fb061dae141f, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[7]
+      value: '"path":"sound.{\"PlayerShieldAttack2\"}.clip","value":$eref:1'
+      objectReference: {fileID: 0}
+    - target: {fileID: 7972478871486960333, guid: 8488e90e2d2cde64ba87fb061dae141f, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[8]
+      value: '"path":"sound.{\"PlayerShieldAttack2\"}.volume","value":{"$id":0,"$type":"System.Single,
+        mscorlib",1}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 7972478871486960333, guid: 8488e90e2d2cde64ba87fb061dae141f, type: 3}
+      propertyPath: serializationData.ReferencedUnityObjects.Array.size
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: 7972478871486960333, guid: 8488e90e2d2cde64ba87fb061dae141f, type: 3}
+      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7972478871486960333, guid: 8488e90e2d2cde64ba87fb061dae141f, type: 3}
+      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 677ba2b7761e20744bf6ba239ee63f76, type: 3}
+    - target: {fileID: 7972478871486960333, guid: 8488e90e2d2cde64ba87fb061dae141f, type: 3}
+      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: b0862543ecea61b499450bfc0fc5f23a, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8488e90e2d2cde64ba87fb061dae141f, type: 3}
