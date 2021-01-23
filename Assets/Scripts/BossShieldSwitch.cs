@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// BossShield를 비활성화하기 위해 사용되는 Switch 기믹. 
+/// BossShield를 비활성화하기 위해 사용되는 Switch 기믹.
 /// 플레이어가 공격하면 비활성화 되어 Shield의 체력을 깎는 이벤트를 Publish 합니다.
 /// 실드가 재생되면 다시 활성화됩니다.
 /// </summary>
 
 public class BossShieldSwitch : FieldObject
 {
-    
+
 
     /// <summary>
     /// 이 Switch 기믹에 사용되는 EventTrigger.
@@ -23,6 +23,11 @@ public class BossShieldSwitch : FieldObject
     public bool IsActive { get; private set; }
 
     private SpriteRenderer shieldRenderer;
+
+    /// <summary>
+    /// 불 이펙트
+    /// </summary>
+    public GameObject fireParticle;
 
     public void Start()
     {
@@ -50,7 +55,7 @@ public class BossShieldSwitch : FieldObject
     public void OnShieldRecoverEvent(IEvent e)
     {
         if (IsActive) return;
-        
+
         EnableSwitch();
 
     }
@@ -88,8 +93,6 @@ public class BossShieldSwitch : FieldObject
     {
         DisableSwitch();
 
-        shieldRenderer.color = Color.black;
-
     }
 
 
@@ -102,7 +105,7 @@ public class BossShieldSwitch : FieldObject
         IsActive = true;
         owningEventTrigger.IsActive = true;
 
-        shieldRenderer.color = Color.blue;
+        fireParticle.SetActive(true);
     }
 
 
@@ -114,7 +117,7 @@ public class BossShieldSwitch : FieldObject
         IsActive = false;
         owningEventTrigger.IsActive = false;
 
-        shieldRenderer.color = Color.red;
+        fireParticle.SetActive(false);
 
     }
 
