@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,10 +18,22 @@ public class StageGate : FieldObject, IEventListener, IInteractable
     /// </summary>
     private bool IsActive = false;
 
+    /// <summary>
+    /// 바꿔치기할 스프라이트 딕셔너리들
+    /// </summary>
+    [SerializeField] public Dictionary<string, Sprite> spriteDictionary = new Dictionary<string, Sprite>();
+
+    private SpriteRenderer spriteRenderer;
+
+    private void Awake()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
     public void Start()
     {
         MessageSystem.Instance.Subscribe<StageClearEvent>(OnStageClearEvent);
-        gameObject.SetActive(false);
+        spriteRenderer.sprite = spriteDictionary["close"];
     }
 
     public void OnDisable()
@@ -28,17 +41,14 @@ public class StageGate : FieldObject, IEventListener, IInteractable
         MessageSystem.Instance.Unsubscribe<ShieldRecoverEvent>(OnStageClearEvent);
     }
 
-
     /// <summary>
     /// StageClearEvent의 Callback.
     /// </summary>
     public void OnStageClearEvent(IEvent e)
     {
         IsActive = true;
-        gameObject.SetActive(true);
+        spriteRenderer.sprite = spriteDictionary["open"];
     }
-
-
 
     public bool OnEvent(IEvent e)
     {
