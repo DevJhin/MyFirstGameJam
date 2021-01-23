@@ -122,6 +122,7 @@ GameObject:
   - component: {fileID: 5248455726152613225}
   - component: {fileID: 8664868082914798699}
   - component: {fileID: 1736339771759752468}
+  - component: {fileID: -8508819563625594029}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -177,6 +178,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd6cbe187d40d6241b7df49f24e1a384, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: AttackBattleActionBehaviour
+      Entry: 6
+      Data: 
+    - Name: InteractActionBehaviour
+      Entry: 6
+      Data: 
   CurrentHP: 10
   MaxHP: 10
   EntityGroup: 1
@@ -200,7 +216,7 @@ MonoBehaviour:
   IsDead: 0
   bounds:
     m_Center: {x: 0, y: 3, z: 0}
-    m_Extent: {x: 0.5, y: 0.5, z: 0}
+    m_Extent: {x: 0.3, y: 0.3, z: 0}
 --- !u!212 &8664868082914798699
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -271,3 +287,11 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!81 &-8508819563625594029
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5248455726152613221}
+  m_Enabled: 1
