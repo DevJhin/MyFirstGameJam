@@ -136,7 +136,7 @@ MonoBehaviour:
   spec:
     useValue: 1
     _value:
-      BulletSpec: {fileID: 11400000, guid: 9edd7e83534baf0458ac0496ed9d3aa7, type: 2}
+      BulletSpec: {fileID: 11400000, guid: ca9f948effe31b2498006737b2805c8a, type: 2}
       Duration: 3
       StartSpeed: 8
       LifeTime: 3

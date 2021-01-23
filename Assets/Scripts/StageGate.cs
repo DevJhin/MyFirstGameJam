@@ -38,7 +38,7 @@ public class StageGate : FieldObject, IEventListener, IInteractable
 
     public void OnDisable()
     {
-        MessageSystem.Instance.Unsubscribe<StageClearEvent>(OnStageClearEvent);
+        MessageSystem.Instance.Unsubscribe<ShieldRecoverEvent>(OnStageClearEvent);
     }
 
     /// <summary>
@@ -70,6 +70,6 @@ public class StageGate : FieldObject, IEventListener, IInteractable
     public override void Dispose()
     {
         base.Dispose();
-        MessageSystem.Instance.Unsubscribe<StageClearEvent>(OnStageClearEvent);
+        MessageSystem.Instance.Unsubscribe<ShieldRecoverEvent>(OnStageClearEvent);
     }
 }

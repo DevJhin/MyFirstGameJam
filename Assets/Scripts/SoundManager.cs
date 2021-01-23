@@ -1,4 +1,4 @@
-ï»¿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
@@ -7,14 +7,14 @@ public class SoundManager : SerializedMonoBehaviour {
 
     public static SoundManager Instance { get; private set; }
 
-    //ì˜¤ë””ì˜¤í´ë¦½ë§ˆë‹¤ ìŒëŸ‰ì„ ë¯¸ë¦¬ Inspectorì—ì„œ ì„¸íŒ…
+    //¿Àµğ¿ÀÅ¬¸³¸¶´Ù À½·®À» ¹Ì¸® Inspector¿¡¼­ ¼¼ÆÃ
     [System.Serializable]
     public class Sound {
         public AudioClip clip;
         public float volume;
     }
 
-    //ì˜¤ë”˜ì‚¬ìš©
+    //¿Àµò»ç¿ë
     [SerializeField]
     public Dictionary<string, Sound> sound = new Dictionary<string, Sound>();
 
@@ -39,7 +39,7 @@ public class SoundManager : SerializedMonoBehaviour {
     //SFX CONTROLS
 
     /// <summary>
-    /// ìê¸° ì˜¤ë””ì˜¤ì†ŒìŠ¤ ì“¸ë•Œ PlayOneShot()
+    /// ÀÚ±â ¿Àµğ¿À¼Ò½º ¾µ¶§ PlayOneShot()
     /// </summary>
     /// <param name="source"></param>
     /// <param name="name"></param>
@@ -49,7 +49,7 @@ public class SoundManager : SerializedMonoBehaviour {
     //OR audioSource.PlayOneShot(SoundManager.Instance.sound[string].clip, float volume);
 
     /// <summary>
-    /// ìê¸° ì˜¤ë””ì˜¤ì†ŒìŠ¤ ì“¸ë•Œ Play()
+    /// ÀÚ±â ¿Àµğ¿À¼Ò½º ¾µ¶§ Play()
     /// </summary>
     /// <param name="source"></param>
     /// <param name="name"></param>
@@ -61,7 +61,7 @@ public class SoundManager : SerializedMonoBehaviour {
     }
 
     /// <summary>
-    /// SoundManager ì˜¤ë””ì˜¤ì†ŒìŠ¤ ì“¸ë•Œ PlayOneShot()
+    /// SoundManager ¿Àµğ¿À¼Ò½º ¾µ¶§ PlayOneShot()
     /// </summary>
     /// <param name="name"></param>
     public void PlayOneShotThere(string name) {
@@ -69,7 +69,7 @@ public class SoundManager : SerializedMonoBehaviour {
     }
 
     /// <summary>
-    /// SoundManager ì˜¤ë””ì˜¤ì†ŒìŠ¤ ì“¸ë•Œ Play()
+    /// SoundManager ¿Àµğ¿À¼Ò½º ¾µ¶§ Play()
     /// </summary>
     /// <param name="name"></param>
     public void PlayThere(string name) {
@@ -80,14 +80,14 @@ public class SoundManager : SerializedMonoBehaviour {
     }
 
     /// <summary>
-    /// SoundManager ì˜¤ë””ì˜¤ì†ŒìŠ¤ ì“¸ë•Œ Pause()
+    /// SoundManager ¿Àµğ¿À¼Ò½º ¾µ¶§ Pause()
     /// </summary>
     public void PauseThere() {
         sfxAudioSource.Pause();
     }
 
     /// <summary>
-    /// SoundManager ì˜¤ë””ì˜¤ì†ŒìŠ¤ ì“¸ë•Œ Stop()
+    /// SoundManager ¿Àµğ¿À¼Ò½º ¾µ¶§ Stop()
     /// </summary>
     public void StopThere() {
         sfxAudioSource.Stop();

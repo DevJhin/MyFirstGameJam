@@ -18,7 +18,7 @@ MonoBehaviour:
   CollisionShape: 0
   CollisionBoxScale: {x: 0, y: 0}
   CollisionCircleRadius: 0.15
-  DisposeAfterCollision: 0
+  DisposeAfterCollision: 1
   CollisionLayerMask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 192

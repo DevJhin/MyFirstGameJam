@@ -113,8 +113,6 @@ public class Stage : IDisposable
 
         }
 
-        SoundManager.Instance.ChangeBgm("BgmGame1");
-
     }
 
     /// <summary>

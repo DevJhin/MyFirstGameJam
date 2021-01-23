@@ -71,8 +71,6 @@ public class Enemy : FieldObject, IEventListener
         // 적이 무적상태라면 데미지 처리 무시.
         if (IsInvinsible)
         {
-
-            SoundManager.Instance.PlayClipAtPoint("PlayerShieldAttack", transform.position);
             Debug.Log($"나 {gameObject.name}, 무적이지롱.");
             return;
         }
@@ -102,7 +100,6 @@ public class Enemy : FieldObject, IEventListener
             //TODO: 적의 피격 사운드, VFX 등 작업 구현할 수 있을 것.
 
             //AnimController.SetBool("IsHurting", true);
-            SoundManager.Instance.PlayClipAtPoint("EnemyHurt", transform.position);
             Debug.Log($"나 {gameObject.name}, 체력 {CurrentHP + finalDamage} => {CurrentHP}.");
         }
 
@@ -132,6 +129,7 @@ public class Enemy : FieldObject, IEventListener
         gameObject.SetActive(false);
         Debug.Log($"나 {gameObject.name}, 여기서 죽다.");
     }
+
 
 
     public override void Dispose()
