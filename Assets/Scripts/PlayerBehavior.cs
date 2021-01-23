@@ -161,9 +161,6 @@ public class PlayerBehavior : FieldObjectBehaviour{
     {
         //player.AttackBattleAction.Execute(player);
         player.AttackBattleActionBehaviour.Start();
-
-        //임시로 추가
-        CameraManager.Instance.StartShake(0.4f, 0.4f, 0.3f);
     }
 
 
