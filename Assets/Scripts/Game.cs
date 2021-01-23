@@ -45,6 +45,10 @@ public class Game : MonoBehaviour
         {
             LoadStage(LoadMapName);
         }
+        else
+        {
+            UIManager.Instance.LoadUI<UIStartMenu>("UIStartMenu");
+        }
     }
 
     void OnDestroy()

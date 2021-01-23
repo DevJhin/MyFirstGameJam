@@ -67,4 +67,6 @@ public abstract class UIBase : MonoBehaviour
 		else
 			return null;
 	}
+
+	protected Button GetButton(int index) => Get<Button>(index);
 }
