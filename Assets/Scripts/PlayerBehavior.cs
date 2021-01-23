@@ -68,22 +68,14 @@ public class PlayerBehavior : FieldObjectBehaviour{
         // If Releasing Jump Button During Jump, Adjust Low JumpFallMultiplier.
         gravityScale = (!IsFalling && !player.Controller.IsJumpButtonOnRepeat) ? player.lowJumpFallMultiplier : player.fallMultiplier;
         bool isGrounded = IsGrounded();
-        // 이전 프레임에서 높이가 변경되었는데 레이캐스트에 땅이 감지된 경우의 처리
-        // 이번 프레임에 착지해야 한다면 착지시키고, 아니라면 IsGrounded()의 감지를 무시합니다.
-        if (isGrounded && !Mathf.Approximately(prevPos.y, Transform.position.y))
-        {
-            // 낙하 중이고 내 위치보다 낮은 땅이 감지되면 착지합니다.
-            if(IsFalling && lastGroundPoint.point.y < Transform.position.y - (colliderExtents.y * 0.5f))
-			{
-                Transform.position = new Vector2(Transform.position.x, lastGroundPoint.point.y + colliderExtents.y);
-            }
-			else
-			{
-                isGrounded = false;
-            }
-        }
+        
         if(isGrounded)
 		{
+            // 이전 프레임에서 높이가 변경되었는데 레이캐스트에 땅이 감지된 경우, 플레이어를 지형에 착지시킵니다.
+            if (!Mathf.Approximately(prevPos.y, Transform.position.y))
+            {
+                Transform.position = new Vector2(Transform.position.x, lastGroundPoint.point.y + colliderExtents.y);
+            }
             //Reset Multiplier
             airDragMultiplier = 1;
             currentVelocity.y = 0f;
@@ -125,7 +117,8 @@ public class PlayerBehavior : FieldObjectBehaviour{
     //Movement
     public void Move(float value)
     {
-        currentVelocity.x = IsSideCollided() ? 0f : (value * player.moveSpeed * airDragMultiplier);
+        float moveValue = value * player.moveSpeed * airDragMultiplier;
+        currentVelocity.x = IsSideCollided(moveValue) ? 0f : moveValue;
 
         if ((value < 0 && !facingLeft) || (value > 0 && facingLeft))
         {
@@ -176,9 +169,15 @@ public class PlayerBehavior : FieldObjectBehaviour{
     //Ground Check
     private bool IsGrounded()
     {
-        // Temp: 콜라이더 외곽 부분의 자연스러운 처리를 위해 캐릭터의 가로 1/6, 3/6, 5/6 지점에서만 아래쪽 지형을 체크합니다.
-        Vector3 delta = -(Transform.right / 3);
-        float velocityY = Mathf.Max(0f, (currentVelocity.y + gravityScale) * Time.deltaTime);
+        // Temp: 콜라이더 외곽 부분의 자연스러운 처리를 위해 캐릭터의 가로 1/4, 2/4, 3/4 지점에서만 아래쪽 지형을 체크합니다.
+        Vector3 delta = -(Transform.right / 4);
+        float velocityY = Mathf.Approximately(currentVelocity.y, 0f) ? 
+            player.raycastLength : Mathf.Max(player.raycastLength, (-currentVelocity.y + gravityScale) * Time.deltaTime);
+
+        Debug.DrawRay(Transform.position, Vector2.down * (colliderExtents.y + velocityY), Color.yellow, 3f);
+        Debug.DrawRay(Transform.position + (Transform.right / 3), Vector2.down * (colliderExtents.y + velocityY), Color.red, 3f);
+        Debug.DrawRay(Transform.position - (Transform.right / 3), Vector2.down * (colliderExtents.y + velocityY), Color.red, 3f);
+
         for (int i = 0; i < 3; i++)
 		{
             RaycastHit2D hit = Physics2D.Raycast(Transform.position + delta, Vector2.down, colliderExtents.y + velocityY, player.groundLayerMask);
@@ -187,18 +186,14 @@ public class PlayerBehavior : FieldObjectBehaviour{
                 lastGroundPoint = hit;
                 return true;
 			}
-            delta += (Transform.right / 3);
+            delta += (Transform.right / 4);
         }
-
-        Debug.DrawRay(Transform.position, Vector2.down * (colliderExtents.y + velocityY), Color.yellow, 3f);
-        Debug.DrawRay(Transform.position + (Transform.right / 3), Vector2.down * (colliderExtents.y + velocityY), Color.red, 3f);
-        Debug.DrawRay(Transform.position - (Transform.right / 3), Vector2.down * (colliderExtents.y + velocityY), Color.red, 3f);
 
         return false;
     }
 
     //Side Check
-    private bool IsSideCollided()
+    private bool IsSideCollided(float moveValue)
     {
         Debug.DrawRay(Transform.position + (Vector3.up * (colliderExtents.y / 2)), Transform.right * (colliderExtents.x + player.raycastLength), Color.green, 3f);
         Debug.DrawRay(Transform.position, Transform.right * (colliderExtents.x + player.raycastLength), Color.cyan, 3f);
