@@ -100,7 +100,8 @@ public class Pool
     public PooledObject Instantiate(Vector3 position, Quaternion rotation)
     {
         PooledObject pooledObject;
-        if (poolStack.Count > 0 && poolStack.Peek() != null)
+        bool isPoolEmpty = !(poolStack.Count > 0 && poolStack.Peek() != null);
+        if (isPoolEmpty)
         {
             Create();
         }
