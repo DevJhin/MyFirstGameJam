@@ -176,12 +176,15 @@ public class PlayerBehavior : FieldObjectBehaviour{
     //Ground Check
     private bool IsGrounded()
     {
+        Debug.DrawRay(Transform.position, Vector2.down * (colliderExtents.y + player.raycastLength), Color.yellow, 3f);
+        Debug.DrawRay(Transform.position + (Transform.right / 3), Vector2.down * (colliderExtents.y + player.raycastLength), Color.red, 3f);
+        Debug.DrawRay(Transform.position - (Transform.right / 3), Vector2.down * (colliderExtents.y + player.raycastLength), Color.red, 3f);
+
         // Temp: 콜라이더 외곽 부분의 자연스러운 처리를 위해 캐릭터의 가로 1/6, 3/6, 5/6 지점에서만 아래쪽 지형을 체크합니다.
         Vector3 delta = -(Transform.right / 3);
-        float velocityY = Mathf.Max(0f, (currentVelocity.y + gravityScale) * Time.deltaTime);
         for (int i = 0; i < 3; i++)
 		{
-            RaycastHit2D hit = Physics2D.Raycast(Transform.position + delta, Vector2.down, colliderExtents.y + velocityY, player.groundLayerMask);
+            RaycastHit2D hit = Physics2D.Raycast(Transform.position + delta, Vector2.down, colliderExtents.y + (Time.deltaTime * gravityScale), player.groundLayerMask);
             if (hit)
 			{
                 lastGroundPoint = hit;
@@ -189,10 +192,6 @@ public class PlayerBehavior : FieldObjectBehaviour{
 			}
             delta += (Transform.right / 3);
         }
-
-        Debug.DrawRay(Transform.position, Vector2.down * (colliderExtents.y + velocityY), Color.yellow, 3f);
-        Debug.DrawRay(Transform.position + (Transform.right / 3), Vector2.down * (colliderExtents.y + velocityY), Color.red, 3f);
-        Debug.DrawRay(Transform.position - (Transform.right / 3), Vector2.down * (colliderExtents.y + velocityY), Color.red, 3f);
 
         return false;
     }
@@ -208,7 +207,7 @@ public class PlayerBehavior : FieldObjectBehaviour{
         Vector3 delta = Vector3.down * (colliderExtents.y / 2);
         for (int i = 0; i < 3; i++)
         {
-            if (Physics2D.Raycast(Transform.position + delta, Transform.right, colliderExtents.x + player.raycastLength, player.groundLayerMask))
+            if (Physics2D.Raycast(Transform.position + delta, Transform.right, colliderExtents.y + player.raycastLength, player.groundLayerMask))
             {
                 return true;
             }
@@ -227,9 +226,9 @@ public class PlayerBehavior : FieldObjectBehaviour{
         Debug.DrawRay(Transform.position + (Transform.right / 3), Vector2.up * colliderExtents.y * (0.75f + currentVelocity.y * Time.deltaTime), Color.red, 3f);
         Debug.DrawRay(Transform.position - (Transform.right / 3), Vector2.up * colliderExtents.y * (0.75f + currentVelocity.y * Time.deltaTime), Color.red, 3f);
 
-        // Temp: 콜라이더 외곽 부분의 자연스러운 처리를 위해 캐릭터의 가로 1/4, 2/4, 3/4 지점에서만 위쪽 지형을 체크합니다.
+        // Temp: 콜라이더 외곽 부분의 자연스러운 처리를 위해 캐릭터의 가로 1/6, 3/6, 5/6 지점에서만 위쪽 지형을 체크합니다.
         // 천장에 부딪힌 게 아니라면 점프 중에 좌우이동이 가능해야 하므로, 여기서 확인하는 높이는 IsSideCollided보다 높아야 합니다.
-        Vector3 delta = -(Transform.right / 4);
+        Vector3 delta = -(Transform.right / 3);
         for (int i = 0; i < 3; i++)
         {
             RaycastHit2D hit = Physics2D.Raycast(Transform.position + delta, Vector2.up, colliderExtents.y * (0.75f + currentVelocity.y * Time.deltaTime), player.groundLayerMask);
@@ -237,7 +236,7 @@ public class PlayerBehavior : FieldObjectBehaviour{
             {
                 return true;
             }
-            delta += (Transform.right / 4);
+            delta += (Transform.right / 3);
         }
 
         return false;
