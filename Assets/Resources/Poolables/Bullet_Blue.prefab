@@ -97,6 +97,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29e61b7d1184974478e3a3d8181eb1be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: Pool
+      Entry: 6
+      Data: 
   CurrentHP: 0
   MaxHP: 0
   EntityGroup: 0
@@ -120,6 +132,7 @@ MonoBehaviour:
   SimulationSpeed: 0
   remainingLifetime: 0
   Effectors: []
+  ExplosionFXName: FX_Bullet_Explosion_Blue
 --- !u!114 &-5591522383884657327
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,6 +146,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OriginalObjectName: Circle
+  DelayTime: 0
+  poolDisposeType: 0
 --- !u!58 &1253510267852205782
 CircleCollider2D:
   m_ObjectHideFlags: 0

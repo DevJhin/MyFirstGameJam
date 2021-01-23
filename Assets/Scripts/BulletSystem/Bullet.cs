@@ -159,6 +159,11 @@ public class Bullet : FieldObject, IEventListener
 
     private bool IsActive = false;
 
+    /// <summary>
+    /// 없어질 때 생기는 이펙트 이름
+    /// </summary>
+    public string ExplosionFXName;
+
     private void Awake()
     {
         PooledObject = GetComponent<PooledObject>();
@@ -229,7 +234,10 @@ public class Bullet : FieldObject, IEventListener
         Effectors = null;
         Pool.Dispose(PooledObject);
 
-        var vfxPooledObject = PoolManager.GetOrCreate("BulletVFX").Instantiate(transform.position, transform.rotation);
+        if (ExplosionFXName != null)
+        {
+            PoolManager.GetOrCreate(ExplosionFXName).Instantiate(transform.position, Quaternion.identity);
+        }
 
 
         IsActive = false;

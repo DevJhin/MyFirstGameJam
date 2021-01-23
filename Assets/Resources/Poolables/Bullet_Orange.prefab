@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1417388994326816485}
   - component: {fileID: -5591522383884657327}
   m_Layer: 0
-  m_Name: OrangeBullet
+  m_Name: Bullet_Orange
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -96,6 +96,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29e61b7d1184974478e3a3d8181eb1be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: Pool
+      Entry: 6
+      Data: 
   CurrentHP: 0
   MaxHP: 0
   EntityGroup: 0
@@ -104,6 +116,7 @@ MonoBehaviour:
   Attacker: {fileID: 0}
   Damage: 1
   EnableMove: 1
+  InitSpeed: 0
   EnableRotation: 0
   RotationAngularVelocity: 0
   Lifetime: 1
@@ -118,6 +131,7 @@ MonoBehaviour:
   SimulationSpeed: 0
   remainingLifetime: 0
   Effectors: []
+  ExplosionFXName: FX_Bullet_Explosion_Orange
 --- !u!114 &-5591522383884657327
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -131,3 +145,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OriginalObjectName: Circle
+  DelayTime: 0
+  poolDisposeType: 0
