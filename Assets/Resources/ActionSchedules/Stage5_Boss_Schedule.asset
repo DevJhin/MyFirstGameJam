@@ -29,3 +29,8 @@ MonoBehaviour:
     Playtime: 12
     RepeatCount: 1
     RepeatInterval: 0
+  - Action: {fileID: 11400000, guid: 7e94977ed3bf39f4abe02e24acab443a, type: 2}
+    Delay: 0.69
+    Playtime: 6
+    RepeatCount: 1
+    RepeatInterval: 0

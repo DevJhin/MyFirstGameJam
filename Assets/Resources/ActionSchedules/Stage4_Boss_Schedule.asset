@@ -14,13 +14,38 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Loop: 1
   TimeTable:
-  - Action: {fileID: 11400000, guid: ba0b6235e01b84345ab4f845d0be5bfa, type: 2}
+  - Action: {fileID: 11400000, guid: 85a3995d63d4aee4693905a7a9f6c07d, type: 2}
     Delay: 2
-    Playtime: 3
+    Playtime: 4
     RepeatCount: 1
     RepeatInterval: 0.01
-  - Action: {fileID: 11400000, guid: a5e892ddaeeb06746ab53ee4e43dadf3, type: 2}
-    Delay: 2
-    Playtime: 3
+  - Action: {fileID: 11400000, guid: cfbd87f4bef8ce540a09d0e1159e8472, type: 2}
+    Delay: 4
+    Playtime: 4
     RepeatCount: 1
     RepeatInterval: 0
+  - Action: {fileID: 11400000, guid: e6d6feeeeee1f74408b17186f67bd9e9, type: 2}
+    Delay: 2
+    Playtime: 6
+    RepeatCount: 1
+    RepeatInterval: 0
+  - Action: {fileID: 11400000, guid: 7586d995e06f7e14c86d6f50e772e577, type: 2}
+    Delay: 1
+    Playtime: 0.5
+    RepeatCount: 3
+    RepeatInterval: 0.1
+  - Action: {fileID: 11400000, guid: a37401a8e85100549b6463242e6eaaa5, type: 2}
+    Delay: 1
+    Playtime: 6
+    RepeatCount: 1
+    RepeatInterval: 0
+  - Action: {fileID: 11400000, guid: e6d6feeeeee1f74408b17186f67bd9e9, type: 2}
+    Delay: 2
+    Playtime: 6
+    RepeatCount: 1
+    RepeatInterval: 0
+  - Action: {fileID: 11400000, guid: 573dd68d1da687a43947b12afd738e85, type: 2}
+    Delay: 1
+    Playtime: 0.5
+    RepeatCount: 3
+    RepeatInterval: 0.1

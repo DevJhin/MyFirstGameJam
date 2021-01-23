@@ -10,26 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 316e65d9219aa7247a526e1eb1996cc6, type: 3}
-  m_Name: ES_LoopPattern3
+  m_Name: ES_SimpleFire 1
   m_EditorClassIdentifier: 
   Value:
-    BulletSpec: {fileID: 11400000, guid: 46086a1049cbe8f49af9735a30f4448d, type: 2}
-    Duration: 0.13
-    StartSpeed: 1.69
-    LifeTime: 4.49
+    BulletSpec: {fileID: 11400000, guid: 9edd7e83534baf0458ac0496ed9d3aa7, type: 2}
+    Duration: 2
+    StartSpeed: 1
+    LifeTime: 3
     UseSimulationSpeed: 1
     SimulationSpeed: 2.67
     OverrideStartColor: 0
     StartColor: {r: 0, g: 0, b: 0, a: 0}
     Burst:
-      Enabled: 0
-      Count: 1
-      RepeatInterval: 0.01
+      Enabled: 1
+      Count: 6
+      RepeatInterval: 0.15
     MultiShot:
-      Enabled: 0
+      Enabled: 1
       LayoutMode: 0
-      Count: 1
-      SpreadAngle: 0
+      Count: 2
+      SpreadAngle: 90
       Spacing: 0
       XCount: 0
       YCount: 0
@@ -38,5 +38,4 @@ MonoBehaviour:
     CollisionLayerMask:
       serializedVersion: 2
       m_Bits: 0
-    Effectors:
-    - {fileID: 11400000, guid: 9942735e448a53e4eb025cd8ccef7c50, type: 2}
+    Effectors: []

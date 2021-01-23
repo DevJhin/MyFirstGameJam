@@ -1,0 +1,433 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1503039251460187814
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2326698873690926276}
+  - component: {fileID: 1424883447900279546}
+  m_Layer: 0
+  m_Name: Emitter_Orange_M1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2326698873690926276
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1503039251460187814}
+  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: -0.09, y: -6.35, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1954204983798712290}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
+--- !u!114 &1424883447900279546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1503039251460187814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e235f134b366f13468ba426e3009fdab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  CurrentHP: 0
+  MaxHP: 0
+  EntityGroup: 2
+  AnimController: {fileID: 0}
+  OwnerPattern: {fileID: 1954204983798712293}
+  PlayOnPatternStart: 1
+  DisposeAllOnStop: 1
+  MaxBulletSpawnCount: 100
+  spec:
+    useValue: 0
+    _value:
+      BulletSpec: {fileID: 11400000, guid: ca9f948effe31b2498006737b2805c8a, type: 2}
+      Duration: 2
+      StartSpeed: 8
+      LifeTime: 2
+      UseSimulationSpeed: 0
+      SimulationSpeed: 0
+      OverrideStartColor: 0
+      StartColor: {r: 0, g: 0, b: 0, a: 0}
+      Burst:
+        Enabled: 1
+        Count: 4
+        RepeatInterval: 0.11
+      MultiShot:
+        Enabled: 0
+        LayoutMode: 0
+        Count: 4
+        SpreadAngle: -360
+        Spacing: 0.97
+        XCount: 5
+        YCount: 5
+        GridSpacing: {x: 0.5, y: 0.5}
+      OverrideCollisionLayerMask: 0
+      CollisionLayerMask:
+        serializedVersion: 2
+        m_Bits: 0
+      Effectors: []
+    assetReference: {fileID: 11400000, guid: efe17c6b93d0ec34dadee261aad14968, type: 2}
+    editAsset: 1
+    _assetReference: {fileID: 11400000, guid: efe17c6b93d0ec34dadee261aad14968, type: 2}
+--- !u!1 &1954204983798712292
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1954204983798712290}
+  - component: {fileID: 1954204983798712293}
+  m_Layer: 0
+  m_Name: Prison
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1954204983798712290
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1954204983798712292}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1954204984616533179}
+  - {fileID: 8641869889588326461}
+  - {fileID: 2326698873690926276}
+  - {fileID: 5840817867643819757}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1954204983798712293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1954204983798712292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b1782ed734f01240aeb9087f4af0db2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  CurrentHP: 0
+  MaxHP: 0
+  EntityGroup: 0
+  AnimController: {fileID: 0}
+  spawnOwner: {fileID: 0}
+  PlayOnEnable: 1
+  PlayOnSpawn: 1
+--- !u!1 &1954204984616533178
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1954204984616533179}
+  - component: {fileID: 1954204984616533176}
+  m_Layer: 0
+  m_Name: Emitter_Orange_T1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1954204984616533179
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1954204984616533178}
+  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: -6.1, y: -0.28, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1954204983798712290}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
+--- !u!114 &1954204984616533176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1954204984616533178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e235f134b366f13468ba426e3009fdab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  CurrentHP: 0
+  MaxHP: 0
+  EntityGroup: 2
+  AnimController: {fileID: 0}
+  OwnerPattern: {fileID: 1954204983798712293}
+  PlayOnPatternStart: 1
+  DisposeAllOnStop: 1
+  MaxBulletSpawnCount: 100
+  spec:
+    useValue: 0
+    _value:
+      BulletSpec: {fileID: 11400000, guid: ca9f948effe31b2498006737b2805c8a, type: 2}
+      Duration: 2
+      StartSpeed: 8
+      LifeTime: 2
+      UseSimulationSpeed: 0
+      SimulationSpeed: 0
+      OverrideStartColor: 0
+      StartColor: {r: 0, g: 0, b: 0, a: 0}
+      Burst:
+        Enabled: 1
+        Count: 4
+        RepeatInterval: 0.11
+      MultiShot:
+        Enabled: 0
+        LayoutMode: 0
+        Count: 4
+        SpreadAngle: -360
+        Spacing: 0.97
+        XCount: 5
+        YCount: 5
+        GridSpacing: {x: 0.5, y: 0.5}
+      OverrideCollisionLayerMask: 0
+      CollisionLayerMask:
+        serializedVersion: 2
+        m_Bits: 0
+      Effectors: []
+    assetReference: {fileID: 11400000, guid: efe17c6b93d0ec34dadee261aad14968, type: 2}
+    editAsset: 1
+    _assetReference: {fileID: 11400000, guid: efe17c6b93d0ec34dadee261aad14968, type: 2}
+--- !u!1 &7616466838730095096
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5840817867643819757}
+  - component: {fileID: 7415307372482052248}
+  m_Layer: 0
+  m_Name: Emitter_Orange_T6 (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5840817867643819757
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7616466838730095096}
+  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: -1.09, y: -12.44, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1954204983798712290}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
+--- !u!114 &7415307372482052248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7616466838730095096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e235f134b366f13468ba426e3009fdab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  CurrentHP: 0
+  MaxHP: 0
+  EntityGroup: 2
+  AnimController: {fileID: 0}
+  OwnerPattern: {fileID: 1954204983798712293}
+  PlayOnPatternStart: 1
+  DisposeAllOnStop: 1
+  MaxBulletSpawnCount: 100
+  spec:
+    useValue: 0
+    _value:
+      BulletSpec: {fileID: 11400000, guid: ca9f948effe31b2498006737b2805c8a, type: 2}
+      Duration: 2
+      StartSpeed: 8
+      LifeTime: 2
+      UseSimulationSpeed: 0
+      SimulationSpeed: 0
+      OverrideStartColor: 0
+      StartColor: {r: 0, g: 0, b: 0, a: 0}
+      Burst:
+        Enabled: 1
+        Count: 4
+        RepeatInterval: 0.11
+      MultiShot:
+        Enabled: 0
+        LayoutMode: 0
+        Count: 4
+        SpreadAngle: -360
+        Spacing: 0.97
+        XCount: 5
+        YCount: 5
+        GridSpacing: {x: 0.5, y: 0.5}
+      OverrideCollisionLayerMask: 0
+      CollisionLayerMask:
+        serializedVersion: 2
+        m_Bits: 0
+      Effectors: []
+    assetReference: {fileID: 11400000, guid: efe17c6b93d0ec34dadee261aad14968, type: 2}
+    editAsset: 1
+    _assetReference: {fileID: 11400000, guid: efe17c6b93d0ec34dadee261aad14968, type: 2}
+--- !u!1 &8416694147667825943
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8641869889588326461}
+  - component: {fileID: 4652695351243498989}
+  m_Layer: 0
+  m_Name: Emitter_Orange_T2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8641869889588326461
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8416694147667825943}
+  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 3.96, y: -0.25, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1954204983798712290}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
+--- !u!114 &4652695351243498989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8416694147667825943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e235f134b366f13468ba426e3009fdab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  CurrentHP: 0
+  MaxHP: 0
+  EntityGroup: 2
+  AnimController: {fileID: 0}
+  OwnerPattern: {fileID: 1954204983798712293}
+  PlayOnPatternStart: 1
+  DisposeAllOnStop: 1
+  MaxBulletSpawnCount: 100
+  spec:
+    useValue: 0
+    _value:
+      BulletSpec: {fileID: 11400000, guid: ca9f948effe31b2498006737b2805c8a, type: 2}
+      Duration: 2
+      StartSpeed: 8
+      LifeTime: 2
+      UseSimulationSpeed: 0
+      SimulationSpeed: 0
+      OverrideStartColor: 0
+      StartColor: {r: 0, g: 0, b: 0, a: 0}
+      Burst:
+        Enabled: 1
+        Count: 4
+        RepeatInterval: 0.11
+      MultiShot:
+        Enabled: 0
+        LayoutMode: 0
+        Count: 4
+        SpreadAngle: -360
+        Spacing: 0.97
+        XCount: 5
+        YCount: 5
+        GridSpacing: {x: 0.5, y: 0.5}
+      OverrideCollisionLayerMask: 0
+      CollisionLayerMask:
+        serializedVersion: 2
+        m_Bits: 0
+      Effectors: []
+    assetReference: {fileID: 11400000, guid: efe17c6b93d0ec34dadee261aad14968, type: 2}
+    editAsset: 1
+    _assetReference: {fileID: 11400000, guid: efe17c6b93d0ec34dadee261aad14968, type: 2}

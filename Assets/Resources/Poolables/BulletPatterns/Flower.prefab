@@ -43,6 +43,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e235f134b366f13468ba426e3009fdab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
   CurrentHP: 0
   MaxHP: 0
   EntityGroup: 0
@@ -126,6 +135,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e235f134b366f13468ba426e3009fdab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
   CurrentHP: 0
   MaxHP: 0
   EntityGroup: 0
@@ -209,6 +227,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e235f134b366f13468ba426e3009fdab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
   CurrentHP: 0
   MaxHP: 0
   EntityGroup: 0
@@ -220,7 +247,7 @@ MonoBehaviour:
   spec:
     useValue: 1
     _value:
-      BulletSpec: {fileID: 11400000, guid: 94dde03a7edc12442b8d64fd4324952c, type: 2}
+      BulletSpec: {fileID: 11400000, guid: 8ecb9fc1350cfe440928ba707d7fc46a, type: 2}
       Duration: 1
       StartSpeed: 8
       LifeTime: 2
@@ -250,90 +277,6 @@ MonoBehaviour:
     assetReference: {fileID: 0}
     editAsset: 0
     _assetReference: {fileID: 0}
---- !u!1 &8524394206820229500
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8524394206820229491}
-  - component: {fileID: 8524394206820229490}
-  m_Layer: 0
-  m_Name: Emitter_Spheric (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8524394206820229491
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8524394206820229500}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 8524394207064780927}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8524394206820229490
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8524394206820229500}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e235f134b366f13468ba426e3009fdab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CurrentHP: 0
-  MaxHP: 0
-  EntityGroup: 0
-  AnimController: {fileID: 0}
-  OwnerPattern: {fileID: 8524394207064780920}
-  PlayOnPatternStart: 1
-  DisposeAllOnStop: 1
-  MaxBulletSpawnCount: 100
-  spec:
-    useValue: 1
-    _value:
-      BulletSpec: {fileID: 11400000, guid: 8ecb9fc1350cfe440928ba707d7fc46a, type: 2}
-      Duration: 2
-      StartSpeed: 8
-      LifeTime: 1
-      UseSimulationSpeed: 0
-      SimulationSpeed: 0
-      OverrideStartColor: 0
-      StartColor: {r: 0.314, g: 0.427, b: 0.31, a: 1}
-      Burst:
-        Enabled: 0
-        Count: 4
-        RepeatInterval: 1
-      MultiShot:
-        Enabled: 1
-        LayoutMode: 0
-        Count: 11
-        SpreadAngle: 360
-        Spacing: 0
-        XCount: 5
-        YCount: 5
-        GridSpacing: {x: 0.5, y: 0.5}
-      OverrideCollisionLayerMask: 0
-      CollisionLayerMask:
-        serializedVersion: 2
-        m_Bits: 0
-      Effectors:
-      - {fileID: 11400000, guid: b2773164a71e1b7419ee97372a8efc67, type: 2}
-    assetReference: {fileID: 0}
-    editAsset: 0
-    _assetReference: {fileID: 0}
 --- !u!1 &8524394207064780921
 GameObject:
   m_ObjectHideFlags: 0
@@ -345,12 +288,12 @@ GameObject:
   - component: {fileID: 8524394207064780927}
   - component: {fileID: 8524394207064780920}
   m_Layer: 0
-  m_Name: Flower_4Way
+  m_Name: Flower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8524394207064780927
 Transform:
   m_ObjectHideFlags: 0
@@ -365,7 +308,6 @@ Transform:
   - {fileID: 8524394205743483686}
   - {fileID: 8524394205340624428}
   - {fileID: 8524394205864507918}
-  - {fileID: 8524394206820229491}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -381,6 +323,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b1782ed734f01240aeb9087f4af0db2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
   CurrentHP: 0
   MaxHP: 0
   EntityGroup: 0

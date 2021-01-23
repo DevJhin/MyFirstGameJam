@@ -255,7 +255,14 @@ public class BulletEmitter : PatternObject
 		bullet.Speed = spec.value.StartSpeed;
 		bullet.Effectors = spec.value.Effectors;
 
-		bullet.Attacker = OwnerPattern.SpawnOwner;
+		if (OwnerPattern != null && OwnerPattern.SpawnOwner != null)
+		{
+			bullet.Attacker = OwnerPattern.SpawnOwner;
+		}
+		else
+		{
+			bullet.Attacker = this;
+		}
 		bullet.EntityGroup = EntityGroup.Enemy;
 
 
