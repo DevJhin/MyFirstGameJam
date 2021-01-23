@@ -17,9 +17,6 @@ public class SlashActionBehaviour : BattleActionBehaviour
     private float currentTime = 0f;
 
 
-    private float coolTime = 0.4f;
-
-
     /// <summary>
     /// BattleLayer에 이 이름을 가진 State가 있어야 함.
     /// </summary>
@@ -62,6 +59,9 @@ public class SlashActionBehaviour : BattleActionBehaviour
 
         //VFX 생성.
         vfxPooledObject = PoolManager.GetOrCreate("SlashVFX", 5).Instantiate(vfxOffset, vfxRotation);
+
+        SoundManager.Instance.PlayClipAtPoint("PlayerAttack2", owner.transform.position);
+
 
         attackedEntityList.Clear();
 
