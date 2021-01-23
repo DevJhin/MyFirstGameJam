@@ -1,0 +1,136 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8362966010271606325
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8362966010271606322}
+  - component: {fileID: 8362966010271606323}
+  m_Layer: 0
+  m_Name: Simple Shot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8362966010271606322
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8362966010271606325}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8362966011400885133}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8362966010271606323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8362966010271606325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e235f134b366f13468ba426e3009fdab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentHP: 0
+  MaxHP: 0
+  EntityGroup: 0
+  AnimController: {fileID: 0}
+  OwnerPattern: {fileID: 8362966011400885132}
+  PlayOnPatternStart: 1
+  DisposeAllOnStop: 1
+  MaxBulletSpawnCount: 100
+  spec:
+    useValue: 1
+    _value:
+      BulletSpec: {fileID: 11400000, guid: ca9f948effe31b2498006737b2805c8a, type: 2}
+      Duration: 2
+      StartSpeed: 25
+      LifeTime: 2
+      UseSimulationSpeed: 0
+      SimulationSpeed: 0
+      OverrideStartColor: 0
+      StartColor: {r: 0, g: 0, b: 0, a: 0}
+      Burst:
+        Enabled: 1
+        Count: 4
+        RepeatInterval: 0.03
+      MultiShot:
+        Enabled: 1
+        LayoutMode: 0
+        Count: 4
+        SpreadAngle: 267
+        Spacing: 0
+        XCount: 5
+        YCount: 5
+        GridSpacing: {x: 0.5, y: 0.5}
+      OverrideCollisionLayerMask: 0
+      CollisionLayerMask:
+        serializedVersion: 2
+        m_Bits: 0
+      Effectors: []
+    assetReference: {fileID: 0}
+    editAsset: 0
+    _assetReference: {fileID: 0}
+--- !u!1 &8362966011400885135
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8362966011400885133}
+  - component: {fileID: 8362966011400885132}
+  m_Layer: 0
+  m_Name: 4Way_4Burst
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8362966011400885133
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8362966011400885135}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 8362966010271606322}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8362966011400885132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8362966011400885135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b1782ed734f01240aeb9087f4af0db2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentHP: 0
+  MaxHP: 0
+  EntityGroup: 0
+  AnimController: {fileID: 0}
+  spawnOwner: {fileID: 0}
+  PlayOnEnable: 1
+  PlayOnSpawn: 1

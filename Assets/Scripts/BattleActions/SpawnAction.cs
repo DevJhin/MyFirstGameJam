@@ -22,5 +22,10 @@ public class SpawnAction : BattleAction
     /// Spawn 위치.
     /// </summary>
     public Vector2 Position;
-   
+
+    /// <summary>
+    /// Spawn할 각도.
+    /// </summary>
+    public float Angle;
+
 }

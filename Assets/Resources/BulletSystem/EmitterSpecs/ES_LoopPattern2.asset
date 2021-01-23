@@ -13,16 +13,29 @@ MonoBehaviour:
   m_Name: ES_LoopPattern2
   m_EditorClassIdentifier: 
   Value:
-    BulletSpec: {fileID: 11400000, guid: 6adfdc3b4f54a3849949a87d51ecb3d9, type: 2}
-    Duration: 0.08
+    BulletSpec: {fileID: 11400000, guid: 94dde03a7edc12442b8d64fd4324952c, type: 2}
+    Duration: 1
     StartSpeed: 6
-    LifeTime: 4
-    UseSimulationSpeed: 1
+    LifeTime: 3
+    UseSimulationSpeed: 0
     SimulationSpeed: 0.78
     OverrideStartColor: 0
     StartColor: {r: 0.545, g: 0.329, b: 0.318, a: 1}
     Burst:
-      Enabled: 0
+      Enabled: 1
       Count: 4
       RepeatInterval: 0.06
+    MultiShot:
+      Enabled: 1
+      LayoutMode: 0
+      Count: 3
+      SpreadAngle: 17
+      Spacing: 0.03
+      XCount: 0
+      YCount: 0
+      GridSpacing: {x: 0, y: 0}
+    OverrideCollisionLayerMask: 0
+    CollisionLayerMask:
+      serializedVersion: 2
+      m_Bits: 0
     Effectors: []

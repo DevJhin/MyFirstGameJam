@@ -57,4 +57,9 @@ public class StageGate : FieldObject, IEventListener, IInteractable
         return false;
     }
 
+    public override void Dispose()
+    {
+        base.Dispose();
+        MessageSystem.Instance.Unsubscribe<ShieldRecoverEvent>(OnStageClearEvent);
+    }
 }

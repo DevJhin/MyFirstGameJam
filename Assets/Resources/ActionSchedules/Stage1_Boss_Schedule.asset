@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce36057916b226747b1e4e9e126f6f3d, type: 3}
+  m_Name: Stage1_Boss_Schedule
+  m_EditorClassIdentifier: 
+  Loop: 1
+  TimeTable:
+  - Action: {fileID: 11400000, guid: f582dfefe056ab64eaf6b23e58b7523b, type: 2}
+    Delay: 2
+    Playtime: 5
+    RepeatCount: 1
+    RepeatInterval: 0.01
+  - Action: {fileID: 11400000, guid: 573dd68d1da687a43947b12afd738e85, type: 2}
+    Delay: 1
+    Playtime: 0.93
+    RepeatCount: 1
+    RepeatInterval: 0
+  - Action: {fileID: 11400000, guid: 7586d995e06f7e14c86d6f50e772e577, type: 2}
+    Delay: 1
+    Playtime: 1
+    RepeatCount: 1
+    RepeatInterval: 0
+  - Action: {fileID: 11400000, guid: cfbd87f4bef8ce540a09d0e1159e8472, type: 2}
+    Delay: 2
+    Playtime: 5
+    RepeatCount: 1
+    RepeatInterval: 0.01
+  - Action: {fileID: 11400000, guid: 16a37f7038afc394fb76a4b8529b51b7, type: 2}
+    Delay: 1
+    Playtime: 1
+    RepeatCount: 1
+    RepeatInterval: 0
+  - Action: {fileID: 11400000, guid: 1574477043174df4da5cff49605caa86, type: 2}
+    Delay: 1
+    Playtime: 1
+    RepeatCount: 1
+    RepeatInterval: 0
+  - Action: {fileID: 11400000, guid: dc4c208ee8bf4824897cae8ae317e8ef, type: 2}
+    Delay: 1
+    Playtime: 1
+    RepeatCount: 1
+    RepeatInterval: 0
+  - Action: {fileID: 11400000, guid: 37a68de6609461a44ae11a2110e1bed8, type: 2}
+    Delay: 1
+    Playtime: 1
+    RepeatCount: 1
+    RepeatInterval: 0

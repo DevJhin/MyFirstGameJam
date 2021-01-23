@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce36057916b226747b1e4e9e126f6f3d, type: 3}
+  m_Name: Stage3_Boss_Schedule
+  m_EditorClassIdentifier: 
+  Loop: 1
+  TimeTable:
+  - Action: {fileID: 11400000, guid: 5939e8bf68d4ef0488dd33960c0a2ac6, type: 2}
+    Delay: 2
+    Playtime: 6
+    RepeatCount: 1
+    RepeatInterval: 0
+  - Action: {fileID: 11400000, guid: ae01cab85e078dc4597def75dc110aa6, type: 2}
+    Delay: 2
+    Playtime: 3
+    RepeatCount: 1
+    RepeatInterval: 0.01
+  - Action: {fileID: 11400000, guid: 2f1d3a9919babf8469221a534710d5fd, type: 2}
+    Delay: 2
+    Playtime: 3
+    RepeatCount: 1
+    RepeatInterval: 0
+  - Action: {fileID: 11400000, guid: a37401a8e85100549b6463242e6eaaa5, type: 2}
+    Delay: 1
+    Playtime: 6
+    RepeatCount: 1
+    RepeatInterval: 0
+  - Action: {fileID: 11400000, guid: 6ec52c8637d653e4aaa5c713571ce09b, type: 2}
+    Delay: 2
+    Playtime: 6
+    RepeatCount: 1
+    RepeatInterval: 0

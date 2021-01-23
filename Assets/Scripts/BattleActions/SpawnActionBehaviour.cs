@@ -48,6 +48,7 @@ public class SpawnActionBehaviour : BattleActionBehaviour
         PrefabName = spawnAction.PrefabName;
         RelativeToOwner = spawnAction.RelativeToOwner;
         SpawnPosition = spawnAction.Position;
+        SpawnRotation = Quaternion.Euler(0, 0, spawnAction.Angle);
     }
 
 
@@ -61,11 +62,10 @@ public class SpawnActionBehaviour : BattleActionBehaviour
         Vector3 position = SpawnPosition;
         Quaternion rotation = SpawnRotation;
 
-
         if (RelativeToOwner)
         {
             position += owner.transform.position;
-            rotation = owner.transform.rotation;
+            rotation *= owner.transform.rotation;
         }
 
         //풀에서 ISpawnable 객체를 가져온다.

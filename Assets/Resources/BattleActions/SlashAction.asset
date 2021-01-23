@@ -15,9 +15,11 @@ MonoBehaviour:
   BattleActionBehaviourName: SlashActionBehaviour
   Damage: 1
   Radius: 1
-  Angle: 120
+  Angle: 180
   duration: 0.5
   CircleCastDistance: 0.01
   CollideLayerMask:
     serializedVersion: 2
     m_Bits: 375
+  vfxOffset: {x: 0.466, y: 0, z: 0}
+  vfxAngle: 0

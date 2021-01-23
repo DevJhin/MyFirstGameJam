@@ -16,10 +16,17 @@ public class SlashActionBehaviour : BattleActionBehaviour
     /// </summary>
     private float currentTime = 0f;
 
+
+    private float coolTime = 0.4f;
+
+
     /// <summary>
     /// BattleLayer에 이 이름을 가진 State가 있어야 함.
     /// </summary>
     private string SlashAnimName = "BA_Slash";
+
+
+    private PooledObject vfxPooledObject;
 
 
     /// <summary>
@@ -33,11 +40,13 @@ public class SlashActionBehaviour : BattleActionBehaviour
     public SlashActionBehaviour(BattleAction ba, FieldObject owner) : base(ba, owner)
     {
         data = ba as SlashAction;
+        IsActive = false;
     }
 
 
     public override void Start()
     {
+        if (IsActive) return;
         currentTime = 0f;
         IsActive = true;
 
@@ -46,6 +55,14 @@ public class SlashActionBehaviour : BattleActionBehaviour
 
         // Slash 애니메이션(State) 실행.
         owner.AnimController.Play(SlashAnimName, 2, 0f);
+
+
+        Vector3 vfxOffset = owner.transform.position + data.vfxOffset;
+        Quaternion vfxRotation = Quaternion.Euler(0, 0, data.vfxAngle);
+
+        //VFX 생성.
+        vfxPooledObject = PoolManager.GetOrCreate("SlashVFX", 5).Instantiate(vfxOffset, vfxRotation);
+
         attackedEntityList.Clear();
 
     }
@@ -53,10 +70,17 @@ public class SlashActionBehaviour : BattleActionBehaviour
 
     public override void Update()
     {
+        if (!IsActive) return;
         currentTime += Time.deltaTime;
 
         ProcessCollision();
 
+        Vector3 vfxOffset = owner.transform.position + owner.transform.rotation * data.vfxOffset;
+        Quaternion vfxRotation = owner.transform.rotation * Quaternion.Euler(0, 0, data.vfxAngle);
+
+        //VFX 생성.
+        vfxPooledObject.transform.position = vfxOffset;
+        vfxPooledObject.transform.rotation = vfxRotation;
 
         if (currentTime > data.duration)
         {
@@ -73,6 +97,7 @@ public class SlashActionBehaviour : BattleActionBehaviour
         // BA 레이어 Off.
         owner.AnimController.SetLayerWeight(2, 0f);
         IsActive = false;
+        PoolManager.GetOrCreate("SlashVFX", 5).Dispose(vfxPooledObject);
 
         attackedEntityList.Clear();
     }
@@ -87,16 +112,17 @@ public class SlashActionBehaviour : BattleActionBehaviour
         Vector2 forward = owner.transform.right;
 
         var hitInfos = Physics2D.CircleCastAll(point, data.Radius, forward, data.CircleCastDistance, data.CollideLayerMask.value);
-
         float halfAngle = data.Angle * 0.5f;
 
         foreach (var hitInfo in hitInfos)
         {
+            
             //범위(Angle) 내에서 충돌이 발생한 Collider만 충돌로 판정해야 한다.
-            Vector2 dir = (hitInfo.point - point).normalized;
+            Vector2 dir = ((Vector2)hitInfo.transform.position - point).normalized;
             float angle = Vector2.Angle(forward, dir);
 
             bool withinRange = angle < halfAngle;
+            
 
             if (withinRange)
             {
@@ -104,7 +130,6 @@ public class SlashActionBehaviour : BattleActionBehaviour
                 FieldObject target = hitInfo.collider.GetComponent<FieldObject>();
                 if (target == null)
                     target = hitInfo.collider.GetComponentInParent<FieldObject>();
-
 
                 if (target != null && !attackedEntityList.Contains(target))
                 {

@@ -26,22 +26,22 @@ public class BulletSpec : ScriptableObject
 	/// <summary>
 	/// 충돌판정 형태.
 	/// </summary>
-	public CollisionShape CollisionShape;
+	public CollisionShape CollisionShape = CollisionShape.Circle;
 
 	/// <summary>
 	/// 충돌판정 영역 사이즈(Box).
 	/// </summary>
-	public Vector2 CollisionBoxScale;
+	public Vector2 CollisionBoxScale = new Vector2(0.1f, 0.1f);
 
 	/// <summary>
 	/// 충돌판정 영역 반경(Circle).
 	/// </summary>
-	public float CollisionCircleRadius;
+	public float CollisionCircleRadius = 0.1f;
 
 	/// <summary>
 	/// 충돌 할 경우, 총알이 Dispose 되는가?
 	/// </summary>
-	public bool DisposeAfterCollision;
+	public bool DisposeAfterCollision = true;
 
 	/// <summary>
 	/// 충돌 레이어 마스크.

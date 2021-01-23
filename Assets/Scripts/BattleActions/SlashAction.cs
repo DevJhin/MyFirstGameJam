@@ -39,5 +39,12 @@ public class SlashAction : BattleAction
     public LayerMask CollideLayerMask;
 
 
+    public Vector3 vfxOffset;
+
+
+    public float vfxAngle;
+
+
+
 
 }

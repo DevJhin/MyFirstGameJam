@@ -80,8 +80,15 @@ public class EllipseMovePatternObject : PatternObject
 
 
     void Update()
-    { 
-        t += Time.deltaTime * Frequency * DoublePI * LookAtEmitter.spec.value.GetSimulationTime();
+    {
+        float dt = Time.deltaTime * Frequency * DoublePI;;
+
+        if (LookAtEmitter)
+        {
+            dt *= LookAtEmitter.spec.value.GetSimulationTime();
+        }
+
+        t += dt;
 
         if (Target != null)
         { 

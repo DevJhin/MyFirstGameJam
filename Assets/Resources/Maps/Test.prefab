@@ -1903,7 +1903,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db4b543a3f0fd4dd28142dc3948acd82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FieldObjectName: Rabbit_Boss
+  FieldObjectName: Stage1_Boss
 --- !u!1 &5962040162001659870
 GameObject:
   m_ObjectHideFlags: 0

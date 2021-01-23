@@ -7,7 +7,7 @@ using Sirenix.OdinInspector;
 /// <summary>
 /// BulletEmiiter에서 Spawn되는 투사체 FieldObject.
 /// </summary>
-public class Bullet : FieldObject
+public class Bullet : FieldObject, IEventListener
 {
     private SpriteRenderer spriteRenderer;
 
@@ -50,6 +50,11 @@ public class Bullet : FieldObject
     /// 이 Bullet의 이동을 활성화하는가?
     /// </summary>
     public bool EnableMove = true;
+
+    /// <summary>
+    /// 시작시 설정된 속도.
+    /// </summary>
+    public float InitSpeed;
 
     /// <summary>
     /// 직선 이동 속도.
@@ -150,7 +155,6 @@ public class Bullet : FieldObject
     private Collider2D[] colliderBuffer = new Collider2D[ColliderBufferSize];
 
 
-
     public List<BulletEffector> Effectors = new List<BulletEffector>();
 
     private bool IsActive = false;
@@ -213,6 +217,15 @@ public class Bullet : FieldObject
 
         Effectors = null;
         Pool.Dispose(PooledObject);
+
+        //Spawn VFX
+        var vfxPooledObject = PoolManager.GetOrCreate("BulletVFX").Instantiate(transform.position, transform.rotation);
+
+        //var 
+
+
+
+
         IsActive = false;
     }
 
@@ -365,4 +378,13 @@ public class Bullet : FieldObject
         }
     }
 
+    public bool OnEvent(IEvent e)
+    {
+        if (e is DamageEvent)
+        {
+            ReturnPool();
+            return true;
+        }
+        return false;
+    }
 }

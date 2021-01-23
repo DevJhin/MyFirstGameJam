@@ -284,7 +284,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LoadMapDirectly: 1
-  LoadMapName: Test
+  LoadMapName: Test2
 --- !u!4 &83121865
 Transform:
   m_ObjectHideFlags: 0
