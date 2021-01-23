@@ -39,7 +39,7 @@ public class Stage : IDisposable
         MessageSystem.Instance.Subscribe<EnemyDeathEvent>(OnEnemyDeathEvent);
         MessageSystem.Instance.Subscribe<PlayerDeathEvent>(OnPlayerDeathEvent);
     }
-    
+
 
     // 변수 등 모두 여기서 해제
     public void Dispose()
@@ -92,10 +92,10 @@ public class Stage : IDisposable
             {
                 var playerResource = Resources.Load("Player");
                 var player = GameObject.Instantiate(playerResource, data.transform.position, Quaternion.identity) as GameObject;
-                PlayerFieldObject = player.GetComponent<FieldObject>();
+                PlayerFieldObject = player?.GetComponent<FieldObject>();
 
-                var hpBar = UIManager.Instance.LoadUI<UIPlayerHpBar>();
-                hpBar.SetPlayer(player.GetComponent<Player>());
+                var hpBar = UIManager.Instance.LoadUI<UIFieldObjectHpBar>("UIPlayerHpBar");
+                hpBar.SetFieldObject(PlayerFieldObject);
 
                 CameraManager.Instance.enabled = true;
                 CameraManager.Instance.Setup(player?.transform);
@@ -104,7 +104,13 @@ public class Stage : IDisposable
             {
                 var fieldObjectResource = Resources.Load(data.FieldObjectName);
                 var spawnedStageGameObject = GameObject.Instantiate(fieldObjectResource, data.transform.position, data.transform.rotation) as GameObject;
-                
+
+                if (spawnedStageGameObject.GetComponent<FieldObject>() is Enemy enemy)
+                {
+                    var hpBar = UIManager.Instance.LoadUI<UIFieldObjectHpBar>("UIEnemyHpBar");
+                    hpBar.SetFieldObject(enemy);
+                }
+
                 StageFieldObjects.Add(spawnedStageGameObject.GetComponent<FieldObject>());
             }
 
@@ -131,7 +137,7 @@ public class Stage : IDisposable
 
         var deadEnemy = deathEvent.Sender;
 
-        // 죽은 적이 보스일 경우, 스테이지 클리어 이벤트 전달. 
+        // 죽은 적이 보스일 경우, 스테이지 클리어 이벤트 전달.
         if (deadEnemy.IsBoss)
         {
             MessageSystem.Instance.Publish(new StageClearEvent());

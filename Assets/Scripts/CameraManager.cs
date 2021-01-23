@@ -74,6 +74,31 @@ public class CameraManager : MonoBehaviour
     public float bottomLimit;
     public float topLimit;
 
+    /// <summary>
+    /// Letterbox 관련 설정
+    /// </summary>
+    [Header("Letter box")]
+
+    /// <summary>
+    /// 게임 보여주는 카메라
+    /// </summary>
+    public Camera MainGameCamera;
+
+    /// <summary>
+    /// 레터박스 전용 카메라
+    /// </summary>
+    public Camera LetterBoxCamera;
+
+    /// <summary>
+    /// 희망하는 해상도 X값
+    /// </summary>
+    public float desiredXRatio = 4;
+
+    /// <summary>
+    /// 희망하는 해상도 Y값
+    /// </summary>
+    public float desiredYRatio = 3;
+
     private Vector3 finalPos;
 
     //Follow Variables
@@ -107,6 +132,24 @@ public class CameraManager : MonoBehaviour
         }
 
         transitionFX = GetComponentInChildren<SimplePostFX>();
+    }
+
+    void Start()
+    {
+        Rect rect = MainGameCamera.rect;
+        float scaleheight = ((float)Screen.width / Screen.height) / (desiredXRatio / desiredYRatio); // (가로 / 세로)
+        float scalewidth = 1f / scaleheight;
+        if (scaleheight < 1)
+        {
+            rect.height = scaleheight;
+            rect.y = (1f - scaleheight) / 2f;
+        }
+        else
+        {
+            rect.width = scalewidth;
+            rect.x = (1f - scalewidth) / 2f;
+        }
+        MainGameCamera.rect = rect;
     }
 
     void OnDestroy()

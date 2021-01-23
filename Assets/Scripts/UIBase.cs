@@ -4,8 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// UI 캔버스가 상속하는 클래스. 생성 시 Bind를 통해 산하 요소를 저장할 수 있습니다.
-/// * UI도 FieldObject에 해당한다면 변경해 주세요. 현재 UI 요소들은 UIBase 클래스를 통해 UI Manager에서 관리 및 해제됩니다.
+/// UI 기본 요소의 기본 구성
 /// </summary>
 public abstract class UIBase : MonoBehaviour
 {
@@ -15,22 +14,16 @@ public abstract class UIBase : MonoBehaviour
 	private Dictionary<Type, UnityEngine.Object[]> childObjects = new Dictionary<Type, UnityEngine.Object[]>();
 
 	private Canvas canvas;
-	public Canvas Canvas
-	{
-		get
-		{
-			if(canvas == null)
-				canvas = gameObject.GetOrAddComponent<Canvas>();
 
-			return canvas;
-		}
+	protected virtual void OnEnable()
+	{
+		canvas = GetComponentInParent<Canvas>();
 	}
 
-	private void Start()
+	protected virtual void Start()
 	{
-		Init();
+
 	}
-	protected abstract void Init();
 
 	/// <summary>
 	/// 이 캔버스의 Sorting Order를 설정합니다.
@@ -38,11 +31,11 @@ public abstract class UIBase : MonoBehaviour
 	/// </summary>
 	public void SetCanvasOrder(int order)
 	{
-		Canvas.sortingOrder = order;
+		canvas.sortingOrder = order;
 	}
 
 	/// <summary>
-	/// 캔버스에 소속된 하위 오브젝트를 불러와 저장합니다. 같은 타입에 대한 Bind는 1회만 호출해야 합니다. 
+	/// 캔버스에 소속된 하위 오브젝트를 불러와 저장합니다. 같은 타입에 대한 Bind는 1회만 호출해야 합니다.
 	/// 오브젝트의 이름과 Enum 자료형 내의 이름이 일치해야 하며, 오브젝트에 T 타입의 컴포넌트가 있어야 합니다.
 	/// </summary>
 	/// <typeparam name="T">저장할 컴포넌트(또는 GameObject) 타입을 입력합니다</typeparam>
