@@ -31,6 +31,11 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        Clear();
+    }
+
     /// <summary>
     /// Resources/UI 폴더에서 UI Canvas 프리팹을 로딩해서 생성합니다. 생성된 요소는 UI Manager에 보관됩니다.
     /// </summary>

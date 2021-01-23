@@ -73,9 +73,6 @@ public class Stage : IDisposable
             GameObject.Destroy(LoadedMap.gameObject);
             LoadedMap = null;
         }
-
-        UIManager.Instance.Clear();
-
     }
 
     /// <summary>
