@@ -36,7 +36,7 @@ public class PlayerBehavior : FieldObjectBehaviour{
         this.player = player;
         Transform = player.transform;
         airDrag = 1 - player.airDrag;
-        colliderExtents = player.col.bounds.extents;
+        colliderExtents = player.bounds.extents;
         prevPos = Transform.position;
         ceilingReactionForceRatio = Mathf.Max(0f, player.ceilingReactionForceRatio);
     }

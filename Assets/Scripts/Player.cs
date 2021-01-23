@@ -56,8 +56,10 @@ public class Player : FieldObject, IEventListener
     /// </summary>
     public bool IsDead = false;
 
-
-
+    /// <summary>
+    /// 캐릭터 전체 바운드 (충돌 판정과는 무관한 땅 밟는 쪽과 연관)
+    /// </summary>
+    public Bounds bounds;
 
     void Awake()
     {
@@ -66,7 +68,6 @@ public class Player : FieldObject, IEventListener
 
         AttackBattleActionBehaviour = BattleActionBehaviourFactory.Create(AttackBattleAction, this);
         InteractActionBehaviour = BattleActionBehaviourFactory.Create(InteractBattleAction, this);
-
     }
 
     private void Update()
