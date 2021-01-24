@@ -8,7 +8,6 @@ public class UIStartMenu : UIBase
     enum Buttons
     {
         StartBtn,
-        OptionBtn,
         QuitBtn
     }
 
@@ -19,7 +18,6 @@ public class UIStartMenu : UIBase
         Bind<Button>(typeof(Buttons));
 
         GetButton((int)Buttons.StartBtn).onClick.AddListener(OnClickStartBtn);
-        //GetButton((int)Buttons.OptionBtn).onClick.AddListener(OnClickOptionBtn);
         GetButton((int)Buttons.QuitBtn).onClick.AddListener(OnClickQuitBtn);
     }
 
@@ -31,13 +29,7 @@ public class UIStartMenu : UIBase
         UIManager.Instance.Clear();
         Game.Instance.LoadStage("Test");
     }
-    /// <summary>
-    /// 옵션 버튼을 눌렀을 때 동작할 내용
-    /// </summary>
-    private void OnClickOptionBtn()
-    {
 
-    }
     /// <summary>
     /// 종료 버튼을 눌렀을 때 동작할 내용
     /// </summary>
