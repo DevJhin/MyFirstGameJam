@@ -114,7 +114,6 @@ public class Stage : IDisposable
         }
 
         SoundManager.Instance.ChangeBgm("BgmGame1");
-        UIManager.Instance.LoadUI<UIOnVictory>("UIOnVictory");
     }
 
     /// <summary>
@@ -141,7 +140,10 @@ public class Stage : IDisposable
         {
             MessageSystem.Instance.Publish(new StageClearEvent());
 
-
+            if(Game.Instance.IsLastStage)
+            {
+                UIManager.Instance.LoadUI<UIOnVictory>("UIOnVictory");
+            }
         }
         else
         {

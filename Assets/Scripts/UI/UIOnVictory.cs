@@ -19,17 +19,13 @@ public class UIOnVictory : UIBase
         Bind<Button>(typeof(Buttons));
         GetButton((int)Buttons.RestartBtn).onClick.AddListener(OnRestart);
 
-        MessageSystem.Instance.Subscribe<StageClearEvent>(OnStageClearEvent);
         gameObject.SetActive(false);
+        Invoke(nameof(ShowUI), 1.5f);
     }
 
-    private void OnStageClearEvent(IEvent e)
+    private void ShowUI()
     {
-        Debug.Log("클리어!");
-        if(Game.Instance.IsLastStage)
-        {
-            gameObject.SetActive(true);
-        }
+        gameObject.SetActive(true);
     }
 
     private void OnRestart()
@@ -37,10 +33,5 @@ public class UIOnVictory : UIBase
         Game.Instance.UnloadCurrentStage();
         UIManager.Instance.Clear();
         UIManager.Instance.LoadUI<UIStartMenu>("UIStartMenu");
-    }
-
-    private void OnDisable()
-    {
-        MessageSystem.Instance.Unsubscribe<StageClearEvent>(OnStageClearEvent);
     }
 }
