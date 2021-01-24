@@ -6,7 +6,6 @@ using UnityEngine.UI;
 /// <summary>
 /// 최종 스테이지 클리어 시 출력되는 UI
 /// </summary>
-// TODO: 승리 시 이 UI를 생성해야 함
 public class UIOnVictory : UIBase
 {
     enum Buttons
@@ -19,6 +18,18 @@ public class UIOnVictory : UIBase
 
         Bind<Button>(typeof(Buttons));
         GetButton((int)Buttons.RestartBtn).onClick.AddListener(OnRestart);
+
+        MessageSystem.Instance.Subscribe<StageClearEvent>(OnStageClearEvent);
+        gameObject.SetActive(false);
+    }
+
+    private void OnStageClearEvent(IEvent e)
+    {
+        Debug.Log("클리어!");
+        if(Game.Instance.IsLastStage)
+        {
+            gameObject.SetActive(true);
+        }
     }
 
     private void OnRestart()
@@ -26,5 +37,10 @@ public class UIOnVictory : UIBase
         Game.Instance.UnloadCurrentStage();
         UIManager.Instance.Clear();
         UIManager.Instance.LoadUI<UIStartMenu>("UIStartMenu");
+    }
+
+    private void OnDisable()
+    {
+        MessageSystem.Instance.Unsubscribe<StageClearEvent>(OnStageClearEvent);
     }
 }
