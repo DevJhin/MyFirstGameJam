@@ -22,6 +22,7 @@ public class PlayerBehavior : FieldObjectBehaviour{
     private float ceilingReactionForceRatio;
     private bool facingLeft;
     private bool isMomentumXReset;
+    private bool isGrounded;
 
     private Vector3 prevPos;
     private float gravityScale;
@@ -59,7 +60,7 @@ public class PlayerBehavior : FieldObjectBehaviour{
         UpdatePhysics();
 
         prevPos = Transform.position;
-        Transform.position += currentVelocity * Time.deltaTime;
+        Transform.position += currentVelocity * Mathf.Min(0.05f, Time.deltaTime);
     }
 
     //Physics Manager
@@ -67,15 +68,15 @@ public class PlayerBehavior : FieldObjectBehaviour{
     {
         // If Releasing Jump Button During Jump, Adjust Low JumpFallMultiplier.
         gravityScale = (!IsFalling && !player.Controller.IsJumpButtonOnRepeat) ? player.lowJumpFallMultiplier : player.fallMultiplier;
-        bool isGrounded = IsGrounded();
         
-        if(isGrounded)
+        if(IsGrounded())
 		{
             // 이전 프레임에서 높이가 변경되었는데 레이캐스트에 땅이 감지된 경우, 플레이어를 지형에 착지시킵니다.
-            if (!Mathf.Approximately(prevPos.y, Transform.position.y))
+            if (isGrounded == false)
             {
                 Transform.position = new Vector2(Transform.position.x, lastGroundPoint.point.y + colliderExtents.y);
             }
+            isGrounded = true;
             //Reset Multiplier
             airDragMultiplier = 1;
             currentVelocity.y = 0f;
@@ -87,16 +88,19 @@ public class PlayerBehavior : FieldObjectBehaviour{
         }
         else
         {
-            // 점프 최대 속도보다 빠르게 낙하하지 않습니다.
-            if(currentVelocity.y > -player.jumpPower)
-			{
-                currentVelocity.y += Physics2D.gravity.y * gravityScale * Time.deltaTime;
+            isGrounded = false;
+           
+            currentVelocity.y += Physics2D.gravity.y * gravityScale * Time.deltaTime;
 
-                // 상향이동 도중 천장에 부딪혔다면 반대 방향으로 튕겨나옵니다.
-                if (IsHitCeiling() && currentVelocity.y > 0f)
-                {
-                    currentVelocity.y = -currentVelocity.y * ceilingReactionForceRatio;
-                }
+            // 상향이동 도중 천장에 부딪혔다면 반대 방향으로 튕겨나옵니다.
+            if (IsHitCeiling() && currentVelocity.y > 0f)
+            {
+                currentVelocity.y = -currentVelocity.y * ceilingReactionForceRatio;
+            }
+            // 점프 최대 속도보다 빠르게 낙하하지 않습니다.
+            if (currentVelocity.y < -player.jumpPower)
+            {
+                currentVelocity.y = -player.jumpPower;
             }
 
             //Air Drag Check
@@ -174,9 +178,9 @@ public class PlayerBehavior : FieldObjectBehaviour{
         float velocityY = Mathf.Approximately(currentVelocity.y, 0f) ? 
             player.raycastLength : Mathf.Max(player.raycastLength, (-currentVelocity.y + gravityScale) * Time.deltaTime);
 
-        Debug.DrawRay(Transform.position, Vector2.down * (colliderExtents.y + velocityY), Color.yellow, 3f);
-        Debug.DrawRay(Transform.position + (Transform.right / 3), Vector2.down * (colliderExtents.y + velocityY), Color.red, 3f);
-        Debug.DrawRay(Transform.position - (Transform.right / 3), Vector2.down * (colliderExtents.y + velocityY), Color.red, 3f);
+        //Debug.DrawRay(Transform.position, Vector2.down * (colliderExtents.y + velocityY), Color.yellow, 3f);
+        //Debug.DrawRay(Transform.position + (Transform.right / 3), Vector2.down * (colliderExtents.y + velocityY), Color.red, 3f);
+        //Debug.DrawRay(Transform.position - (Transform.right / 3), Vector2.down * (colliderExtents.y + velocityY), Color.red, 3f);
 
         for (int i = 0; i < 3; i++)
 		{
@@ -195,9 +199,9 @@ public class PlayerBehavior : FieldObjectBehaviour{
     //Side Check
     private bool IsSideCollided(float moveValue)
     {
-        Debug.DrawRay(Transform.position + (Vector3.up * (colliderExtents.y / 2)), Transform.right * (colliderExtents.x + player.raycastLength), Color.green, 3f);
-        Debug.DrawRay(Transform.position, Transform.right * (colliderExtents.x + player.raycastLength), Color.cyan, 3f);
-        Debug.DrawRay(Transform.position + (Vector3.down * (colliderExtents.y /2)), Transform.right * (colliderExtents.x + player.raycastLength), Color.green, 3f);
+        //Debug.DrawRay(Transform.position + (Vector3.up * (colliderExtents.y / 2)), Transform.right * (colliderExtents.x + player.raycastLength), Color.green, 3f);
+        //Debug.DrawRay(Transform.position, Transform.right * (colliderExtents.x + player.raycastLength), Color.cyan, 3f);
+        //Debug.DrawRay(Transform.position + (Vector3.down * (colliderExtents.y /2)), Transform.right * (colliderExtents.x + player.raycastLength), Color.green, 3f);
 
         // Temp: 콜라이더 외곽 부분의 자연스러운 처리를 위해 캐릭터의 세로 1/4, 2/4, 3/4 지점에서만 캐릭터 앞쪽 지형을 체크합니다.
         Vector3 delta = Vector3.down * (colliderExtents.y / 2);
@@ -218,9 +222,9 @@ public class PlayerBehavior : FieldObjectBehaviour{
     /// </summary>
     private bool IsHitCeiling()
 	{
-        Debug.DrawRay(Transform.position, Vector2.up * colliderExtents.y * (0.75f + currentVelocity.y * Time.deltaTime), Color.magenta, 3f);
-        Debug.DrawRay(Transform.position + (Transform.right / 3), Vector2.up * colliderExtents.y * (0.75f + currentVelocity.y * Time.deltaTime), Color.red, 3f);
-        Debug.DrawRay(Transform.position - (Transform.right / 3), Vector2.up * colliderExtents.y * (0.75f + currentVelocity.y * Time.deltaTime), Color.red, 3f);
+        //Debug.DrawRay(Transform.position, Vector2.up * colliderExtents.y * (0.75f + currentVelocity.y * Time.deltaTime), Color.magenta, 3f);
+        //Debug.DrawRay(Transform.position + (Transform.right / 3), Vector2.up * colliderExtents.y * (0.75f + currentVelocity.y * Time.deltaTime), Color.red, 3f);
+        //Debug.DrawRay(Transform.position - (Transform.right / 3), Vector2.up * colliderExtents.y * (0.75f + currentVelocity.y * Time.deltaTime), Color.red, 3f);
 
         // Temp: 콜라이더 외곽 부분의 자연스러운 처리를 위해 캐릭터의 가로 1/4, 2/4, 3/4 지점에서만 위쪽 지형을 체크합니다.
         // 천장에 부딪힌 게 아니라면 점프 중에 좌우이동이 가능해야 하므로, 여기서 확인하는 높이는 IsSideCollided보다 높아야 합니다.
