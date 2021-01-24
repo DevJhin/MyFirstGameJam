@@ -19,7 +19,7 @@ public class UIStartMenu : UIBase
         Bind<Button>(typeof(Buttons));
 
         GetButton((int)Buttons.StartBtn).onClick.AddListener(OnClickStartBtn);
-        GetButton((int)Buttons.OptionBtn).onClick.AddListener(OnClickOptionBtn);
+        //GetButton((int)Buttons.OptionBtn).onClick.AddListener(OnClickOptionBtn);
         GetButton((int)Buttons.QuitBtn).onClick.AddListener(OnClickQuitBtn);
     }
 
