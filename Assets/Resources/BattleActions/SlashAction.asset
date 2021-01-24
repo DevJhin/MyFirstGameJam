@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SlashAction
   m_EditorClassIdentifier: 
   BattleActionBehaviourName: SlashActionBehaviour
-  Damage: 5
+  Damage: 1
   Radius: 1
   Angle: 180
   duration: 0.4

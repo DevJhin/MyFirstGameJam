@@ -15,7 +15,7 @@ MonoBehaviour:
   Loop: 1
   TimeTable:
   - Action: {fileID: 11400000, guid: a37401a8e85100549b6463242e6eaaa5, type: 2}
-    Delay: 0
+    Delay: 2
     Playtime: 3
     RepeatCount: 1
     RepeatInterval: 0

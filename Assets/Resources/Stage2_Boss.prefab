@@ -599,8 +599,8 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  CurrentHP: 40
-  MaxHP: 40
+  CurrentHP: 20
+  MaxHP: 20
   EntityGroup: 2
   AnimController: {fileID: 0}
   MainActionSchedule: {fileID: 11400000, guid: f640bb75a4f0f3e40a47c3584d1fcf36, type: 2}
@@ -5931,7 +5931,7 @@ PrefabInstance:
       objectReference: {fileID: -1876997658539923545}
     - target: {fileID: 6037383770828256582, guid: cfd05e937f6b6984abcc796c153bb822, type: 3}
       propertyPath: ShieldRecoveryTime
-      value: 8
+      value: 6.5
       objectReference: {fileID: 0}
     - target: {fileID: 6037383770828256582, guid: cfd05e937f6b6984abcc796c153bb822, type: 3}
       propertyPath: ShieldObjects.Array.size

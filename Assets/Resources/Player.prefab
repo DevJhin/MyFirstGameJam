@@ -193,8 +193,8 @@ MonoBehaviour:
     - Name: InteractActionBehaviour
       Entry: 6
       Data: 
-  CurrentHP: 100
-  MaxHP: 100
+  CurrentHP: 5
+  MaxHP: 5
   EntityGroup: 1
   AnimController: {fileID: 0}
   groundLayerMask:

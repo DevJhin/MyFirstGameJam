@@ -65,7 +65,7 @@ MonoBehaviour:
     _value:
       BulletSpec: {fileID: 11400000, guid: 8ecb9fc1350cfe440928ba707d7fc46a, type: 2}
       Duration: 0.5
-      StartSpeed: 10.49
+      StartSpeed: 6
       LifeTime: 3
       UseSimulationSpeed: 0
       SimulationSpeed: 0.1
