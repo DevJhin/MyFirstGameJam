@@ -373,7 +373,7 @@ public class Bullet : FieldObject, IEventListener
 
         Vector2 velocity = new Vector2(dx, dy);
 
-        velocity += value;
+        velocity += value*Time.deltaTime;
 
         Angle = Vector2.SignedAngle(Vector2.right, velocity.normalized);
         Speed = velocity.magnitude;

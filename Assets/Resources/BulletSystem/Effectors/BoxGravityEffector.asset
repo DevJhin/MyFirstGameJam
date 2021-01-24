@@ -10,6 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b8466df35285ec47a9edac53cc46142, type: 3}
-  m_Name: GravityEffector 1
+  m_Name: BoxGravityEffector
   m_EditorClassIdentifier: 
-  Acceleration: {x: 0, y: -6.18}
+  Acceleration: {x: 0, y: -7.8}

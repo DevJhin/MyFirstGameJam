@@ -43,6 +43,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e235f134b366f13468ba426e3009fdab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 0
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
   CurrentHP: 0
   MaxHP: 0
   EntityGroup: 0
@@ -56,8 +65,8 @@ MonoBehaviour:
     _value:
       BulletSpec: {fileID: 11400000, guid: 8ecb9fc1350cfe440928ba707d7fc46a, type: 2}
       Duration: 0.5
-      StartSpeed: 10.49
-      LifeTime: 3
+      StartSpeed: 6
+      LifeTime: 3.95
       UseSimulationSpeed: 0
       SimulationSpeed: 0.1
       OverrideStartColor: 0
@@ -80,7 +89,7 @@ MonoBehaviour:
         serializedVersion: 2
         m_Bits: 0
       Effectors:
-      - {fileID: 11400000, guid: 638974735b812e54eb444003cc72d635, type: 2}
+      - {fileID: 11400000, guid: 5967c6746dbd3174dba5dad3d185299b, type: 2}
     assetReference: {fileID: 0}
     editAsset: 0
     _assetReference: {fileID: 0}
@@ -128,6 +137,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b1782ed734f01240aeb9087f4af0db2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 0
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
   CurrentHP: 0
   MaxHP: 0
   EntityGroup: 0
@@ -179,6 +197,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1758b577c6a270c4c9b243ff1427aa5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 0
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
   CurrentHP: 0
   MaxHP: 0
   EntityGroup: 0

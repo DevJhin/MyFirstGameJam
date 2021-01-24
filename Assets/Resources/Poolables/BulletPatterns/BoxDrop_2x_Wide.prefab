@@ -89,7 +89,7 @@ MonoBehaviour:
         serializedVersion: 2
         m_Bits: 0
       Effectors:
-      - {fileID: 11400000, guid: 638974735b812e54eb444003cc72d635, type: 2}
+      - {fileID: 11400000, guid: 5967c6746dbd3174dba5dad3d185299b, type: 2}
     assetReference: {fileID: 0}
     editAsset: 0
     _assetReference: {fileID: 0}
