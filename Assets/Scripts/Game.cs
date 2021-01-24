@@ -28,6 +28,7 @@ public class Game : MonoBehaviour
 
     void Awake()
     {
+        Application.targetFrameRate = 240;
         if (Instance == null)
         {
             Instance = this;
@@ -55,12 +56,12 @@ public class Game : MonoBehaviour
     void OnDestroy()
     {
         Debug.Log("Game: Destroy Call");
-        
-        if (currentStage != null)   
+
+        if (currentStage != null)
         {
             currentStage.Dispose();
         }
-        
+
     }
 
     public void LoadStage(string stageName)
