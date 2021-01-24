@@ -25,6 +25,8 @@ public class SlashActionBehaviour : BattleActionBehaviour
 
     private PooledObject vfxPooledObject;
 
+    private string[] SlashSFXNames = {"PlayerAttack1", "PlayerAttack2"};
+
 
     /// <summary>
     /// 이번 실행에서 데미지를 전달한 FieldObject 리스트. 
@@ -60,7 +62,8 @@ public class SlashActionBehaviour : BattleActionBehaviour
         //VFX 생성.
         vfxPooledObject = PoolManager.GetOrCreate("SlashVFX", 5).Instantiate(vfxOffset, vfxRotation);
 
-        SoundManager.Instance.PlayClipAtPoint("PlayerAttack2", owner.transform.position);
+        int randIndex = Random.Range(0, SlashSFXNames.Length);
+        SoundManager.Instance.PlayClipAtPoint(SlashSFXNames[randIndex], owner.transform.position);
 
 
         attackedEntityList.Clear();

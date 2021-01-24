@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Value:
     BulletSpec: {fileID: 11400000, guid: 9edd7e83534baf0458ac0496ed9d3aa7, type: 2}
-    Duration: 2
+    Duration: 1.71
     StartSpeed: 1
     LifeTime: 3
     UseSimulationSpeed: 1

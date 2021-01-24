@@ -14,14 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Loop: 1
   TimeTable:
-  - Action: {fileID: 11400000, guid: ba0b6235e01b84345ab4f845d0be5bfa, type: 2}
-    Delay: 2
-    Playtime: 2.5
-    RepeatCount: 1
-    RepeatInterval: 0.01
-  - Action: {fileID: 11400000, guid: a5e892ddaeeb06746ab53ee4e43dadf3, type: 2}
-    Delay: 1
-    Playtime: 2.5
+  - Action: {fileID: 11400000, guid: f582dfefe056ab64eaf6b23e58b7523b, type: 2}
+    Delay: 0
+    Playtime: 3
     RepeatCount: 1
     RepeatInterval: 0
   - Action: {fileID: 11400000, guid: 95deb6c618b68db47ad5b6cfb5ea66a4, type: 2}
@@ -35,12 +30,12 @@ MonoBehaviour:
     RepeatCount: 1
     RepeatInterval: 0
   - Action: {fileID: 11400000, guid: 8d43c5e64c632f44da4c7d61d3b16070, type: 2}
-    Delay: 0
+    Delay: 0.3
     Playtime: 2
     RepeatCount: 1
     RepeatInterval: 0
-  - Action: {fileID: 11400000, guid: 37a68de6609461a44ae11a2110e1bed8, type: 2}
-    Delay: 0.58
+  - Action: {fileID: 11400000, guid: a44cf2217fdca704da857d8f7c98dda8, type: 2}
+    Delay: 0.3
     Playtime: 2
     RepeatCount: 1
     RepeatInterval: 0
@@ -49,3 +44,13 @@ MonoBehaviour:
     Playtime: 8
     RepeatCount: 1
     RepeatInterval: 0
+  - Action: {fileID: 11400000, guid: a5e892ddaeeb06746ab53ee4e43dadf3, type: 2}
+    Delay: 2
+    Playtime: 2.5
+    RepeatCount: 1
+    RepeatInterval: 0
+  - Action: {fileID: 11400000, guid: ba0b6235e01b84345ab4f845d0be5bfa, type: 2}
+    Delay: 2
+    Playtime: 2.5
+    RepeatCount: 1
+    RepeatInterval: 0.01

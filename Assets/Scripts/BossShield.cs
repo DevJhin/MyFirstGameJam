@@ -71,7 +71,10 @@ public class BossShield : FieldObject
 
             // 일정시간 후에 실드를 복수한다.
             // FIXME: Invoke는 편의상 쓰고 나중에 수정할 것.
+            SoundManager.Instance.PlayThere("EnemyShieldDown");
             Invoke("RecoverShield", ShieldRecoveryTime);
+
+
         }
 
     }

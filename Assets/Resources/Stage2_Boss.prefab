@@ -5915,7 +5915,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6037383770828256582, guid: cfd05e937f6b6984abcc796c153bb822, type: 3}
       propertyPath: MaxHP
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6037383770828256582, guid: cfd05e937f6b6984abcc796c153bb822, type: 3}
       propertyPath: collider
@@ -5923,7 +5923,7 @@ PrefabInstance:
       objectReference: {fileID: 3760045261475454443}
     - target: {fileID: 6037383770828256582, guid: cfd05e937f6b6984abcc796c153bb822, type: 3}
       propertyPath: CurrentHP
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6037383770828256582, guid: cfd05e937f6b6984abcc796c153bb822, type: 3}
       propertyPath: OwnerEnemy
@@ -5931,7 +5931,7 @@ PrefabInstance:
       objectReference: {fileID: -1876997658539923545}
     - target: {fileID: 6037383770828256582, guid: cfd05e937f6b6984abcc796c153bb822, type: 3}
       propertyPath: ShieldRecoveryTime
-      value: 60
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6037383770828256582, guid: cfd05e937f6b6984abcc796c153bb822, type: 3}
       propertyPath: ShieldObjects.Array.size

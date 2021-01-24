@@ -43,6 +43,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e235f134b366f13468ba426e3009fdab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
   CurrentHP: 0
   MaxHP: 0
   EntityGroup: 0
@@ -54,7 +63,7 @@ MonoBehaviour:
   spec:
     useValue: 1
     _value:
-      BulletSpec: {fileID: 11400000, guid: 94dde03a7edc12442b8d64fd4324952c, type: 2}
+      BulletSpec: {fileID: 11400000, guid: 9edd7e83534baf0458ac0496ed9d3aa7, type: 2}
       Duration: 2
       StartSpeed: 6
       LifeTime: 2
@@ -128,6 +137,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b1782ed734f01240aeb9087f4af0db2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
   CurrentHP: 0
   MaxHP: 0
   EntityGroup: 0
@@ -210,6 +228,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1758b577c6a270c4c9b243ff1427aa5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
   CurrentHP: 0
   MaxHP: 0
   EntityGroup: 0
@@ -297,6 +324,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e235f134b366f13468ba426e3009fdab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
   CurrentHP: 0
   MaxHP: 0
   EntityGroup: 0
@@ -308,7 +344,7 @@ MonoBehaviour:
   spec:
     useValue: 1
     _value:
-      BulletSpec: {fileID: 11400000, guid: 94dde03a7edc12442b8d64fd4324952c, type: 2}
+      BulletSpec: {fileID: 11400000, guid: 9edd7e83534baf0458ac0496ed9d3aa7, type: 2}
       Duration: 2
       StartSpeed: 6
       LifeTime: 2
@@ -381,6 +417,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1758b577c6a270c4c9b243ff1427aa5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
   CurrentHP: 0
   MaxHP: 0
   EntityGroup: 0

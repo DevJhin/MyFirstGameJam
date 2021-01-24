@@ -126,6 +126,9 @@ public class Enemy : FieldObject, IEventListener
         {
             Sender = this
         };
+
+        SoundManager.Instance.PlayClipAtPoint("EnemyDeath1", transform.position);
+        
         MessageSystem.Instance.Publish(deathEvent);
 
         //GameObject 비활성화.

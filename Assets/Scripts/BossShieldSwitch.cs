@@ -77,7 +77,7 @@ public class BossShieldSwitch : FieldObject
         {
             MessageSystem.Instance.Publish(new ShieldSwitchOffEvent());
 
-            SoundManager.Instance.PlayClipAtPoint("EnemyHurt", transform.position);
+            SoundManager.Instance.PlayClipAtPoint("FireOff", transform.position);
 
             DisableSwitch();
 

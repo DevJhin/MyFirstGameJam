@@ -159,6 +159,7 @@ public class Stage : IDisposable
     {
         var deathEvent = e as PlayerDeathEvent;
 
+        SoundManager.Instance.StopBgm();
         //TODO: 플레이어 사망시 처리해야 하는 작업 수행.
 
     }

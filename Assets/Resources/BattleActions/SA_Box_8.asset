@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b432a1d71dbde6d47bc98bef7537c99d, type: 3}
-  m_Name: SA_Box_5
+  m_Name: SA_Box_8
   m_EditorClassIdentifier: 
   BattleActionBehaviourName: SpawnActionBehaviour
   PrefabName: BulletPatterns/1Box
   RelativeToOwner: 0
-  Position: {x: -7, y: 10}
-  Angle: 270
+  Position: {x: 8, y: -3}
+  Angle: 180

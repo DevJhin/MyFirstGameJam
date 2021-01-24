@@ -14,6 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Loop: 1
   TimeTable:
+  - Action: {fileID: 11400000, guid: a37401a8e85100549b6463242e6eaaa5, type: 2}
+    Delay: 0
+    Playtime: 3
+    RepeatCount: 1
+    RepeatInterval: 0
   - Action: {fileID: 11400000, guid: ba0b6235e01b84345ab4f845d0be5bfa, type: 2}
     Delay: 2
     Playtime: 3
@@ -29,8 +34,23 @@ MonoBehaviour:
     Playtime: 12
     RepeatCount: 1
     RepeatInterval: 0
+  - Action: {fileID: 11400000, guid: 85a3995d63d4aee4693905a7a9f6c07d, type: 2}
+    Delay: 2
+    Playtime: 4
+    RepeatCount: 1
+    RepeatInterval: 0
+  - Action: {fileID: 11400000, guid: 56d32608c815ddc4ea872157e734e8b9, type: 2}
+    Delay: 2
+    Playtime: 4
+    RepeatCount: 1
+    RepeatInterval: 0
+  - Action: {fileID: 11400000, guid: cb0f6b9e510eb6f4d83d7ea61e613ef0, type: 2}
+    Delay: 0
+    Playtime: 0
+    RepeatCount: 1
+    RepeatInterval: 0
   - Action: {fileID: 11400000, guid: 7e94977ed3bf39f4abe02e24acab443a, type: 2}
-    Delay: 0.69
+    Delay: 1
     Playtime: 6
     RepeatCount: 1
     RepeatInterval: 0

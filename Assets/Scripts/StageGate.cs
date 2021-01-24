@@ -56,6 +56,8 @@ public class StageGate : FieldObject, IEventListener, IInteractable
         {
             if (IsActive)
             {
+                SoundManager.Instance.PlayThere("DoorOpen");
+
                 Game.Instance.UnloadCurrentStage();
                 Game.Instance.LoadStage(NextMapName);
                 IsActive = false;

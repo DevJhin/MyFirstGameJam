@@ -128,9 +128,13 @@ public class Player : FieldObject, IEventListener
             //피격 애니메이션 실행.
             AnimController.SetLayerWeight(1, 1f);
 
+            SoundManager.Instance.PlayClipAtPoint("PlayerHurt", transform.position);
+
             //일정 시간후, 무적상태 OFF시킨다.
             //FIXME: 귀찮아서 Invoke 쓰긴 했는데 나중엔 바꿔야 할 듯.
             Invoke(nameof(Test_OnInvinsibleTimeEnd), test_invinsibleTime);
+
+
         }
     }
 
@@ -147,11 +151,15 @@ public class Player : FieldObject, IEventListener
         //죽으면 Controller Input을 Disable 해준다.
         Controller.DisableInput();
 
+
+        SoundManager.Instance.PlayClipAtPoint("PlayerDeath", transform.position);
+        
         //플레이어 사망 이벤트 전달.
         var deathEvent = new PlayerDeathEvent()
         {
         };
 
+        
         ///사망 이벤트 전달.
         MessageSystem.Instance.Publish(deathEvent);
     }

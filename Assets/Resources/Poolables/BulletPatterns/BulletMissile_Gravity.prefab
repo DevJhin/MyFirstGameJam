@@ -75,6 +75,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b1782ed734f01240aeb9087f4af0db2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
   CurrentHP: 0
   MaxHP: 0
   EntityGroup: 0
@@ -125,6 +134,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e235f134b366f13468ba426e3009fdab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
   CurrentHP: 0
   MaxHP: 0
   EntityGroup: 0
@@ -136,7 +154,7 @@ MonoBehaviour:
   spec:
     useValue: 1
     _value:
-      BulletSpec: {fileID: 11400000, guid: ca9f948effe31b2498006737b2805c8a, type: 2}
+      BulletSpec: {fileID: 11400000, guid: 8ecb9fc1350cfe440928ba707d7fc46a, type: 2}
       Duration: 3
       StartSpeed: 8
       LifeTime: 3

@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Value:
     BulletSpec: {fileID: 11400000, guid: 9edd7e83534baf0458ac0496ed9d3aa7, type: 2}
-    Duration: 0.12
+    Duration: 0.08
     StartSpeed: 9.72
     LifeTime: 3
     UseSimulationSpeed: 1
-    SimulationSpeed: 0.5
+    SimulationSpeed: 0.76
     OverrideStartColor: 0
     StartColor: {r: 0, g: 0, b: 0, a: 0}
     Burst:

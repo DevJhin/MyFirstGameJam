@@ -15,5 +15,5 @@ MonoBehaviour:
   BattleActionBehaviourName: SpawnActionBehaviour
   PrefabName: BulletPatterns/1Box
   RelativeToOwner: 0
-  Position: {x: -12, y: -1}
+  Position: {x: -12, y: 3}
   Angle: 0
