@@ -24,6 +24,7 @@ public class Game : MonoBehaviour
     /// 현재 실행 중인 스테이지
     /// </summary>
     private Stage currentStage = null;
+    public bool IsLastStage => (currentStage.StageName == "Test4");
 
     void Awake()
     {

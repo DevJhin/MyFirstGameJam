@@ -274,7 +274,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f18c8390748664008933115a720570c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LoadMapDirectly: 1
+  LoadMapDirectly: 0
   LoadMapName: Test3
 --- !u!4 &83121865
 Transform:

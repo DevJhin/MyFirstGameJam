@@ -126,7 +126,7 @@ public class Stage : IDisposable
 
         CameraManager.Instance.StartTransition(0, 1f);
         CameraManager.Instance.FollowTarget = null;
-
+        UIManager.Instance.Clear();
     }
 
 
@@ -161,6 +161,7 @@ public class Stage : IDisposable
 
         SoundManager.Instance.StopBgm();
         //TODO: 플레이어 사망시 처리해야 하는 작업 수행.
+        UIManager.Instance.LoadUI<UIOnGameOver>("UIOnGameOver");
 
     }
 }
