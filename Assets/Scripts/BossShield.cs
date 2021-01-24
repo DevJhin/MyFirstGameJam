@@ -23,19 +23,22 @@ public class BossShield : FieldObject
     /// </summary>
     public float ShieldRecoveryTime;
 
+    /// <summary>
+    /// 실드 렌더러 오브젝트들
+    /// </summary>
+    public GameObject[] ShieldObjects;
 
-    private SpriteRenderer bodyRendrerer;
+
     private Collider2D bodyCollider;
 
-    
+
 
     public void Start()
     {
-        bodyRendrerer = GetComponentInChildren<SpriteRenderer>();
         bodyCollider = GetComponentInChildren<Collider2D>();
 
         RecoverShield();
-       
+
         MessageSystem.Instance.Subscribe<ShieldSwitchOffEvent>(OnShieldSwitchOffEvent);
         MessageSystem.Instance.Subscribe<StageClearEvent>(OnStageClearEvent);
     }
@@ -97,12 +100,16 @@ public class BossShield : FieldObject
 
         //적 개체를 다시 무적으로 설정.
         OwnerEnemy.IsInvinsible = true;
-        
+
         //실드가 회복되었다는 이벤트를 뿌린다.
         MessageSystem.Instance.Publish(new ShieldRecoverEvent());
 
-        bodyRendrerer.enabled = true;
         bodyCollider.enabled = true;
+
+        foreach (var obj in ShieldObjects)
+        {
+            obj.SetActive(true);
+        }
     }
 
 
@@ -116,8 +123,12 @@ public class BossShield : FieldObject
         //적 개체의 무적상태를 비활성화.
         OwnerEnemy.IsInvinsible = false;
 
-        bodyRendrerer.enabled = false;
         bodyCollider.enabled = false;
+
+        foreach (var obj in ShieldObjects)
+        {
+            obj.SetActive(false);
+        }
     }
 
 
@@ -127,9 +138,8 @@ public class BossShield : FieldObject
 
         OwnerEnemy = null;
 
-        bodyRendrerer = null;
         bodyCollider = null;
-
+        ShieldObjects = null;
     }
 
 
