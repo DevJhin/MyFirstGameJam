@@ -52,6 +52,17 @@
                 },
                 {
                     "name": "",
+                    "id": "d9574a44-db86-4a56-b477-007e039b817f",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "c61a7a97-b8c4-457e-a689-308abdc087bf",
                     "path": "<Keyboard>/space",
                     "interactions": "",
@@ -62,7 +73,18 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "1D Axis",
+                    "name": "",
+                    "id": "73276fd7-ac8e-4894-ad4a-f53089a331dd",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Keyboard_WASD",
                     "id": "0753f26e-721f-40c8-ba3a-69d1d71281a9",
                     "path": "1DAxis",
                     "interactions": "",
@@ -95,7 +117,7 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "1D Axis",
+                    "name": "Keyboard_Arrows",
                     "id": "7390cbb3-b42e-4a26-99b2-6f7ed9ca81a0",
                     "path": "1DAxis",
                     "interactions": "",
@@ -128,9 +150,53 @@
                     "isPartOfComposite": true
                 },
                 {
+                    "name": "Joystick",
+                    "id": "6807f5ad-e93b-4ad2-a6ce-b13c12a4bddc",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "7252c977-1c8f-400f-9118-b8e84b4d4624",
+                    "path": "<Gamepad>/leftStick/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "02ecf46a-d363-4f9b-be29-b985f3f9c3a0",
+                    "path": "<Gamepad>/leftStick/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
                     "name": "",
                     "id": "3e91e622-e700-4631-9b46-70f3fe80d69f",
                     "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c26f8171-b0ad-4428-a37e-df3cf89579f1",
+                    "path": "<Gamepad>/buttonEast",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
