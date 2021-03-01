@@ -154,7 +154,7 @@
                     "id": "6807f5ad-e93b-4ad2-a6ce-b13c12a4bddc",
                     "path": "1DAxis",
                     "interactions": "",
-                    "processors": "",
+                    "processors": "AxisDeadzone(min=0.8)",
                     "groups": "",
                     "action": "Move",
                     "isComposite": true,

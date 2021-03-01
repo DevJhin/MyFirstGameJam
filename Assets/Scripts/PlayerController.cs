@@ -19,12 +19,19 @@ public class PlayerController : FieldObjectController, IDisposable
     private readonly static string InputActionAssetPath = "InputSystem/InputSettings";
 
 
+    private bool isMoveButtonOnRepeat_Internal;
+
+
     /// <summary>
     /// 현재 Move 버튼이 Repeat(꾹 누르고 있는) 상태인가?
     /// </summary>
     public bool IsMoveButtonOnRepeat
     {
-        get; private set;
+        get
+        {
+            return isMoveButtonOnRepeat_Internal && Mathf.Abs(moveAction.ReadValue<float>())> 0.01f;
+        }
+
     }
 
 
@@ -143,7 +150,7 @@ public class PlayerController : FieldObjectController, IDisposable
     /// </summary>
     private void OnMoveActionPressed(InputAction.CallbackContext obj)
     {
-        IsMoveButtonOnRepeat = true;
+        isMoveButtonOnRepeat_Internal = true;
     }
 
 
@@ -152,7 +159,7 @@ public class PlayerController : FieldObjectController, IDisposable
     /// </summary>
     private void OnMoveActionReleased(InputAction.CallbackContext obj)
     {
-        IsMoveButtonOnRepeat = false;
+        isMoveButtonOnRepeat_Internal = false;
     }
 
 
