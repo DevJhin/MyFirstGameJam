@@ -94,8 +94,6 @@ public class Stage : IDisposable
                 var hpBar = UIManager.Instance.LoadUI<UIFieldObjectHpBar>("UIPlayerHpBar");
                 hpBar.SetFieldObject(PlayerFieldObject);
 
-                UIManager.Instance.LoadUI<UIVirtualGamepad>("UIVirtualGamepad");
-
                 CameraManager.Instance.enabled = true;
                 CameraManager.Instance.Setup(player?.transform);
             }
