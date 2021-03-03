@@ -28,7 +28,7 @@ public class Game : MonoBehaviour
 
     void Awake()
     {
-        Application.targetFrameRate = 240;
+        Application.targetFrameRate = 60;
         if (Instance == null)
         {
             Instance = this;
